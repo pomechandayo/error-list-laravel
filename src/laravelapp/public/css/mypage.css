@@ -5,6 +5,18 @@
   height: auto;
 }
 
+.edit-profile-message {
+  width: 100%;
+  background-color: aquamarine;
+  margin: 5% auto 5% auto;
+  color: green;
+  font-size: 1.2rem;
+  height: 5vh;
+  opacity: 0.9;
+  text-align: center;
+  padding-top: 3%;
+}
+
 .edit-profile-h2 {
   display: inline-block;
   width: 100%;

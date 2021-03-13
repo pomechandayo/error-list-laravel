@@ -47,6 +47,8 @@ class CreateAppTables extends Migration
             $table->string('name',255);
             $table->string('email',255);
             $table->string('password',15);
+            $table->string('avatar_file_name')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

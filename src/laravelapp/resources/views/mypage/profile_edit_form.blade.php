@@ -1,10 +1,17 @@
 @extends('layouts.app_content')
 
 @section('title')
-新規会員登録
+マイページ/プロフィール編集
 @endsection
 @section('content')
+@if(session('status')) 
+  <div class="edit-profile-message">
+    {{session('status')}}
+  </div>
+@endif
   <div class="edit-profile-box">
+
+
     <h2 class="edit-profile-h2">プロフィール編集</h2>
     <div class="edit-profile-border"></div>
     <form action="{{ route('mypage.edit-profile') }}" method="post">
@@ -20,6 +27,7 @@
     @if ($errors->has('name'))
       <li class="error-message">{{ $errors->first('name') }}</li>
     @endif 
+
     <button type="submit" class="edit-profile-save">保存</button>
 
     </form>
