@@ -1,0 +1,63 @@
+.edit-profile-box {
+  width: 80%;
+  background-color: #fff;
+  margin: auto;
+  height: auto;
+}
+
+.edit-profile-h2 {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  font-size: 1.6rem;
+  margin: 3% auto 3% auto;
+}
+
+.edit-profile-border {
+  width: 100%;
+  border: 1px solid  #6c757d;
+  opacity: 0.3;
+  margin: 0 auto 5% auto;
+}
+
+.edit-profile-input {
+  display: none;
+}
+
+.avatar-img {
+  display: inline-block;
+  background-color: #000;
+  width: 35%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.edit-profile-label {
+  font-size: 1.3rem;
+  width: 30%;
+  margin-top: 5px;
+  margin-left: 11%;
+}
+
+.edit-profile-name {
+  width: 70%;
+  height: 4vh;
+  margin: 2% 0 3% 11%;
+  font-size: 1.3rem;
+}
+
+.edit-profile-save {
+  width: 71%;
+  margin-left: 11%;
+  background-color: #007bff;
+  height: 5vh;
+  opacity: 0.9;
+  border: 1px solid #007bff;
+  border-radius: 3px;
+  margin-bottom: 10%;
+  font-size: 1.3rem;
+}
+.edit-profile-save:hover {
+  opacity: 0.6;
+}

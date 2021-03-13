@@ -13,7 +13,7 @@
 <div class="relative">
   <h2>ログイン</h2>
 </div>
-<form action="register" class="register-form" method="post">
+<form action="{{ route('login') }}" class="register-form" method="post">
     @csrf
 
   <div class="form-box">
@@ -27,14 +27,21 @@
         <label for="email">メールアドレス</label>
         <input class="input-box" type="text" name="email" value="{{ old('email')}}" placeholder="@iyatarou@makeruna.com">
             @if ($errors->has('email'))
-            <li>{{ $errors->first('email') }}</li>
+            <li class="error-message">{{ $errors->first('email') }}</li>
             @endif
         <label for="password">パスワード</label>
         <input class="input-box" type="password" name="password" value="{{ old('password')}}" placeholder="パスワード">
             @if ($errors->has('password'))
-            <li>{{ $errors->first('password') }}</li>
+            <li class="error-message">{{ $errors->first('password') }}</li>
             @endif
-        <button class="register" >登録</button>
+        
+            <button type="submit" class="register" >ログイン</button>
+            <div class="make-acount">
+                <a class="make-acount-link" href="{{ route('register') }}">アカウントをお持ちでない方はこちら</a>
+            </div>
+            <div class="forget-password">
+                <a class="forget-password-link" href="{{ route('password.request') }}">パスワードをお忘れの方はこちら</a>
+            </div>
   </div>
 </form>
 @endsection

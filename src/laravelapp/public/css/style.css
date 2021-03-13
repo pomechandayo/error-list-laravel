@@ -3,6 +3,10 @@
   font-size: 10px;
   outline: 0;
 }
+
+a {
+  text-decoration: none;
+}
   body{
     height: auto;
     background-color: #eeeeee;
@@ -116,6 +120,8 @@
     height: 40px;
     background-color: #343a40;
   }
+  /* ここまでヘッダー */
+  
   .relative{
     background-color: #6c757d;
     height: 50px;
@@ -247,10 +253,41 @@
     height: 30px;
     font-size: 18px;
   }
-  
+
+  .error-message {
+    margin-left: 20%;
+  }
+
+  .make-acount {
+    margin: 0 auto;
+    width: 40%;
+    padding-right: 8%;
+  }
+
+  .forget-password {
+    margin: 10px auto 20px auto;
+    width: 40%;
+    padding-right: 8%;
+  }
+  .make-acount-link {
+    color: blue;
+    font-size: 1.1rem;
+  }
+
+  .make-acount-link:hover {
+    opacity: 0.6;
+  }
+  .forget-password-link {
+    color: blue;
+    font-size: 1.1rem;
+  }
+  .forget-password-link:hover {
+    opacity: 0.6;
+  }
+
   .register{
     display: block;
-    margin: 30px auto;
+    margin: 30px auto 15px auto;
     width: 50%;
     height: 40px;
     border-radius: 5px;
@@ -306,7 +343,7 @@
       align-items: center;
     }
     .search-input-pc {
-      width: 80%;
+      width: 70%;
       height: 28px;      
     }
     .search-btn-pc {

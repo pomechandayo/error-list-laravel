@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, , initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
- <link rel="stylesheet" href="{{ asset('/css/style.css')}}" >
-
+  <link rel="stylesheet" href="{{ asset('/css/style.css')}}" >
+  <link rel="stylesheet" href="{{ asset('/css/mypage.css') }}">
   <title>@yield('title') | {{config('app.name','Laravel')}}</title>
  
 </head>
@@ -16,17 +16,18 @@
   </div>
   <div class="header-right">
     
-    <form  class="search" action="get">
+    <form  class="search" method="post" action="{{ route('register') }}">
     @csrf
       <input class="search-input-pc" type="text" placeholder="検索キーワード">
       <input class="search-btn-pc" type="image" onfocus="this.blur(); " src="{{ asset('/img/serch1.png')}}" value="検索">
   </form>
       <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="serch-img"></button>
-      <a href="" class="link"><button class="btn" type="button" onfocus="this.blur(); ">ログイン</button></a>
+      <a href="{{ route('login') }}" class="link"><button class="btn" type="button" onfocus="this.blur(); ">ログイン</button></a>
      <span></span>
       <a href="{{ route('showregister') }}" class="link"><button class="btn" type="button" onfocus="this.blur();">新規会員登録</button></a>
   </div>
 </div>
+
 <nav id="nav"> 
   <ul class=nav-ul>
     <div class="list-box1">
@@ -39,6 +40,7 @@
 
 <div class="header-around-behind"></div>
 
+<!-- 検索窓 -->
 <form  id="search" action="get">
   @csrf
     <input class="search-input" type="text" placeholder="検索キーワード">
@@ -70,7 +72,7 @@
       }
     }
 
-    selector('.btn').onclick = function () {
+    selector().onclick = function () {
       if(selectNav.id == 'nav') {
         selectNav.setAttribute('id','nav1');
       }else {
