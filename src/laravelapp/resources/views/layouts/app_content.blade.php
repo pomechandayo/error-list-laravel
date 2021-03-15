@@ -15,24 +15,40 @@
     <a href="{{ route('top')}}" class="logo">Errors</a>
   </div>
   <div class="header-right">
-    
     <form  class="search" method="post" action="{{ route('register') }}">
     @csrf
       <input class="search-input-pc" type="text" placeholder="検索キーワード">
       <input class="search-btn-pc" type="image" onfocus="this.blur(); " src="{{ asset('/img/serch1.png')}}" value="検索">
   </form>
-      <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="serch-img"></button>
+
+ 
+      <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="search-img"></button>
+      
+      @if(true == Auth::check())
+      <button class="icon-btn">
+        <img src="/storage/profile_image/{{$user->profile_image}}" alt="押すとメニューが開きます" class="icon-img">
+      </button>
+      @else
       <a href="{{ route('login') }}" class="link"><button class="btn" type="button" onfocus="this.blur(); ">ログイン</button></a>
      <span></span>
       <a href="{{ route('showregister') }}" class="link"><button class="btn" type="button" onfocus="this.blur();">新規会員登録</button></a>
+      @endif
   </div>
 </div>
 
 <nav id="nav"> 
   <ul class=nav-ul>
     <div class="list-box1">
-      <li class="nav-list" ><a href="">投稿</a></li>
-      <li class="nav-list"><a href=""></a></li>
+
+      <li class="nav-list" >
+        <a href="">マイページへ</a>
+    </li>
+      <li class="nav-list" >
+        <a href="">投稿</a>
+      </li>
+      <li class="nav-list">
+        <a href=""></a>
+    </li>
     </div>
   </ul>
 </nav>
@@ -56,30 +72,6 @@
   </small> 
 </footer>
 
-<script>
-    function selector(select){
-      return document.querySelector(select);
-    }
-    
-    selectSearch = selector('#search');
-    selectNav = selector('#nav');
-
-    selector('.search-btn').onclick = function () {
-      if(selectSearch.id == 'search'){
-        selectSearch.setAttribute('id','search1');
-      }else {
-        selectSearch.setAttribute('id','search');
-      }
-    }
-
-    selector().onclick = function () {
-      if(selectNav.id == 'nav') {
-        selectNav.setAttribute('id','nav1');
-      }else {
-        slectNav.setAttribute('id','nav');
-      }
-    }
-
-  </script>
+<script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
 </body>
 </html>

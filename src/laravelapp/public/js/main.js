@@ -1,0 +1,34 @@
+console.log('hello');
+
+function selector(select){
+  return document.querySelector(select);
+}
+
+selectSearch = selector('#search');
+selectNav = selector('#nav');
+
+selector('.search-btn').onclick = function () {
+  if(selectSearch.id == 'search'){
+    selectSearch.setAttribute('id','search1');
+  }else {
+    selectSearch.setAttribute('id','search');
+  }
+}
+
+selector('.icon-btn').onclick = function () {
+  if(selectNav.id == 'nav') {
+    selectNav.setAttribute('id','nav1');
+  }else {
+    selectNav.setAttribute('id','nav');
+  }
+}
+
+// 読み込んだ画像をimgのsrcに代入する関数
+// selector('.edit-profile-input')
+// .addEventListener('change',(e)=> {
+//   const input= e.target;
+//   const reader = new FileReader();
+//   reader.onload = (e) => {
+//     input.closest('.edit-profile-label1').querySelector('img').src = e.target};
+//     reader.readAsDateURL(input.files[0]);
+// });

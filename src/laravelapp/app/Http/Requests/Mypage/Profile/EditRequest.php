@@ -24,6 +24,7 @@ class EditRequest extends FormRequest
     public function rules()
     {
         return [
+            'profile_image' => ['file', 'image'],
             'name' => ['required','string','max:255'],
         ];
     }

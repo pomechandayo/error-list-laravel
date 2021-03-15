@@ -31,4 +31,5 @@ Route::prefix('mypage')
     ->name('mypage.edit-profile');
     Route::post('edit-profile','ProfileController@editProfile')
     ->name('mypage.edit-profile');
+    Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
 });

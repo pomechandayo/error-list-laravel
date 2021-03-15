@@ -13,18 +13,7 @@ class CreateAppTables extends Migration
      */
     public function up()
     {   
-        if(Schema::hasTable('users')){
-            return;
-        }
-        if(Schema::hasTable('articles')){
-            return;
-        }
-        if(Schema::hasTable('tags')){
-            return;
-        }
-        if(Schema::hasTable('likes')){
-            return;
-        }
+    
 
         Schema::create('likes', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -41,16 +30,8 @@ class CreateAppTables extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
         });
-        Schema::create('users',function
-        (Blueprint $table){
-            $table->bigIncrements('id');
-            $table->string('name',255);
-            $table->string('email',255);
-            $table->string('password',15);
-            $table->string('avatar_file_name')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        
+        
     }
 
     /**
@@ -63,6 +44,5 @@ class CreateAppTables extends Migration
         Schema::dropIfExists('likes');
         Schema::dropIfExists('tags');
         Schema::dropIfExists('articles');
-        Schema::dropIfExists('users');
     }
 }
