@@ -1,4 +1,4 @@
-console.log('hello');
+
 
 function selector(select){
   return document.querySelector(select);
