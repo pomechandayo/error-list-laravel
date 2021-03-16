@@ -33,3 +33,5 @@ Route::prefix('mypage')
     ->name('mypage.edit-profile');
     Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
 });
+
+Route::get('/article','articleController@showArticle')->name('showArticle');

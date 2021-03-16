@@ -15,16 +15,21 @@
     <a href="{{ route('top')}}" class="logo">Errors</a>
   </div>
   <div class="header-right">
+   
     <form  class="search" method="post" action="{{ route('register') }}">
-    @csrf
+      @csrf
       <input class="search-input-pc" type="text" placeholder="検索キーワード">
       <input class="search-btn-pc" type="image" onfocus="this.blur(); " src="{{ asset('/img/serch1.png')}}" value="検索">
   </form>
-
  
       <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="search-img"></button>
       
       @if(true == Auth::check())
+      <a href="" class="link-write-article">
+      <button  class="link-write-article-btn">
+        投稿する
+      </button>
+    </a>
       <button class="icon-btn">
         <img src="/storage/profile_image/{{$user->profile_image}}" alt="押すとメニューが開きます" class="icon-img">
       </button>
@@ -41,7 +46,7 @@
     <div class="list-box1">
 
       <li class="nav-list" >
-        <a href="">マイページへ</a>
+        <a href="{{ route('mypage.profile') }}">マイページへ</a>
     </li>
       <li class="nav-list" >
         <a href="">投稿</a>

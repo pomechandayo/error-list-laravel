@@ -49,15 +49,34 @@ a {
     opacity: 0.6;
   }
   
-  
   .header-right {
-    width: 30%;
+    width: 35%;
     margin-left: 2%;
     margin-right: 2%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
+  .link-write-article {
+    display: block;
+    width: 40%;
+    height: auto;
+    margin-left:auto;
+  }
+  
+  .link-write-article-btn {
+    width: 100%;
+    height: 2.7rem;
+    background-color: #343a40;
+    border: 2px solid #eeeeee;
+    color: #eeeeee;
+    font-size: 1.1rem;
+  }
+  
+  .link-write-article-btn:hover {
+    opacity: 0.6;
+    cursor: pointer;
+    }
 
   .icon-btn {
     display: inline-block;
@@ -68,8 +87,8 @@ a {
   }
   .icon-img {
     display: inline-block;
-    height: 30px;
-    width: 30px;
+    height: 34px;
+    width: 34px;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -129,10 +148,6 @@ a {
     text-align: center;
     padding-top: 10px;
   }
-
-  
-  
-  
   .header-around-behind{
     height: 40px;
     background-color: #343a40;
@@ -361,8 +376,9 @@ a {
     .header-left:hover {
       opacity: 0.6;
     }
-
+    
     .logo {
+      font-size: 2.8rem;
       display: inline-block;
       width: 100%;
     }
@@ -374,6 +390,22 @@ a {
       width: 60%;
     }
 
+    .link-write-article {
+      display: block;
+      width: 20%;
+      height: auto;
+      margin: 0 2%;
+    }
+  
+    .link-write-article-btn {
+        width: 100%;
+        height: 4vh;
+        background-color: #343a40;
+        border: 2px solid #eeeeee;
+        color: #eeeeee;
+        font-size: 1.1rem;
+    }
+    
     .icon-btn {
       display: inline-block;
       width: 10%;
@@ -383,8 +415,8 @@ a {
     }
     .icon-img {
       display: inline-block;
-      height: 32px;
-      width: 32px;
+      height: 36px;
+      width: 36px;
       border-radius: 50%;
       cursor: pointer;
     }
