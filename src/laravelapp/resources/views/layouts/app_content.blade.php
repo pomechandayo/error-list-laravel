@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, , initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="{{ asset('/css/style.css')}}" >
   <link rel="stylesheet" href="{{ asset('/css/mypage.css') }}">
+  <link rel="stylesheet" href="{{ asset('/css/article.css') }}">
   <title>@yield('title') | {{config('app.name','Laravel')}}</title>
  
 </head>

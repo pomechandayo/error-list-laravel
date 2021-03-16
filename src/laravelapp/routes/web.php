@@ -34,4 +34,9 @@ Route::prefix('mypage')
     Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
 });
 
-Route::get('/article','articleController@showArticle')->name('showArticle');
+Route::prefix('article')
+->middleware('auth')
+->group(function(){
+    Route::get('/post','ArticleController@showPostingArticle')
+    ->name('articl.post');
+});
