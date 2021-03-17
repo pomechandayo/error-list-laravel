@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, , initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="{{ asset('/css/style.css')}}" >
-  <link rel="stylesheet" href="{{ asset('/css/mypage.css') }}">
-  <link rel="stylesheet" href="{{ asset('/css/article.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <title>@yield('title') | {{config('app.name','Laravel')}}</title>
  
 </head>
@@ -28,7 +27,7 @@
       <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="search-img"></button>
       
       @if(true == Auth::check())
-      <a href="" class="link-write-article">
+      <a href="{{ route('article.post')}}" class="link-write-article">
       <button  class="link-write-article-btn">
         投稿する
       </button>

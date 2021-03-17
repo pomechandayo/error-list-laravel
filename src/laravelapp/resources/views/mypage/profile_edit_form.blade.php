@@ -3,6 +3,10 @@
 @section('title')
 プロフィール編集
 @endsection
+<head>
+<link rel="stylesheet" href="{{ asset('/css/mypage.css') }}">
+</head>
+
 @section('content')
 @if(session('status')) 
   <div class="edit-profile-message">

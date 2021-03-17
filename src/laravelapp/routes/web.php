@@ -38,5 +38,5 @@ Route::prefix('article')
 ->middleware('auth')
 ->group(function(){
     Route::get('/post','ArticleController@showPostingArticle')
-    ->name('articl.post');
+    ->name('article.post');
 });

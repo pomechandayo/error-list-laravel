@@ -32,3 +32,13 @@ selector('.icon-btn').onclick = function () {
 //     input.closest('.edit-profile-label1').querySelector('img').src = e.target};
 //     reader.readAsDateURL(input.files[0]);
 // });
+
+// 記事投稿ページマークダウンエディタ機能
+$(function () {
+  $('#markdown-editor-textarea').keyup(function () {
+    let html = marked($(this).val());
+    $('#markdown-preview').html(html);
+  });
+  });
+
+

@@ -3,7 +3,9 @@
 @section('title')
   マイページ
 @endsection
-
+<head>
+<link rel="stylesheet" href="{{ asset('/css/mypage.css') }}">
+</head>
 @section('content')
 <div class="profile-container">
   <div class="profile-box1">

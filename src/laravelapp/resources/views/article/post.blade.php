@@ -5,21 +5,28 @@
 @endsection
 
 @section('content')
-<textarea name="article" id="markdown-editor-textarea" cols="30" rows="10">
+<head>
+  <link rel="stylesheet" href="{{ asset('/css/article.css') }}">
+</head>
 
-</textarea>
-<textarea name="" id="markdown-preview" cols="30" rows="20" style="margin-top:50px;"></textarea>
+<form action="" method="post" class="article-form">
+@csrf
+  <input type="text" name="article-title" class="article-title" placeholder="タイトル">
+  <input type="text" name="article-tag" class="article-tag"  placeholder="タグをカンマ区切りで5つまで(PHP,Ruby,Javaなど)">
+  <div class="tab-bar">
+    <div class="tab-bar-text">本文</div>
+    <div class="tab-bar-preview">プレビュー</div>
+  </div>
+  <textarea name="article" id="markdown-editor-textarea">
 
+  </textarea>
+  <div id="markdown-preview"></div>
 
+  <div class="btn-bar">
+    <button type="submit" class="article-post-btn">投稿</button>
+  </div>
 
-<script>
-  $(function () {
-  $('#markdown-editor-textarea').keyup(function () {
-    let html = marked($(this).val());
-    $('#markdown-preview').html(html);
-  });
-  });
+</form>
 
-</script>
 
 @endsection
