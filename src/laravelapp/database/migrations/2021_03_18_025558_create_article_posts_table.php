@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppTables extends Migration
+class CreateArticlePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,15 @@ class CreateAppTables extends Migration
      * @return void
      */
     public function up()
-    {   
-    
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
 
-
+            $table->integer('user_id');
+            $table->string('title')->nullable();
+            $table->string('body')->nullalbe();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,8 +30,6 @@ class CreateAppTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('likes');
-        Schema::dropIfExists('tags');
         Schema::dropIfExists('articles');
     }
 }

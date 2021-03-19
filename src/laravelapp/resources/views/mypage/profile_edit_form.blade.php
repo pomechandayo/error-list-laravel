@@ -22,7 +22,10 @@
     @csrf
     <!-- プロフィール画像 -->
     <label for="profile_image" class="edit-profile-label1">
-      <input type="file" name="profile_image" accept="image/png,image/jpeg,image/gif" class="edit-profile-input" id="profile_image" style="display: none;;" />
+      <input 
+        type="file" 
+        name="profile_image" 
+        accept="image/png,image/jpeg,image/gif" class="edit-profile-input" id="profile_image" style="display: none;;" />
         @if(!empty($user->profile_image))
           <img src="/storage/profile_image/{{$user->profile_image}}" alt="プロフィールの画像です" class="profile_img">
         @else
@@ -31,8 +34,12 @@
         
      </label>
     <label for="name" class="edit-profile-label2">ニックネーム</label>
-    <input type="text" class="edit-profile-name" name="name"
-    value="{{ old('name',$user->name) }}">
+    <input 
+      type="text" 
+      class="edit-profile-name" 
+      name="name"
+    
+      value="{{ old('name',$user->name) }}">
     @if ($errors->has('name'))
       <li class="error-message">{{ $errors->first('name') }}</li>
     @endif 

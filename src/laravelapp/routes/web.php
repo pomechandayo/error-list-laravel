@@ -19,7 +19,9 @@ Auth::routes([
     'register' => false
 ]);
 
-Route::get('/home', 'HomeController@index')->name('top');
+Route::get('/home', 'HomeController@index');
+
+Route::get('index','ArticleController@index')->name('index');
 
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
@@ -34,9 +36,9 @@ Route::prefix('mypage')
     Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
 });
 
-Route::prefix('article')
-->middleware('auth')
-->group(function(){
-    Route::get('/post','ArticleController@showPostingArticle')
-    ->name('article.post');
+
+Route::group(['middleware' => ['auth']],function()  {
+    Route::resource('article','ArticleController',
+    ['only' => ['create','store','show','edit','update','destroy']]);
+
 });

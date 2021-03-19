@@ -171,7 +171,7 @@ a {
   /* スマホ用 */
   #search {
     position: fixed;
-    width: 100%;
+    width: 90%;
     display: none;
   }
   
@@ -201,6 +201,7 @@ a {
     height: 25px;
     margin-left: 20px; 
     width: 80%;
+    font-size: 1.5rem;
   }
   .search-btn1 {
     background-color: #343a40;
@@ -387,7 +388,7 @@ a {
     }
     .header-right {
       height: 50px;
-      width: 60%;
+      width: 65%;
     }
 
     .link-write-article {
@@ -423,14 +424,16 @@ a {
     
     .search {
       display: block;
-      width: 70%;
+      width: 60%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
     }
     .search-input-pc {
       width: 70%;
-      height: 28px;      
+      height: 28px;   
+      font-size: 1.5rem;   
     }
     .search-btn-pc {
       height: 24px;

@@ -14,31 +14,60 @@
 <header>
 <div class="header-box">
   <div class="header-left">
-    <a href="{{ route('top')}}" class="logo">Errors</a>
+    <a href="{{ route('index')}}" class="logo">Errors</a>
   </div>
   <div class="header-right">
    
     <form  class="search" method="post" action="{{ route('register') }}">
       @csrf
-      <input class="search-input-pc" type="text" placeholder="検索キーワード">
-      <input class="search-btn-pc" type="image" onfocus="this.blur(); " src="{{ asset('/img/serch1.png')}}" value="検索">
+      <input 
+        class="search-input-pc" 
+        type="text" 
+        placeholder="検索キーワード"
+      
+      >
+      <input 
+        class="search-btn-pc" 
+        type="image" onfocus="this.blur(); " 
+        src="{{ asset('/img/serch1.png')}}" 
+        value="検索"
+      >
   </form>
  
-      <button class="search-btn" type="button" onfocus="this.blur(); "><img src="{{ asset('/img/serch1.png')}}" class="search-img"></button>
+      <button 
+        class="search-btn" 
+        type="button" 
+        onfocus="this.blur(); "
+      >
+          <img src="{{ asset('/img/serch1.png')}}" class="search-img">
+      </button>
       
       @if(true == Auth::check())
-      <a href="{{ route('article.post')}}" class="link-write-article">
+      <a href="{{ route('article.create')}}" class="link-write-article">
       <button  class="link-write-article-btn">
         投稿する
       </button>
     </a>
       <button class="icon-btn">
-        <img src="/storage/profile_image/{{$user->profile_image}}" alt="押すとメニューが開きます" class="icon-img">
+        <img src="/storage/profile_image/{{$user->profile_image}}" 
+          class="icon-img">
       </button>
       @else
-      <a href="{{ route('login') }}" class="link"><button class="btn" type="button" onfocus="this.blur(); ">ログイン</button></a>
+      <a href="{{ route('login') }}" class="link">
+        <button 
+          class="btn" 
+          type="button" 
+          onfocus="this.blur(); ">
+          ログイン
+        </button>
+      </a>
      <span></span>
-      <a href="{{ route('showregister') }}" class="link"><button class="btn" type="button" onfocus="this.blur();">新規会員登録</button></a>
+      <a href="{{ route('showregister') }}" class="link">
+        <button 
+        class="btn" 
+        type="button" 
+        onfocus="this.blur();">
+        新規会員登録</button></a>
       @endif
   </div>
 </div>
