@@ -14,4 +14,10 @@ class Article extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    /*ページネーションやorederByができる*/
+    public function getArticleList($num_per_page = 10) {
+        return $this->orderBy('id','desc')
+        ->paginate($num_per_page);
+    }
 }

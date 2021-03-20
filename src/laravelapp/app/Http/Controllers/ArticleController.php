@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Article;
 use App\Tag;
+use App\Models\User;
 
 
 class ArticleController extends Controller
@@ -16,10 +17,17 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $items = Article::all();
-        return $items->toArray();
+    public function index(User $user,Request $request)
+     {  
+         /*記事情報と紐付けられたユーザー情報取得*/
+         $sort = $request->sort;
+         $article_list = Article::with('User')->orderByRaw('created_at desc')->Paginate(10);
+       
+
+         return view('index',[
+        'article_list' => $article_list,
+        'sort' => $sort,
+         ])->with('user',Auth::user());
     }
 
     /**

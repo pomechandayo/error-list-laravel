@@ -1,0 +1,27 @@
+.top-main {
+
+}
+
+.top-tag-select {
+  height: 50px;
+  width: 100%;
+}
+
+.top-article-container {
+
+}
+
+.top-article-user {
+
+}
+.top-article-title {
+  font-size: 50px;
+  height: 100px;
+}
+
+.top-article-created_at {
+  font-size: 50px;
+}
+.top-paginate {
+
+}

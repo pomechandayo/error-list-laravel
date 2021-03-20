@@ -424,11 +424,10 @@ a {
     
     .search {
       display: block;
-      width: 60%;
+      width: 68%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-
     }
     .search-input-pc {
       width: 70%;
@@ -464,3 +463,11 @@ a {
       margin-left: 20%;
     }
   }
+
+
+  @media screen and (min-width: 1025px) {
+    .search {
+      width: 75%;
+    }
+  }
+

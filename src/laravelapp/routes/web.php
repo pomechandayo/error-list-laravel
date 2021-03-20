@@ -22,7 +22,6 @@ Auth::routes([
 Route::get('/home', 'HomeController@index');
 
 Route::get('index','ArticleController@index')->name('index');
-
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
 Route::prefix('mypage')
