@@ -20,12 +20,13 @@ class ProfileController extends Controller
     */
 public function showProfile(Request $request) {
 
-    
     $user = Auth::user();
+    
     $article_count = Article::where('user_id',$user->id)->get();
-
+    
+    // myarticleの値が入っていれば自分が投稿した記事をviewに送る
     if($request->menu_link === 'myarticle'){
-    $sort = $request->sort;
+        $sort = $request->sort;
         $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(10);
         
         return view('mypage.profile',[
