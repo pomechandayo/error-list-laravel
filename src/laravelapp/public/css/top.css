@@ -1,27 +1,68 @@
 .top-main {
-
+  width: 90%;
+  margin: auto;
 }
-
+li {
+  list-style-type: none;
+}
 .top-tag-select {
-  height: 50px;
+  height: 100px;
   width: 100%;
 }
 
 .top-article-container {
-
+  background-color: #eeeeee;
+  height: auto;
+}
+.top-article_box {
+  width: 100%;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  line-height: 1.6;
+  height: 120px;
+  box-sizing: border-box;
+  padding: 15px;
 }
 
+.top-article-myimage {
+  display: inline-block;
+  height: 20px;
+  width: 20px
+}
 .top-article-user {
-
+  font-size: 1.5rem;
 }
 .top-article-title {
-  font-size: 50px;
-  height: 100px;
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+.top-article-tag {
+  font-size: 1.5rem;
+}
+.top-article-created_at {
+  font-size: 1.5rem;
 }
 
-.top-article-created_at {
-  font-size: 50px;
+.pagination {
+  box-sizing: border-box;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  height: 120px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .top-paginate {
+  width: 100%;
+  height: auto;
+}
 
+.page-item {
+  display: block;
+  height: auto;
+}
+
+.page-link {
+  font-size: 2rem;
+  display: inline-block;
+  height: auto;
 }

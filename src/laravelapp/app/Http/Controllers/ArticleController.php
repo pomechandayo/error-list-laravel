@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Article;
 use App\Tag;
-use App\Models\User;
+use App\User;
 
 
 class ArticleController extends Controller
@@ -21,8 +21,9 @@ class ArticleController extends Controller
      {  
          /*記事情報と紐付けられたユーザー情報取得*/
          $sort = $request->sort;
-         $article_list = Article::with('User')->orderByRaw('created_at desc')->Paginate(10);
-       
+         $article_list = Article::with('User')->orderBy('created_at', 'desc')->Paginate(10);
+
+         
 
          return view('index',[
         'article_list' => $article_list,
@@ -77,11 +78,12 @@ class ArticleController extends Controller
         /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
         
         $post = new Article;
-        $post->tags()->attach($tags_id);
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = Auth::user()->id;
         $post->save();
+        $post->tags()->attach($tags_id);
+        
 
         return redirect()->route('index');
 
@@ -93,10 +95,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $item = ArticlePost::find($id);
-        return $item->toArray();
+    public function show(Request $request)
+    {   
+        
     }
 
     /**

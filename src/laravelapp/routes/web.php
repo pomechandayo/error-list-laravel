@@ -22,6 +22,7 @@ Auth::routes([
 Route::get('/home', 'HomeController@index');
 
 Route::get('index','ArticleController@index')->name('index');
+
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
 Route::prefix('mypage')
@@ -33,11 +34,12 @@ Route::prefix('mypage')
     Route::post('edit-profile','ProfileController@editProfile')
     ->name('mypage.edit-profile');
     Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
+    Route::get('profile/{menu_link}','ProfileController@showProfile');
 });
 
 
 Route::group(['middleware' => ['auth']],function()  {
     Route::resource('article','ArticleController',
     ['only' => ['create','store','show','edit','update','destroy']]);
-
+    
 });

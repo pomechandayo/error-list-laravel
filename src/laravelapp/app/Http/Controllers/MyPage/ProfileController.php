@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\MyPage;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Mypage\Profile\EditRequest;
+use App\Article;
+use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,27 @@ class ProfileController extends Controller
     /*
     マイページ表示
     */
-public function showProfile() {
-    return view('mypage.profile')
-    ->with('user',Auth::user());
+public function showProfile(Request $request) {
+
+    
+    $user = Auth::user();
+    $article_count = Article::where('user_id',$user->id)->get();
+
+    if($request->menu_link === 'myarticle'){
+    $sort = $request->sort;
+        $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(10);
+        
+        return view('mypage.profile',[
+            'article_list' => $article_list,
+            'sort' => $sort,
+            'article_count' => $article_count,
+            ])->with('user',Auth::user());
+        }else{
+            return view('mypage.profile',[
+            'article_count' => $article_count,
+            ])
+            ->with('user',Auth::user());
+        }
 }
 
 
