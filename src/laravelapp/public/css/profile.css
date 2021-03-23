@@ -1,8 +1,11 @@
-.profile-container {
+.profile-container-lg {
   background-color: #fff;
   width: 90%;
   height: auto;
   margin: 0 auto;
+}
+a:hover {
+  text-decoration: none;
 }
 
 .profile-box1 {
@@ -20,11 +23,11 @@
 }
 .profile-user-name {
   display: block;
-  width: 80%;
+  width: 85%;
   margin: 1.2rem auto;
   text-align: center;
   font-size: 2.0rem;
-  border-bottom: 1px solid  #6c757d;
+  border-bottom: 2px solid  #6c757d;
   padding-bottom: 2rem;
   color: #444;
 }
@@ -50,6 +53,10 @@
   height: 30px;
   font-size: 2rem;
 }
+.profile-link-menu:hover{
+  text-decoration: none;
+  color: #007bff;
+}
 
 .profile-link-editprofile {
   display: block;
@@ -57,7 +64,7 @@
   opacity: 0.9;
   width: 80vw;
   height: 4vh;
-  margin:3.0rem auto 2.5rem auto;
+  margin: 50px auto 2.5rem auto;
   border-radius: 5px;
 }
 .profile-link-editprofile:hover {
@@ -81,8 +88,91 @@
   color: #fff;
   font-size: 1.5rem;
 }
+.profile-link:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* ここから記事一覧 */
+.profile-article-box {
+  width: 100%;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  line-height: 1.6;
+  height: 120px;
+  box-sizing: border-box;
+  padding: 5px 0 5px 20px;
+}
+
+.profile-link-article {
+  text-decoration: none;
+}
+.profile-link-article:hover {
+  text-decoration: none;
+}
+.profile-myimage {
+  display: inline-block;
+  height: 20px;
+  width: 20px
+}
+.profile-article-user {
+  font-size: 1.6rem;
+  margin-top: 13px;
+  color: #444;
+}
+.profile-article-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.profile-article-tag {
+  font-size: 1.5rem;
+}
+.profile-article-created_at {
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.pagination {
+  box-sizing: border-box;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  height: 120px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+.profile-paginate {
+  width: 100%;
+  height: auto;
+}
+
+.page-item {
+  display: block;
+  height: auto;
+}
+
+.page-link {
+  font-size: 2rem;
+  display: inline-block;
+  height: auto;
+}
 
 @media screen and (min-width: 600px){ 
+.profile-container-lg {
+  width: 80%;
+}
+.profile-container1 {
+  width: 100%;
+  height: 520px;
+  background-color: #fff;
+}
+.profile-container2 {
+  width: 100%;
+  background-color: #fff;
+}
+
   .profile-icon {
     display: block;
     width: 230px;
@@ -90,6 +180,7 @@
   }
   .profile-link-editprofile {
   height:5vh;
+  width: 70vw;
 }
   .profile-link-myarticle {
     height: 5vh;

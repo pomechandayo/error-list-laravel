@@ -25,6 +25,7 @@ Route::get('index','ArticleController@index')->name('index');
 
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
+
 Route::prefix('mypage')
 ->namespace('MyPage')
 ->middleware('auth')
@@ -40,6 +41,6 @@ Route::prefix('mypage')
 
 Route::group(['middleware' => ['auth']],function()  {
     Route::resource('article','ArticleController',
-    ['only' => ['create','store','show','edit','update','destroy']]);
-    
+    ['only' => ['create','store','edit','update','destroy']]);
 });
+Route::resource('article/show','ArticleController',['only' => ['show']]);

@@ -14,7 +14,7 @@
 <header>
 <div class="header-box">
   <div class="header-left">
-    <a href="{{ route('index')}}" class="logo">Errors</a>
+    <a href="{{ route('index')}}" class="logo">ErrorList</a>
   </div>
   <div class="header-right">
    
@@ -102,7 +102,7 @@
 @yield('content')
 
 <footer>
-<p>Errors</p>
+<div class="footer-logo" >ErrorList</div>
   <small>
     &copy;Eroors incremnts Inc. 2021
   </small> 

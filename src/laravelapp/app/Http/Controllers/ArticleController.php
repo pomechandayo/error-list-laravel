@@ -10,6 +10,7 @@ use App\Tag;
 use App\User;
 
 
+
 class ArticleController extends Controller
 {
     /**
@@ -20,11 +21,13 @@ class ArticleController extends Controller
     public function index(User $user,Request $request)
      {  
          /*記事情報と紐付けられたユーザー情報取得*/
+
          $sort = $request->sort;
          $article_list = Article::with('User')->orderBy('created_at', 'desc')->Paginate(10);
-
-         
-
+      
+        
+        
+        
          return view('index',[
         'article_list' => $article_list,
         'sort' => $sort,
@@ -95,9 +98,17 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request, int $id)
     {   
-        
+
+        $article = Article::with('User')->find($id);
+        $article_parse = new Article;
+        $article_parse_body = $article->parse($article_parse);
+       
+        return view('article.show',[
+            'article' => $article,
+            'article_parse_body' => $article_parse_body
+        ])->with('user',Auth::user());
     }
 
     /**

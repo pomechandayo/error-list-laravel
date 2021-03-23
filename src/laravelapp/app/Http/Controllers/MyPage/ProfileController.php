@@ -27,7 +27,7 @@ public function showProfile(Request $request) {
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
     if($request->menu_link === 'myarticle'){
         $sort = $request->sort;
-        $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(10);
+        $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(5);
         
         return view('mypage.profile',[
             'article_list' => $article_list,

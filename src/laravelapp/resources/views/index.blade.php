@@ -23,12 +23,14 @@
         @foreach($article_list as $article)
         <div class="top-article_box">
           <li class="top-article-user">
-            <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}</li>
-          <li class="top-article-title">{{ $article->title}}</li>
+          <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}</li>
+          <a href="" class="top-link-article">
+            <li class="top-article-title">{{ $article->title}}</li>
+          </a>
           <li class="top-article-tag">
-            {{ dd()}}
-          {{ $article->tags('name') }}</li>
-          <li class="top-article-created_at">{{ $article->created_at}}</li> 
+         
+          <li class="top-article-created_at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li> 
+    
         </div>
           @endforeach
       </ul>

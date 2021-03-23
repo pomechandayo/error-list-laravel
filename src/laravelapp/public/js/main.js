@@ -3,7 +3,7 @@
 function selector(select){
   return document.querySelector(select);
 }
-
+// 検索アイコンを押すと検索窓を出す
 selectSearch = selector('#search');
 selectNav = selector('#nav');
 
@@ -14,7 +14,8 @@ selector('.search-btn').onclick = function () {
     selectSearch.setAttribute('id','search');
   }
 }
-
+// headerのユーザーアイコンをタップすると
+// ナビゲーションメニューが出る
 selector('.icon-btn').onclick = function () {
   if(selectNav.id == 'nav') {
     selectNav.setAttribute('id','nav1');
