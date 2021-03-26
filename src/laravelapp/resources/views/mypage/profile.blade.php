@@ -35,6 +35,7 @@
         </button>
       </div>
       </div>
+      
       <!-- ここから記事一覧 -->
       <div class="profile-container2">
       @if(isset($article_list))

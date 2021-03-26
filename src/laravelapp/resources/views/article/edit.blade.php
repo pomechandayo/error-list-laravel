@@ -12,16 +12,11 @@
   >
 </head>
 
-<form action="/article" method="post" class="article-form">
+<form action="{{ route('article.update',$article_data->id)}}" method="post" class="article-form">
 @csrf
-<input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')}} ">
+@method('patch')
+<input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')??$article_data->title}}">
 
-@error('title')
-  <div class="create-error">※{{ $message }} </div>
-@enderror
-@error('body')
-  <div class="create-error">※{{ $message }}</div>
-@enderror
 
 <input 
 type="text" 
@@ -35,6 +30,7 @@ value="{{ old('tag') }}">
 </div>
 <textarea 
 id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
+{{old('body') ?? $article_data->body}}
 </textarea>
 
 
@@ -43,7 +39,7 @@ id="markdown-editor-textarea" name="body" placeholder="本文を書いてくだ�
   </div>
   
   <div class="btn-bar">
-    <button type="submit" class="article-post-btn">投稿</button>
+    <button type="submit" class="article-post-btn">更新</button>
     
   </div>
   

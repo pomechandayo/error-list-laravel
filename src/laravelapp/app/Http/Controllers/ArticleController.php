@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Article;
 use App\Tag;
 use App\User;
-
-
+use App\Article_tag;
+use App\Http\Requests\ArticleRequest;
+use App\ArticleTag;
 
 class ArticleController extends Controller
 {
@@ -23,12 +24,11 @@ class ArticleController extends Controller
          /*記事情報と紐付けられたユーザー情報取得*/
 
          $sort = $request->sort;
-         $article_list = Article::with('User')->orderBy('created_at', 'desc')->Paginate(10);
-      
-        
-        
-        
-         return view('index',[
+         $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
+       
+       
+
+        return view('index',[
         'article_list' => $article_list,
         'sort' => $sort,
          ])->with('user',Auth::user());
@@ -53,11 +53,8 @@ class ArticleController extends Controller
      *       投稿した内容のレコードを作成
      */
     public function store(Request $request)
-    {  
-        $validate = $request->validate([
-            'title' => 'required|max:50',
-            'body' => 'required|max:2000',
-        ]);
+    { 
+        
         /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
         */
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
@@ -119,7 +116,11 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+       
+        $article_data = Article::find($id);
+        return view('article.edit',[
+            'article_data' => $article_data,
+        ])->with('user',Auth::user());
     }
 
     /**
@@ -130,8 +131,13 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+       
+        $article = Article::find($id);
+        $article->title = request('title');
+        $article->body = request('body');
+        $article->save();
+        return redirect()->action('ArticleController@show', $article->id)->with('user',Auth::user());
     }
 
     /**
