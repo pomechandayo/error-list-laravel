@@ -1,23 +1,21 @@
 .top-main {
   width: 90%;
   margin: auto;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
 }
 li {
   list-style-type: none;
-}
-.top-tag-select {
-  height: 100px;
-  width: 100%;
-  background-color: #fff;
 }
 
 .top-article-container {
   background-color: #fff;
   height: auto;
+  margin-top: 40px;
+  border-radius: 5px;
 }
 .top-article_box {
   width: 100%;
-  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  border-bottom: 2px solid rgba(42, 46, 49, 0.4);
   line-height: 1.6;
   height: 120px;
   box-sizing: border-box;
@@ -50,7 +48,6 @@ li {
 
 .pagination {
   box-sizing: border-box;
-  border-top: 2px solid rgba(42, 46, 49, 0.4);
   height: 120px;
   padding-top: 20px;
   display: flex;

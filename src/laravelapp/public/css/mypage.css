@@ -4,6 +4,7 @@
   background-color: #fff;
   margin: auto;
   height: 50vh;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
 }
 
 .edit-profile-message {
@@ -65,7 +66,7 @@
   width: 70%;
   height: 4vh;
   margin: 2% auto 3% auto;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .edit-profile-save {
@@ -105,7 +106,7 @@
     font-size: 1.3rem;
     width: 30%;
     margin-top: 5px;
-    margin-left: 15%;
+    margin-left: 20%;
   }
   
   .edit-profile-name {

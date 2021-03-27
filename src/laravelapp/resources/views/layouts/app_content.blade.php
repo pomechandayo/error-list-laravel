@@ -41,7 +41,7 @@
       >
           <img src="{{ asset('/img/serch1.png')}}" class="search-img">
       </button>
-      
+        <!-- ログインしていればユーザーのアイコンが表示される -->
       @if(true == Auth::check())
       <a href="{{ route('article.create')}}" class="link-write-article">
       <button  class="link-write-article-btn">
@@ -52,6 +52,7 @@
         <img src="/storage/profile_image/{{$user->profile_image}}" 
           class="icon-img">
       </button>
+      <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
       @else
       <a href="{{ route('login') }}" class="link">
         <button 
@@ -74,16 +75,16 @@
 
 <nav id="nav"> 
   <ul class=nav-ul>
-    <div class="list-box1">
-
-      <li class="nav-list" >
-        <a href="{{ route('mypage.profile') }}">マイページへ</a>
+      <li class="nav-link-mypage" >
+        <a href="{{ route('mypage.profile') }}">
+          <img src="/storage/profile_image/{{$user->profile_image}}" class="nav-my-icon">
+        </a>
     </li>
       <li class="nav-list" >
-        <a href="">投稿</a>
+        <a href="{{ route('article.create')}}" class="nav-link">投稿</a>
       </li>
       <li class="nav-list">
-        <a href=""></a>
+        <a href="" class="nav-link"></a>
     </li>
     </div>
   </ul>

@@ -25,9 +25,9 @@ class ArticleController extends Controller
 
          $sort = $request->sort;
          $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
-       
-       
-
+    
+         dd(Tag::find(1)->articles());
+         
         return view('index',[
         'article_list' => $article_list,
         'sort' => $sort,

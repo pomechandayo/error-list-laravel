@@ -13,13 +13,10 @@
 </head>
 @section('content')
   <div class="top-main">
-    <div class="top-tag-select">
 
-    </div>
 
     <div class="top-article-container">
       <ul>
-     
         @foreach($article_list as $article)       
         <div class="top-article_box">
           <li class="top-article-user">
