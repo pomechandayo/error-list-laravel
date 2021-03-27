@@ -13,9 +13,11 @@
 </head>
 @section('content')
   <div class="top-main">
-
-
+    
     <div class="top-article-container">
+      @foreach($tag_desc as $tag)
+        {{dd($tag->pivot)}}
+      @endforeach
       <ul>
         @foreach($article_list as $article)       
         <div class="top-article_box">

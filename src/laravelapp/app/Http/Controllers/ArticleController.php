@@ -25,12 +25,17 @@ class ArticleController extends Controller
 
          $sort = $request->sort;
          $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
+      
+
+         $tag = Tag::find(1)->articles;
+         $tag_desc = $tag->sortByDesc('created_at')
+         ->forPage($request->page,3);
     
-         dd(Tag::find(1)->articles());
-         
+
         return view('index',[
         'article_list' => $article_list,
         'sort' => $sort,
+        'tag_desc' => $tag_desc,
          ])->with('user',Auth::user());
     }
 

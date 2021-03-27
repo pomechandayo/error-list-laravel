@@ -12,8 +12,10 @@ class Article extends Model
     public function tags() {
         return $this->belongsToMany(
             'App\Tag',
-            'article_tags',)
-            ->withTimestamps();
+            'article_tags',
+            'tag_id',
+            'article_id',
+            )->withTimestamps();
     }
 
 
