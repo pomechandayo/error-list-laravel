@@ -140,6 +140,7 @@ class ArticleController extends Controller
         return redirect()->action('ArticleController@show', $article->id)->with('user',Auth::user());
     }
 
+  
     /**
      * Remove the specified resource from storage.
      *
@@ -147,7 +148,12 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {  
+        $article = Article::find($id);
+        
+        
+        $article->delete();
+
+        return redirect(route('index'))->with('success','記事を削除しました');
     }
 }

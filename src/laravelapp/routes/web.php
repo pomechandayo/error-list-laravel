@@ -42,5 +42,6 @@ Route::prefix('mypage')
 Route::group(['middleware' => ['auth']],function()  {
     Route::resource('article','ArticleController',
     ['only' => ['create','store','edit','update','destroy']]);
+    
+    Route::resource('article/show','ArticleController',['only' => ['show']]);
 });
-Route::resource('article/show','ArticleController',['only' => ['show']]);

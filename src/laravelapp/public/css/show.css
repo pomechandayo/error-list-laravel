@@ -2,26 +2,30 @@
   background-color: #fff;
   height: auto;
   min-height: 500px;
-  width: 95%;
+  width: 90%;
   margin: 50px auto 0 auto;
   box-sizing: border-box;
   padding: 25px 10px;
 }
 .show-box {
-  height: 150px;
+  height: 130px;
   background-color: #eee;
+  border-radius: 5px;
 }
 .show-title-box {
   width: 100%;
   height: 90px;
-  font-size: 2rem;
   color:#111;
-  padding: 10px;
+  padding: 15px;
   box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .show-user-data {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 .show-user-image {
   height: 20px;
@@ -34,31 +38,35 @@
 .show-title {
   font-size: 3rem;
   font-weight: bold;
-  margin: 8px 0;
+  width: 100%;
+  margin: 5px 0;
 }
 .show-created-at {
   font-size: 1.5rem;
   color: #111;
-  display: inline-block;
-  width: 50%;
+  width: 60%;
 }
 .show-linkbox {
-  display: inline-block;
-  text-align: right;
+  display: flex;
+  justify-content:end;
+  box-sizing: border-box;
   margin-left: auto;
-  width: 45%;
 }
 .show-link-edit {
   font-size: 1.7rem;
   color: #333;
+  display: inline;
+  margin-right: 10px;
 }
 .show-link-edit:hover {
   color: #007bff;
 }
+
 .show-link-delete {
+  border: none;
   font-size: 1.7rem;
   color: #333;
-  margin-left: 5px;
+  display: inline;
 }
 .show-link-delete:hover {
   color: #007bff;
@@ -132,7 +140,8 @@ hr {
     background-color: #fff;
     height: auto;
     min-height: 500px;
-    width: 85%;
+    width: 70%;
     margin-bottom: 50px;
+   margin-left: 5%;
   }
 }

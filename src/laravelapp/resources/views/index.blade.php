@@ -24,7 +24,7 @@
         <div class="top-article_box">
           <li class="top-article-user">
             <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}</li>
-            <a href="" class="top-link-article">
+            <a href="{{ action('ArticleController@show', $article->id) }}" class="top-link-article">
               <li class="top-article-title">{{ $article->title}}</li>
             </a>
             <li class="top-article-created_at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>          

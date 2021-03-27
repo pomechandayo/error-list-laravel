@@ -1,0 +1,13 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article_tag extends Model
+{
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
+
+}

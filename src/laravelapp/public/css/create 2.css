@@ -1,0 +1,145 @@
+.article-form {
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article-title {
+  display: block;
+  width: 100%;
+  height: 45px;
+  font-size: 2.3rem;
+  padding: 10px 0 0 5px;
+}
+.article-tag {
+  width: 100%;
+  height: 32px;
+  font-size: 1.5rem;
+}
+
+.tab-bar {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  box-sizing: border-box;
+}
+.tab-bar-text {
+  font-size: 1.7rem;
+  color: #444;
+  width: 49%;
+ margin-left: 2%;
+}
+.tab-bar-preview {
+  font-size: 1.7rem;
+  width: 49%;
+  color: #444;
+}
+#markdown-editor-textarea {
+  width: 50%;
+  height: 72vh;
+  font-size: 1.7rem;
+  padding-left: 1%;
+  padding-right: 1%;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+#markdown-preview {
+  padding-top: 10px;
+  display: inline-block;
+  width: 50%;
+  background-color: #fff;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  padding-left: 1%;
+  padding-right: 1%;
+  box-sizing: border-box;
+}
+
+.create-error {
+ color: red;
+ font-size: 1.5rem;
+margin-right: 5px;
+}
+
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  color: #111;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+h4 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+p {
+  color: #111;
+  text-align: left;
+  font-size: 1.7rem;
+}
+
+pre {
+  color: #111;
+  text-align: left;
+  font-size: 1.7rem;
+}
+
+li {
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-color: #111;
+}
+
+.btn-bar {
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  padding-right: 1%;
+}
+.article-post-btn {
+  display: block;
+  height: 4vh;
+  width: 20rem;
+  font-size: 1.5rem;
+  background-color: #6c757d;
+  opacity: 0.9;
+  border-radius: 5px;
+  color: #fff;
+}
+.article-post-btn:hover {
+  opacity: 0.6;
+}
+
+footer {
+  display: none;
+}
