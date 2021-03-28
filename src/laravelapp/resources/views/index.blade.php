@@ -12,12 +12,31 @@
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 @section('content')
-  <div class="top-main">
-    
-    <div class="top-article-container">
-      @foreach($tag_desc as $tag)
-        {{dd($tag->pivot)}}
-      @endforeach
+<div class="top-main">
+
+<div class="top-article-container">
+ 
+     <div class="search-result">
+       <h2 class="search-article">
+       {{ $tag_keyword }} {{count($article_list)}}件</h2>
+       <form action="{{ route('index')}}" method="get" class="tag-form">
+       @csrf
+      <input 
+        class="tag-search" 
+        type="text" 
+        name="tag_keyword"
+        placeholder="タグ名を記入してください"
+        vlaue="{{$tag_keyword}}"
+      >
+      <input 
+        class="tag-search-btn" 
+        type="image" onfocus="this.blur(); " 
+        src="{{ asset('/img/serch2.png')}}" 
+        value="検索"
+      >
+       </form>
+     </div>
+
       <ul>
         @foreach($article_list as $article)       
         <div class="top-article_box">
@@ -36,4 +55,8 @@
 
     </div>
   </div> 
+  <script>
+    
+
+  </script>
 @endsection

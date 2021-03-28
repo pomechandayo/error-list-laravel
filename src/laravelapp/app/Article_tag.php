@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Article_tag extends pivot
+class Article_tag extends Pivot
 {
     
     public function get_tags() {

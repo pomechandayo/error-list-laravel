@@ -72,23 +72,26 @@
       @endif
   </div>
 </div>
-
+@if(true == Auth::check())
 <nav id="nav"> 
   <ul class=nav-ul>
-      <li class="nav-link-mypage" >
-        <a href="{{ route('mypage.profile') }}">
-          <img src="/storage/profile_image/{{$user->profile_image}}" class="nav-my-icon">
+      <li class="nav-list" >
+        <a href="{{ route('mypage.profile') }}" class="nav-link">
+          マイページ
         </a>
     </li>
       <li class="nav-list" >
         <a href="{{ route('article.create')}}" class="nav-link">投稿</a>
       </li>
       <li class="nav-list">
-        <a href="" class="nav-link"></a>
+        <a href="{{ action('')}}" class="nav-link">
+          ログアウト
+        </a>
     </li>
     </div>
   </ul>
 </nav>
+@endif
 </header>
 
 <div class="header-around-behind"></div>

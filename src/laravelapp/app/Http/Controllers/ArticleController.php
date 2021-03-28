@@ -21,23 +21,43 @@ class ArticleController extends Controller
      */
     public function index(User $user,Request $request)
      {  
-         /*記事情報と紐付けられたユーザー情報取得*/
-
+         $tag_keyword = '新着記事一覧';
          $sort = $request->sort;
-         $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
-      
+        //  タグの検索フォームからリクエストがあるか判定
+         if(!isset($request->tag_keyword))
+         {  
+             $article_list = Article::with('User')->orderBy   ('created_at','desc')->Paginate(10);
+            }else{
+                //  検索フォームの入力内容からtagのレコードを取り出す
+                $tag_keyword = $request->input('tag_keyword');
+                $tag_number = Tag::where('name',$tag_keyword)->first('id');
+               
+                $tag_keyword = '「'.$tag_keyword.'」'.'の検索結果'; 
+                //タグid($tag_number->id)から該当する記事のレコードを取り出す
+                $articles = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
+                foreach($articles as $article )
+                {
+                    $get_article_list[] = $article->id;
+                }
+               
+               
+                /*記事情報と紐付けられたユーザー情報取得*/
+                $article_list = Article::with('User')->whereIn('id',$get_article_list)->orderBy('created_at','desc')->Paginate(10);
+            }
 
-         $tag = Tag::find(1)->articles;
-         $tag_desc = $tag->sortByDesc('created_at')
-         ->forPage($request->page,3);
-    
+               return view('index',[
+            'article_list' => $article_list,
+            'sort' => $sort,
+            'tag_keyword' => $tag_keyword,
+             ])->with('user',Auth::user());
+        }
+        
+        
+        
+         
 
-        return view('index',[
-        'article_list' => $article_list,
-        'sort' => $sort,
-        'tag_desc' => $tag_desc,
-         ])->with('user',Auth::user());
-    }
+         
+
 
     /**
      * Show the form for creating a new resource.

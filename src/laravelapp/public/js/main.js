@@ -3,7 +3,7 @@
 function selector(select){
   return document.querySelector(select);
 }
-// 検索アイコンを押すと検索窓を出す
+// 検索アイコンを押すと検索窓を出す(header)
 selectSearch = selector('#search');
 selectNav = selector('#nav');
 
@@ -24,15 +24,6 @@ selector('.icon-btn').onclick = function () {
   }
 }
 
-// 読み込んだ画像をimgのsrcに代入する関数
-// selector('.edit-profile-input')
-// .addEventListener('change',(e)=> {
-//   const input= e.target;
-//   const reader = new FileReader();
-//   reader.onload = (e) => {
-//     input.closest('.edit-profile-label1').querySelector('img').src = e.target};
-//     reader.readAsDateURL(input.files[0]);
-// });
 
 // 記事投稿ページマークダウンエディタ機能
 $(function () {
@@ -42,4 +33,4 @@ $(function () {
   });
   });
 
-
+  

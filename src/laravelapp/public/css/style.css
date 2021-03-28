@@ -113,6 +113,7 @@ a:hover {
     margin: 0 4px;
   }
 
+  /* ナビメニュー */
   #nav {
     display: none;
   }
@@ -131,26 +132,14 @@ a:hover {
   .nav-ul {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-  
   }
-  .nav-link-mypage {
-    width: 70%;
-    margin: 10px 15%;
-    text-align: center;
-  }
-  .nav-my-icon {
-    height: 100px;
-    width: 50%;
-  }
-
+ 
   .nav-list {
-    width: 40%;
+    width: 100%;
     height: 70px;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
     box-sizing: border-box;
+    border-bottom: 1px solid #343a40;
+    text-align: center;
   }
   
   .nav-list:hover {
@@ -159,19 +148,18 @@ a:hover {
   
   .nav-link{
     display: inline-block;
-    border-radius: 5px;
     width:100%;
-    background-color:#eee;
-    color: #444;
     height: 70px;
     font-size: 2rem;
-    height: 70px;
-    margin: auto;
+    color: #666;
+    margin-top: 15px;
   }
   .header-around-behind{
     height: 40px;
     background-color: #343a40;
   }
+  /* ここまでナビメニュー */
+
   /* ここまでヘッダー */
 
   .relative{
