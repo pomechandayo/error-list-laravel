@@ -19,6 +19,7 @@ Auth::routes([
     'register' => false
 ]);
 
+
 Route::get('/home', 'HomeController@index');
 
 Route::get('index','ArticleController@index')->name('index');
@@ -45,3 +46,6 @@ Route::group(['middleware' => ['auth']],function()  {
     
     Route::resource('article/show','ArticleController',['only' => ['show']]);
 });
+
+Route::get('/logout','Auth\LogoutController@getLogout')->name('logout');
+Route::post('/logout','Auth\LogoutController@getLogout')->name('post.logout');

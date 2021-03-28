@@ -84,9 +84,15 @@
         <a href="{{ route('article.create')}}" class="nav-link">投稿</a>
       </li>
       <li class="nav-list">
-        <a href="{{ action('')}}" class="nav-link">
-          ログアウト
-        </a>
+        <form action="{{ route('logout') }}"
+        method="POST">
+        @csrf
+        <a 
+        href=
+        "{{ route('logout') }}" class="nav-link">
+        ログアウト
+      </a>
+      </form>
     </li>
     </div>
   </ul>
