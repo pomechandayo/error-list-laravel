@@ -13,18 +13,26 @@
 <div class="relative">
   <h2>ログイン</h2>
 </div>
+
 <form action="{{ route('login') }}" class="register-form" method="post">
     @csrf
+    <div class="form-box" >
+        <h3 style="margin-bottom: 30px;">簡単ログイン</h3>
+        <input type="hidden" name="email" value="ff@gmail.pom">
+        <input type="hidden" name="password" value="aa1000">
+        <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
+    
+        <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button>
+    
+    </div>
+</form>
 
-  <div class="form-box">
-      <h3 style="margin-bottom: 30px;">簡単ログイン</h3>
-        <a href="" class="easy-login-btn"><button class="easy-btn" type="button" onfocus="this.blur(); "> こちらから会員登録無しで全ての機能を使うことができます</button></a>
 
-        <a href="" class="easy-login-btn"><button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button>
-        </a>
-
+<form action="{{ route('login') }}" class="register-form" method="post">
+    @csrf
+<div class="form-box">
     <h3 style="margin-bottom: 20px;"> 
-        メールアドレスで登録
+        メールアドレスでログイン
     </h3>  
         <label for="email">メールアドレス</label>
         <input class="input-box" type="text" name="email" value="{{ old('email')}}" placeholder="@iyatarou@makeruna.com">            @if ($errors->has('email'))

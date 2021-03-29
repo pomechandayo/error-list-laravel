@@ -32,17 +32,25 @@ class ArticleController extends Controller
                 $tag_keyword = $request->input('tag_keyword');
                 $tag_number = Tag::where('name',$tag_keyword)->first('id');
                
-                $tag_keyword = '「'.$tag_keyword.'」'.'の検索結果'; 
-                //タグid($tag_number->id)から該当する記事のレコードを取り出す
-                $articles = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
-                foreach($articles as $article )
-                {
-                    $get_article_list[] = $article->id;
+                
+                // 検索結果がnullではないか判定
+                if($tag_number != null){
+                    //タグid($tag_number->id)から該当する記事のレコードを取り出す
+                    $articles = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
+                    
+                    foreach($articles as $article )
+                    {
+                        $get_article_list[] = $article->id;
+                    }
+                    /*記事情報と紐付けられたユーザー情報取得*/
+                    $article_list = Article::with('User')->whereIn('id',$get_article_list)->orderBy('created_at','desc')->Paginate(10);
+                    $tag_keyword = '「'.$tag_keyword.'」'.'の検索結果'; 
+                }else{
+                    $article_list = [];
+                    $tag_keyword = '「'.$tag_keyword.'」'.'に一致する記事はありませんでした'; 
+
                 }
                
-               
-                /*記事情報と紐付けられたユーザー情報取得*/
-                $article_list = Article::with('User')->whereIn('id',$get_article_list)->orderBy('created_at','desc')->Paginate(10);
             }
 
                return view('index',[

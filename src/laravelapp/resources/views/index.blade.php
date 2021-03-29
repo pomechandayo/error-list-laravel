@@ -36,7 +36,7 @@
       >
        </form>
      </div>
-
+        @if( $article_list != [])
       <ul>
         @foreach($article_list as $article)       
         <div class="top-article_box">
@@ -52,7 +52,8 @@
       <div class="top-paginate">
         {{ $article_list->appends(['sort' => $sort])->links() }}
       </div>
-
+      @endif
+      
     </div>
   </div> 
   <script>
