@@ -21,19 +21,31 @@ class ArticleController extends Controller
      */
     public function index(User $user,Request $request)
      {  
-         $tag_keyword = '新着記事一覧';
+         $keyword = '新着記事一覧';
          $sort = $request->sort;
-        //  タグの検索フォームからリクエストがあるか判定
-         if(!isset($request->tag_keyword))
+            ('request_tag');
+        
+         $keywords = $request->input('keyword');
+      
+        /**
+         * ここからタグ検索機能
+         * 
+         * 検索結果を$article_listに代入する
+         * */
+
+        /*タグの検索フォームからリクエストがあるか判定,無ければ新着記事を表示する*/
+      
+         if($request->keyword == null || $request->keyword != "")
          {  
-             $article_list = Article::with('User')->orderBy   ('created_at','desc')->Paginate(10);
+             $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
+           
             }else{
-                //  検索フォームの入力内容からtagのレコードを取り出す
-                $tag_keyword = $request->input('tag_keyword');
-                $tag_number = Tag::where('name',$tag_keyword)->first('id');
+                /*検索フォームの入力内容からtagのレコードを取り出す*/
+                $keyword = $request->input('keyword');
+                $tag_number = Tag::where('name',$keyword)->first('id');
                
                 
-                // 検索結果がnullではないか判定
+                /*検索結果がnullではない場合記事を取得、nullの場合検索結果0件を表示*/
                 if($tag_number != null){
                     //タグid($tag_number->id)から該当する記事のレコードを取り出す
                     $articles = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
@@ -44,19 +56,41 @@ class ArticleController extends Controller
                     }
                     /*記事情報と紐付けられたユーザー情報取得*/
                     $article_list = Article::with('User')->whereIn('id',$get_article_list)->orderBy('created_at','desc')->Paginate(10);
-                    $tag_keyword = '「'.$tag_keyword.'」'.'の検索結果'; 
+                    $keyword = '「'.$keyword.'」'.'の検索結果'; 
                 }else{
                     $article_list = [];
-                    $tag_keyword = '「'.$tag_keyword.'」'.'に一致する記事はありませんでした'; 
+                    $keyword = '「' . $keyword . '」' . 'に一致する記事はありませんでした'; 
 
                 }
-               
             }
 
+            /*ここまでタグ検索機能*/
+
+            /**ここから検索機能
+             * 
+             * 
+             */
+            $search1 = $request->input('keyword');
+
+
+             /*ここまで検索機能*/
+
+            /**記事の合計数が0か判定する
+             * 
+             * 記事の合計を$articleTotalに代入する
+            */
+            if($article_list != []){
+                $query = $article_list;
+                $articleTotal = $query->total();
+            }else{
+                $articleTotal = 0;
+            }
+           
                return view('index',[
             'article_list' => $article_list,
             'sort' => $sort,
-            'tag_keyword' => $tag_keyword,
+            'keyword' => $keyword,
+            'articleTotal' => $articleTotal,
              ])->with('user',Auth::user());
         }
         

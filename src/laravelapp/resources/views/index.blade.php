@@ -18,15 +18,15 @@
  
      <div class="search-result">
        <h2 class="search-article">
-       {{ $tag_keyword }} {{count($article_list)}}件</h2>
+       {{ $keyword }} {{$articleTotal}}件</h2>
        <form action="{{ route('index')}}" method="get" class="tag-form">
        @csrf
       <input 
         class="tag-search" 
         type="text" 
-        name="tag_keyword"
-        placeholder="タグ名を記入してください"
-        vlaue="{{$tag_keyword}}"
+        name="keyword"
+        placeholder="tag:タグ名  キーワード"
+        vlaue="{{$keyword}}"
       >
       <input 
         class="tag-search-btn" 

@@ -18,13 +18,13 @@
   </div>
   <div class="header-right">
    
-    <form  class="search" method="post" action="{{ route('register') }}">
+    <form  class="search" method="get" action="{{ route('index')}}">
       @csrf
       <input 
         class="search-input-pc" 
         type="text" 
         placeholder="検索キーワード"
-      
+        name="keyword"
       >
       <input 
         class="search-btn-pc" 

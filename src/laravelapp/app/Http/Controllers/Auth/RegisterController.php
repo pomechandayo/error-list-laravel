@@ -53,7 +53,7 @@ class RegisterController extends Controller
     }
     public function register(UserRequest $request)
     {
-    User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

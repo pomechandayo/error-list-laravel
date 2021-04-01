@@ -19,13 +19,13 @@ Auth::routes([
     'register' => false
 ]);
 
-
 Route::get('/home', 'HomeController@index');
 
-Route::get('index','ArticleController@index')->name('index');
+Route::get('index','ArticleController@index')->name('index')->middleware('keyword');
 
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
+
 
 Route::prefix('mypage')
 ->namespace('MyPage')
