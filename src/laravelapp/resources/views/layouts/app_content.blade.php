@@ -74,7 +74,7 @@
 </div>
 @if(true == Auth::check())
 <nav id="nav"> 
-  <ul class=nav-ul>
+  <ul class="nav-ul">
       <li class="nav-list" >
         <a href="{{ route('mypage.profile') }}" class="nav-link">
           マイページ

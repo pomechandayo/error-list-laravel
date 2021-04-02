@@ -29,6 +29,8 @@ class KeywordExploder
             $keyword = preg_replace('/\s(?=\s)/','',$keyword);
             // キーワード文字列の前後のスペースを削除する
             $keyword = trim($keyword);
+         
+
         }
 
         if(!empty($keyword) || $keyword !== '')
@@ -37,9 +39,10 @@ class KeywordExploder
             $keyword = mb_convert_kana($keyword,'KV');
             // 半角スペースで配列にし、重複は削除する
             $ret['keyword'] = array_unique(explode(' ',$keyword));
+            
 
         }
-
+       
         $request->merge($ret);
 
         return $next($request);

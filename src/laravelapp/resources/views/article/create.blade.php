@@ -19,16 +19,15 @@
 @error('title')
   <div class="create-error">※{{ $message }} </div>
 @enderror
+@error('tags')
+  <div class="create-error">※{{ $message }}</div>
+@enderror
 @error('body')
   <div class="create-error">※{{ $message }}</div>
 @enderror
 
-<input 
-type="text" 
-name="tags" 
-class="article-tag"  
-placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-value="{{ old('tag') }}">
+<input type="text" name="tags" class="article-tag" placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
+value="{{ old('tags') }}">
 <div class="tab-bar">
   <div class="tab-bar-text">本文</div>
   <div class="tab-bar-preview">プレビュー</div>
@@ -48,8 +47,4 @@ id="markdown-editor-textarea" name="body" placeholder="本文を書いてくだ�
   </div>
   
 </form>
-<script>
-  const 
-</script>
-
 @endsection

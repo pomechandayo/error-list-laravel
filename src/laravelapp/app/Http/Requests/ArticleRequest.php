@@ -24,10 +24,8 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required | email',
-            'password' => 'required | min:6',
             'title' => 'required | max:100' ,
+            'tags' => 'required',
             'body' =>  'required',
         ];
     }
@@ -35,7 +33,8 @@ class ArticleRequest extends FormRequest
     public function messages() {
         return [
             'title.required' => 'タイトルは必須です' ,
-            'title.min' => 'タイトルは100文字までです' ,
+            'title.max' => 'タイトルは100文字までです' ,
+            'tags' => 'タグは必須です',
             'body.required' => '本文は必須です' ,
         ];
     }
@@ -43,10 +42,8 @@ class ArticleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'ユーザー名',
-            'email' => 'メールアドレス',
-            'password' => 'パスワード',
             'title' => 'タイトル',
+            'tags' => 'タグ',
             'body' => '本文',
         ];
     }
