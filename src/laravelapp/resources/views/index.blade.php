@@ -60,7 +60,7 @@
           
       </div>
       @endif
-      
+      {{ $article_list->links() }} 
     </div>
   </div> 
   <script>

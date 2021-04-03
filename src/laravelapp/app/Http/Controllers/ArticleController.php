@@ -20,11 +20,12 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(User $user,Request $request)
-    {          
+    {   
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
         
+      
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
         if($keywords === "")
@@ -35,11 +36,11 @@ class ArticleController extends Controller
            $keyword = '新着記事一覧';
            $articleTotal = "";
 
-           return view('index',[
-             'article_list' => $article_list,
-             'articleTotal' => $articleTotal,
-             'keyword' => $keyword,
-            ])->with('user',Auth::user());
+             return view('index',[
+                'article_list' => $article_list,
+                'articleTotal' => $articleTotal,
+                'keyword' => $keyword,
+               ])->with('user',Auth::user());
          }
         
         // 検索ワードからtag:の後に続く情報を抽出
@@ -97,8 +98,7 @@ class ArticleController extends Controller
                  return strpos($article->body,$keyword) !== false;
                 });
 
-
-                if( $articles->isEmpty() == false )
+           if( $articles->isEmpty() == false )
                 {
                    foreach($articles as $article )
                    {
@@ -110,7 +110,7 @@ class ArticleController extends Controller
                    ->orderBy('created_at','desc')->Paginate(10);
                    
                    $search_keyword = $keywords.'の検索結果';
-                }else{
+             }else{
                     $article_list = [];
                     $articleTotal = 0;
                     $search_keyword = $keywords.
@@ -121,7 +121,7 @@ class ArticleController extends Controller
                         'keyword' => $search_keyword,
                         'articleTotal' => $articleTotal,
                      ])->with('user',Auth::user());
-                }
+             }
         }
 
         /**
@@ -129,7 +129,6 @@ class ArticleController extends Controller
          */
         if($article_list === [] && $keywords !== "")
         {   
-           
             $articles = Article::get()->filter(
             function($article) use ($keywords)
                 {
@@ -180,42 +179,17 @@ class ArticleController extends Controller
                     }else{
                         $articleTotal = 0;
                     }
-                    
-                    // {{ $article_list->appends(['sort' => $sort])->links() }} 
-                    // $sort = $request->sort('article_list');
-                    // 'sort' => $sort,
+                 
                     $search_keyword = $keywords . 'の検索結果';
-                   
+                 
+
                     return view('index',[
                         'article_list' => $article_list,
                         'keyword' => $search_keyword,
-                        'articleTotal' => $articleTotal,
+                        'articleTotal' => $articleTotal,   
                      ])->with('user',Auth::user());
                 }
                 
-                   
-            
-
-       
-        
-        
-         
-            
-            
-            
-                
-
-           
-
-          
-        
-        
-        
-         
-
-         
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -266,7 +240,6 @@ class ArticleController extends Controller
         $post->save();
         $post->tags()->attach($tags_id);
         
-
         return redirect()->route('index');
 
     }
@@ -324,7 +297,9 @@ class ArticleController extends Controller
         $article->body = request('body');
         $article->save();
 
-        return redirect()->action           ('ArticleController@show', $article->id)->with('user',Auth::user());
+        return redirect()
+        ->action('ArticleController@show', $article->id)
+        ->with('user',Auth::user());
     }
 
   
@@ -339,6 +314,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->delete();
 
-        return redirect(route('index'))->with('success','記事を削除しました');
+        return redirect(route('index'))
+        ->with('success','記事を削除しました');
     }
 }
