@@ -20,121 +20,194 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(User $user,Request $request)
-     {          
-         
-         $keyword = '新着記事一覧';
-         $sort = $request->sort;
-         ('request_tag');
-         
-         $keywords = $request->input('keyword');
-         $keywords = implode(" ",$keywords);
-         $tag_keyword = 0;
-         /**
-          * ここからタグ検索機能
-          * 
-          * 検索結果を$article_listに代入する
-          * */
-          
-          // 検索ワードからタグの情報を抽出
-          $tag_extract = preg_grep('/^tag:/',$request->input('keyword'));
-          if( !empty($tag_extract)){
-              $tag_keyword = str_replace('tag:',"",$tag_extract[0]);
-            }
-          
-          
-        /*検索フォームからタグのリクエストがあるか判定,無ければ新着記事を表示する*/
+    {          
+        $keywords_array = $request->input('keyword');
+        $keywords = implode(" ",$keywords_array);
+        $article_list = [];
         
-        if($tag_keyword == null)
-        {  
-            $article_list = Article::with('User')->orderBy('created_at','desc')->Paginate(10);
+        /*検索フォームからタグのリクエストがあるか判定,
+        無ければ新着記事を表示する*/
+        if($keywords === "")
+         {  
+           $article_list = Article::with('User')
+            ->orderBy('created_at','desc')->Paginate(10);
             
-        }else{
+           $keyword = '新着記事一覧';
+           $articleTotal = "";
+
+           return view('index',[
+             'article_list' => $article_list,
+             'articleTotal' => $articleTotal,
+             'keyword' => $keyword,
+            ])->with('user',Auth::user());
+         }
+        
+        // 検索ワードからtag:の後に続く情報を抽出
+        $tag_extract = preg_grep('/^tag:/',$keywords_array);
+        
+        /**
+         * 
+         * タグキーワードが入力されたか判定
+         * 無ければ$tag_numberにnullを代入
+         * 
+         * タグキーワードに該当する記事があればarticle_listに追加
+         * 無ければ$article_listに[]を追加
+         */
+        if(!empty($tag_extract))
+        {   
+            $tag_keyword = str_replace('tag:',"",$tag_extract[0]);
+            $tag_number = Tag::where('name',$tag_keyword)
+            ->first('id');
             
-                /*検索フォームの入力内容からtagのレコードを取り出す*/
-                $tag_number = Tag::where('name',$tag_keyword)->first('id');
+            if($tag_number !== null)
+            {
+                $article_list = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
             
+            }else{
+                $article_list = [];
+            }
+            
+        }else{ 
+            $tag_number = null; 
+        }
+        
+        /**
+         * tag検索ワードとフリーキーワードがどちらもあるか判定
+         * 
+         * どちらもあった場合タグ検索から取り出したレコードを
+         * フリーキーワードで絞り込む
+         * 
+         * article_listに絞り込んだ結果を代入する
+         */
+       
+        if($tag_number !== null && $keywords !== $tag_extract[0] )
+        {   
+            $keyword = str_replace('tag:',"",$keywords);
+            $keyword = str_replace($tag_keyword." ","",$keyword); 
+           
+            $articles = $article_list->filter(
+            function($article) use ($keyword)
+                {
+                    return strpos($article->title,$keyword) !==false;
+                });
                 
-                /*検索結果がnullではない場合記事を取得、nullの場合検索結果0件を表示*/
-                if($tag_number !== null){
-                    //タグid($tag_number->id)から該当する記事のレコードを取り出す
-                    $articles = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
-                    
+            $articles = $article_list->filter(
+            function($article) use ($keyword)
+                {
+                 return strpos($article->body,$keyword) !== false;
+                });
+
+
+                if( $articles->isEmpty() == false )
+                {
+                   foreach($articles as $article )
+                   {
+                      $get_article_list[] = $article->id;
+                   }
+                   /*記事情報と紐付けられたユーザー情報取得*/
+                   $article_list = Article::with('User')
+                   ->whereIn  ('id',$get_article_list)
+                   ->orderBy('created_at','desc')->Paginate(10);
                    
-                    $keywords = str_replace('tag:',"",$keywords);
-                    $keywords = str_replace($tag_keyword." ","",$keywords);
-                    dd($articles);
-                    $articles = $articles->filter(function($article) use ($keywords){
-                    return strpos($article->title,$keywords) !==false;
-                         });
-                    $articles = $articles->filter(function($article)
-                    use ($keywords){
-                    return strpos($article->body,$keywords)
-                     !==false; });
-                       
-                     if( $articles->isEmpty() == false ){
-                         dd($articles);
-                    foreach($articles as $article )
-                    {
-                        $get_article_list[] = $article->id;
-                    }
-                    /*記事情報と紐付けられたユーザー情報取得*/
-                    $article_list = Article::with('User')->whereIn('id',$get_article_list)->orderBy('created_at','desc')->Paginate(10);
-                    $keyword = '「'.$keywords.'」'.'の検索結果'; 
-                    }
-                    else{
-                        $article_list = [];
-                    $keyword = '「' . $keywords . '」' . 'に一致する記事はありませんでした'; 
-                    }
+                   $search_keyword = $keywords.'の検索結果';
                 }else{
                     $article_list = [];
-                    $keyword = '「' . $keywords . '」' . 'に一致する記事はありませんでした'; 
-
+                    $articleTotal = 0;
+                    $search_keyword = $keywords.
+                    'に一致する記事はありませんでした';
+        
+                    return view('index',[
+                        'article_list' => $article_list,
+                        'keyword' => $search_keyword,
+                        'articleTotal' => $articleTotal,
+                     ])->with('user',Auth::user());
                 }
-            }
+        }
 
-            /*ここまでタグ検索機能*/
-
-          
-            
-            $keywords = str_replace('tag:',"",$keywords);
-            $keywords = str_replace($tag_keyword." ","",$keywords);
+        /**
+         * フリーキーワードのみの検索の場合
+         */
+        if($article_list === [] && $keywords !== "")
+        {   
            
-            /**
-             * 
-             */
-            if($request->keyword !== null || empty($tag_extract))
-            {   
-                
-                $article_list = $article_list->filter(function($article) use ($keywords){
+            $articles = Article::get()->filter(
+            function($article) use ($keywords)
+                {
                     return strpos($article->title,$keywords) !==false;
                 });
-                $article_list = $article_list->filter(function($article)
-                use ($keywords){
-                    return strpos($article->body,$keywords)
-                !==false; });
+                
+            $articles = Article::get()->filter(
+            function($article) use ($keywords)
+                {
+                 return strpos($article->body,$keywords)
+                  !== false;
+                });
+
+
+                if( $articles->isEmpty() == false )
+                {
+                   foreach($articles as $article )
+                   {
+                      $get_article_list[] = $article->id;
+                   }
+                   /*記事情報と紐付けられたユーザー情報取得*/
+                   $article_list = Article::with('User')
+                   ->whereIn  ('id',$get_article_list)
+                   ->orderBy('created_at','desc')->Paginate(10);
+                   
+                   $search_keyword = $keywords.'の検索結果';
+                }else{
+                    $article_list = [];
+                    $articleTotal = 0;
+                    $search_keyword = $keywords.
+                    'に一致する記事はありませんでした';
+        
+                    return view('index',[
+                        'article_list' => $article_list,
+                        'keyword' => $search_keyword,
+                        'articleTotal' => $articleTotal,
+                     ])->with('user',Auth::user());
+                }
+        }
+               
+                    /**記事の合計数が0か判定する
+                     * 
+                     * 記事の合計を$articleTotalに代入する
+                    */
+                    if($article_list !== []){
+                        $query = $article_list;
+                        $articleTotal = count($query);
+                    }else{
+                        $articleTotal = 0;
+                    }
+                    
+                    // {{ $article_list->appends(['sort' => $sort])->links() }} 
+                    // $sort = $request->sort('article_list');
+                    // 'sort' => $sort,
+                    $search_keyword = $keywords . 'の検索結果';
+                   
+                    return view('index',[
+                        'article_list' => $article_list,
+                        'keyword' => $search_keyword,
+                        'articleTotal' => $articleTotal,
+                     ])->with('user',Auth::user());
+                }
+                
+                   
+            
+
+       
+        
+        
+         
+            
+            
             
                 
-            }
 
-            /**記事の合計数が0か判定する
-             * 
-             * 記事の合計を$articleTotalに代入する
-            */
-            if($article_list !== []){
-              
-                $query = $article_list;
-                $articleTotal = count($query);
-            }else{
-                $articleTotal = 0;
-            }
            
-               return view('index',[
-            'article_list' => $article_list,
-            'sort' => $sort,
-            'keyword' => $keyword,
-            'articleTotal' => $articleTotal,
-             ])->with('user',Auth::user());
-        }
+
+          
         
         
         
@@ -224,11 +297,12 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
         
         $tag = Article::find($id)->tags->first();
+       
         $article_data = Article::find($id);
-        return view('article.edit',[
+            return view('article.edit',[
             'article_data' => $article_data,
             'tag' => $tag,
         ])->with('user',Auth::user());
@@ -249,7 +323,8 @@ class ArticleController extends Controller
         $article->title = request('title');
         $article->body = request('body');
         $article->save();
-        return redirect()->action('ArticleController@show', $article->id)->with('user',Auth::user());
+
+        return redirect()->action           ('ArticleController@show', $article->id)->with('user',Auth::user());
     }
 
   
@@ -262,8 +337,6 @@ class ArticleController extends Controller
     public function destroy($id)
     {  
         $article = Article::find($id);
-        
-        
         $article->delete();
 
         return redirect(route('index'))->with('success','記事を削除しました');

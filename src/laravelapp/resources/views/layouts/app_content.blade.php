@@ -23,7 +23,7 @@
       <input 
         class="search-input-pc" 
         type="text" 
-        placeholder="検索キーワード"
+        placeholder="tag:タグ名 キーワード"
         name="keyword"
       >
       <input 

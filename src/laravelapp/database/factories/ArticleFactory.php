@@ -18,7 +18,9 @@ $factory->define(Article::class,
 
 $factory->define(Tag::class,
     function(Faker $faker){
-        $tags = ['PHP','Go','Python','Mysql','laravel'];
+        $tags = 
+        ['PHP','Go','Python','Mysql','laravel', 'Ruby','Docker','javascript','AWS',
+        ];
         $tag = array_rand($tags,1);
         return['name' => $tags[$tag],
     ];

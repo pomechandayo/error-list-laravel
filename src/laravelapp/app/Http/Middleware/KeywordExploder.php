@@ -44,7 +44,6 @@ class KeywordExploder
         }
        
         $request->merge($ret);
-
         return $next($request);
     }
 }

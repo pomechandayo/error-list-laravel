@@ -18,7 +18,7 @@
         <li class="show-title">{{$article->title}}</li>
         <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>
        
-        @if($article->user_id == Auth::user()->id)
+        @if(true == Auth::check() && $article->user_id == Auth::user()->id)
         <div class="show-linkbox">
           <a href="{{ action('ArticleController@edit',$article->id)}}" class="show-link-edit">編集</a>
 

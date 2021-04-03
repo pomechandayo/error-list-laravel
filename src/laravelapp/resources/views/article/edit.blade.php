@@ -13,33 +13,44 @@
 </head>
 
 <form action="{{ route('article.update',$article_data->id)}}" method="post" class="article-form">
-@csrf
-@method('patch')
-<input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')??$article_data->title}}">
+      @csrf
+      @method('patch')
+      <input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')??$article_data->title}}">
 
-@error('title')
-  <div class="create-error">※{{ $message }} </div>
-@enderror
-@error('tags')
-  <div class="create-error">※{{ $message }}</div>
-@enderror
-@error('body')
-  <div class="create-error">※{{ $message }}</div>
-@enderror
+      @error('title')
+        <div class="create-error">※{{ $message }} </div>
+      @enderror
+      @error('tags')
+        <div class="create-error">※{{ $message }}</div>
+      @enderror
+      @error('body')
+        <div class="create-error">※{{ $message }}</div>
+      @enderror
+      
+      @if($tag === null)
+        <input 
+        type="text" 
+        name="tags" 
+        class="article-tag"  
+        placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
+        value="{{ old('tag')}}">
+      @else
+        <input 
+        type="text" 
+        name="tags" 
+        class="article-tag"  
+        placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
+        value="{{ old('tag') ?? $tag->name }}">
+      @endif
 
-<input 
-type="text" 
-name="tags" 
-class="article-tag"  
-placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-value="{{ old('tag')??$tag->name }}">
-<div class="tab-bar">
-  <div class="tab-bar-text">本文</div>
-  <div class="tab-bar-preview">プレビュー</div>
+      
+    <div class="tab-bar">
+    <div class="tab-bar-text">本文</div>
+    <div class="tab-bar-preview">プレビュー</div>
 </div>
 <textarea 
-id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
-{{old('body') ?? $article_data->body}}
+  id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
+  {{old('body') ?? $article_data->body}}
 </textarea>
 
 

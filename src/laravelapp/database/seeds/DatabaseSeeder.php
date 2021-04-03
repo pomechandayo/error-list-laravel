@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Tag::class,5)->create()
         ->each(function($tag) use ($articles){
             $tag->articles()->attach(
-                $articles->random(1,1)->pluck('id')->toArray()
+                $articles->random(3,1)->pluck('id')->toArray()
             );
         });
     }

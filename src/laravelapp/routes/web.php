@@ -44,8 +44,8 @@ Route::group(['middleware' => ['auth']],function()  {
     Route::resource('article','ArticleController',
     ['only' => ['create','store','edit','update','destroy']]);
     
-    Route::resource('article/show','ArticleController',['only' => ['show']]);
 });
+Route::resource('article/show','ArticleController',['only' => ['show']]);
 
 Route::get('/logout','Auth\LogoutController@getLogout')->name('logout');
 Route::post('/logout','Auth\LogoutController@getLogout')->name('post.logout');
