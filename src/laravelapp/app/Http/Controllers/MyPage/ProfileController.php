@@ -25,7 +25,8 @@ public function showProfile(Request $request) {
     $article_count = Article::where('user_id',$user->id)->get();
     
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
-    if($request->menu_link === 'myarticle'){
+    if($request->menu_link === 'myarticle')
+    {
         $sort = $request->sort;
         $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(5);
         
@@ -52,11 +53,11 @@ public function showProfile(Request $request) {
     
     public function editProfile(EditRequest $request) 
     {
-        $user = Auth::user();
+         $user = Auth::user();
         
-        $user->name = $request->input('name');
+         $user->name = $request->input('name');
         
-            if ($request->has('profile_image')) {
+         if ($request->has('profile_image')) {
              $fileName = $this->saveAvatar($request->file('profile_image'));
              $user->profile_image= $fileName;
          }
@@ -81,7 +82,7 @@ public function showProfile(Request $request) {
           Image::make($file)->fit(200, 200)->save($tempPath);
   
           $filePath = Storage::disk('public')
-              ->putFile('profile_image', new File($tempPath));
+            ->putFile('profile_image', new File($tempPath));
 
           return basename($filePath);
       }
@@ -98,4 +99,4 @@ public function showProfile(Request $request) {
          $meta   = stream_get_meta_data($tmp_fp);
          return $meta["uri"];
      }
-}
+    }

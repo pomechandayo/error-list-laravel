@@ -17,15 +17,16 @@
 <div class="top-article-container">
  
     <div class="search-result">
-      @if($articleTotal > 0)
-        <h2 class="search-article">
-          {{ $keyword }} {{$articleTotal}}件
-    　  </h2>
-      @else
-        <h2 class="search-article">
-          {{ $keyword }}
-    　  </h2>
-      @endif
+     @if(!empty($article_list))
+      <h2 class="search-article">
+        {{  $search_keyword ?? $keyword }}
+        {{$article_list->total()}}件
+  　  </h2>
+     @else
+      <h2 class="search-article">
+        {{  $search_keyword ?? $keyword }}
+  　  </h2>
+     @endif
        <form action="{{ route('index')}}" method="get" class="tag-form">
          @csrf
          <input 
@@ -33,7 +34,7 @@
           type="text" 
           name="keyword"
           placeholder="tag:タグ名  キーワード"
-          vlaue="{{$keyword}}"
+          value="{{ $keywords ?? '' }}"
          >
          <input 
             class="tag-search-btn" 
@@ -60,7 +61,9 @@
           
       </div>
       @endif
-      {{ $article_list->links() }} 
+      @if(!empty($article_list))
+          {{ $article_list->links() }}
+      @endif
     </div>
   </div> 
   <script>

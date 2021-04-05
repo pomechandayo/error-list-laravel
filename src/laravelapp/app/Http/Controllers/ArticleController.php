@@ -20,42 +20,40 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(User $user,Request $request)
-    {   
+    {  
+
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
-        
-      
+              
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
         if($keywords === "")
          {  
            $article_list = Article::with('User')
             ->orderBy('created_at','desc')->Paginate(10);
-            
+        
            $keyword = '新着記事一覧';
-           $articleTotal = "";
 
              return view('index',[
                 'article_list' => $article_list,
-                'articleTotal' => $articleTotal,
                 'keyword' => $keyword,
+                'keywords' => $keywords,
                ])->with('user',Auth::user());
          }
-        
+         
         // 検索ワードからtag:の後に続く情報を抽出
         $tag_extract = preg_grep('/^tag:/',$keywords_array);
-        
         /**
          * 
          * タグキーワードが入力されたか判定
          * 無ければ$tag_numberにnullを代入
          * 
-         * タグキーワードに該当する記事があればarticle_listに追加
-         * 無ければ$article_listに[]を追加
+         * タグキーワードに該当する記事があればarticle_listに代入
+         * 無ければ$article_listに[]を代入
          */
         if(!empty($tag_extract))
-        {   
+        {  
             $tag_keyword = str_replace('tag:',"",$tag_extract[0]);
             $tag_number = Tag::where('name',$tag_keyword)
             ->first('id');
@@ -63,7 +61,7 @@ class ArticleController extends Controller
             if($tag_number !== null)
             {
                 $article_list = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
-            
+           
             }else{
                 $article_list = [];
             }
@@ -112,17 +110,36 @@ class ArticleController extends Controller
                    $search_keyword = $keywords.'の検索結果';
              }else{
                     $article_list = [];
-                    $articleTotal = 0;
                     $search_keyword = $keywords.
                     'に一致する記事はありませんでした';
-        
+                
                     return view('index',[
                         'article_list' => $article_list,
                         'keyword' => $search_keyword,
-                        'articleTotal' => $articleTotal,
                      ])->with('user',Auth::user());
              }
+        }else{
+            $tag_extract[] = 0; 
         }
+
+        /**
+         * タグ検索のみの時 
+         * 
+        */
+        if($keywords === $tag_extract[0] &&
+           $tag_number !== null)
+        {
+            foreach($article_list as $article )
+              {
+                $get_article_list[] = $article->id;
+              }
+
+           /*記事情報と紐付けられたユーザー情報取得*/
+           $article_list = Article::with('User')
+           ->whereIn  ('id',$get_article_list)               ->orderBy('created_at','desc')
+           ->Paginate(10);
+        }
+
 
         /**
          * フリーキーワードのみの検索の場合
@@ -151,44 +168,32 @@ class ArticleController extends Controller
                    }
                    /*記事情報と紐付けられたユーザー情報取得*/
                    $article_list = Article::with('User')
-                   ->whereIn  ('id',$get_article_list)
-                   ->orderBy('created_at','desc')->Paginate(10);
+                    ->whereIn  ('id',$get_article_list)
+                    ->orderBy('created_at','desc')->Paginate(10);
                    
                    $search_keyword = $keywords.'の検索結果';
                 }else{
                     $article_list = [];
-                    $articleTotal = 0;
                     $search_keyword = $keywords.
                     'に一致する記事はありませんでした';
         
                     return view('index',[
                         'article_list' => $article_list,
                         'keyword' => $search_keyword,
-                        'articleTotal' => $articleTotal,
                      ])->with('user',Auth::user());
                 }
         }
                
-                    /**記事の合計数が0か判定する
-                     * 
-                     * 記事の合計を$articleTotalに代入する
-                    */
-                    if($article_list !== []){
-                        $query = $article_list;
-                        $articleTotal = count($query);
-                    }else{
-                        $articleTotal = 0;
-                    }
                  
-                    $search_keyword = $keywords . 'の検索結果';
+                $search_keyword = $keywords . 'の検索結果';
                  
 
-                    return view('index',[
-                        'article_list' => $article_list,
-                        'keyword' => $search_keyword,
-                        'articleTotal' => $articleTotal,   
-                     ])->with('user',Auth::user());
-                }
+                 return view('index',[
+                    'search_keyword' => $search_keyword, 
+                    'article_list' => $article_list,
+                    'keywords' => $keywords,
+                ])->with('user',Auth::user());
+    }
                 
     /**
      * Show the form for creating a new resource.

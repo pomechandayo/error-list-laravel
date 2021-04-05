@@ -22,6 +22,21 @@ services:
      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
    ports:
      - 3306:3306
+ db-test:
+   image: mysql:5.7
+   container_name: db-test
+   environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_DATABASE: laravel_db
+     MYSQL_USER: laravel_user
+     MYSQL_PASSWORD: laravel_pass
+     TZ: 'Asia_Tokyo'
+   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+   volumes:
+     - ./docker/db-test/data:/var/lib/mysql
+     - ./docker/db-test/my.cnf:/etc/mysql/conf.d/my.cnf
+   ports:
+     - 3000:3306
  phpmyadmin:
    image: phpmyadmin/phpmyadmin
    environment:
@@ -30,8 +45,9 @@ services:
      - PMA_USER=laravel_user
      - PMA_PASSWORD=laravel_pass
    links:
-     - db
+     - db-test
    ports:
       - 8080:80
    volumes:
       - /sessions
+

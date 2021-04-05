@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes([
     'register' => false
@@ -35,7 +33,8 @@ Route::prefix('mypage')
     ->name('mypage.edit-profile');
     Route::post('edit-profile','ProfileController@editProfile')
     ->name('mypage.edit-profile');
-    Route::get('profile','ProfileController@showProfile')->name('mypage.profile');
+    Route::get('profile','ProfileController@showProfile')
+    ->name('mypage.profile');
     Route::get('profile/{menu_link}','ProfileController@showProfile');
 });
 
