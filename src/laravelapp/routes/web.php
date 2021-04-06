@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']],function()  {
     
 });
 Route::resource('article/show','ArticleController',['only' => ['show']]);
+Route::get('article/status','ArticleController@status')->name('article.status');
 
 Route::get('/logout','Auth\LogoutController@getLogout')->name('logout');
 Route::post('/logout','Auth\LogoutController@getLogout')->name('post.logout');

@@ -2,17 +2,20 @@
 
 namespace Tests\Feature\controllers;
 
-use App\Article;
-use App\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Database\Eloquent\Collectioin;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use App\Article;
+use App\Tag;
+use Tests\TestCase;
+
 
 
 class ViewControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    
 
    /**test index */
    public function test_index()
@@ -27,9 +30,27 @@ class ViewControllerTest extends TestCase
    /**test article */
    public function testArticle()
    {
-       $this->withoutExceptionHandling();
-       $article = Article::factory()->create();
+        $this->withoutExceptionHandling();
+        
+        $articles = Article::with('user')->first();
+        
+        $this->get('/index')
+        ->assertSee($articles->title)
+        ->assertSee($articles->body)
+        ->assertSee($articles->name);
 
-       $this->assertInstanceOf(Collection::class,$article->user);
+    
+   }
+
+   public function testArticleClosed()
+   {
+       $this->withoutExceptionHandling();
+
+       $articles1 = Article::where('status','CLOSED')
+       ->first();
+
+       $this->get('/index')
+       ->assertDontSee($articles1);
+
    }
 }

@@ -21,26 +21,42 @@ class ProfileController extends Controller
 public function showProfile(Request $request) {
 
     $user = Auth::user();
-
+    $sort = 0;
+    $article_list = [];
     $article_count = Article::where('user_id',$user->id)->get();
     
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
-    if($request->menu_link === 'myarticle')
+    if($request->menu_link === 'myarticle_all')
     {
         $sort = $request->sort;
-        $article_list = Article::where('user_id',$user->id)->orderBy('created_at', 'desc')->Paginate(5);
-        
-        return view('mypage.profile',[
+        $article_list = Article::where('user_id',$user->id)
+        ->orderBy('created_at', 'desc')
+        ->Paginate(5);
+        }
+    // 公開中の記事だけ表示
+    if($request->menu_link === 'myarticle_open')
+    {
+        $sort = $request->sort;
+        $article_list = Article::where('user_id',$user->id)
+        ->ArticleOpen()
+        ->orderBy('created_at', 'desc')
+        ->Paginate(5);   
+        }
+    // 非公開中の記事だけ表示
+    if($request->menu_link === 'myarticle_closed')
+    {
+        $sort = $request->sort;
+        $article_list = Article::where('user_id',$user->id)
+        ->ArticleClosed()
+        ->orderBy('created_at', 'desc')
+        ->Paginate(5);
+        }
+         return view('mypage.profile',[
+            'article_count' => $article_count,
             'article_list' => $article_list,
             'sort' => $sort,
-            'article_count' => $article_count,
             ])->with('user',Auth::user());
-        }else{
-            return view('mypage.profile',[
-            'article_count' => $article_count,
-            ])
-            ->with('user',Auth::user());
-        }
+        
 }
 
 

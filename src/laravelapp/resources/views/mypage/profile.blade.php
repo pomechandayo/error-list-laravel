@@ -18,7 +18,7 @@
         {{ $user->name }}
       </div>
       <div class="profile-linkbox">
-        <a href="{{ url('mypage/profile/myarticle')}}" class="profile-link-menu">
+        <a href="{{ url('mypage/profile/myarticle_all')}}" class="profile-link-menu">
         <div class="profile-article-total">
           {{count($article_count)}}
         </div>
@@ -38,17 +38,27 @@
       
       <!-- ここから記事一覧 -->
       <div class="profile-container2">
-      @if(isset($article_list))
-      @foreach($article_list as $article)
-      <div class="profile-article-box">
-        <li class="profile-article-user">
-          <img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage">  
-          {{$article->user->name}}</li>
-          <a href="{{ action('ArticleController@show', $article->id) }}" class="profile-link-article">
-            <li class="profile-article-title">{{$article->title}}</li>
-          </a>
-          <li class="profile-article-created_at">{{$article->created_at->format('Y年m月d日')}}に投稿</li>
+      @if( !empty($article_list))
+        <div class="profile-fillter-box">
+          <a href="{{ url('mypage/profile/myarticle_all')}}" class="profile-fillter-link">全て</a>
+          <a href="{{ url('mypage/profile/myarticle_open')}}" 
+          class="profile-fillter-link">公開</a>
+          <a href="{{ url('mypage/profile/myarticle_closed')}}" 
+          class="profile-fillter-link">非公開</a>
+
         </div>
+
+        @foreach($article_list as $article)
+          <div class="profile-article-box">
+             <li class="profile-article-user">
+             <img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage">  
+            {{$article->user->name}}</li>
+             <a href="{{ action('ArticleController@show', $article->id) }}" class="profile-link-article">
+             <li class="profile-article-title">{{$article->title}}</li>
+             </a>
+             <li class="profile-article-created_at">
+            {{$article->created_at->format('Y年m月d日')}}に投稿</li>
+         </div>
         @endforeach
         <div class="profile-paginate">
           {{ $article_list->appends(['sort' => $sort])->links() }}

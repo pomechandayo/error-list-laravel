@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
 
-        factory(App\Article::class,15)
+        factory(App\Article::class,30)
         ->create();
 
         $articles = App\Article::all();
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Tag::class,5)->create()
         ->each(function($tag) use ($articles){
             $tag->articles()->attach(
-                $articles->random(3,1)->pluck('id')->toArray()
+                $articles->random(6,1)->pluck('id')->toArray()
             );
         });
     }

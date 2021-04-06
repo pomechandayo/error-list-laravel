@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ArticleRequest;
+use App\ArticleTag;
+use App\Article_tag;
 use App\Article;
 use App\Tag;
 use App\User;
-use App\Article_tag;
-use App\Http\Requests\ArticleRequest;
-use App\ArticleTag;
 
 class ArticleController extends Controller
 {
@@ -21,7 +21,6 @@ class ArticleController extends Controller
      */
     public function index(User $user,Request $request)
     {  
-
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
@@ -31,7 +30,8 @@ class ArticleController extends Controller
         if($keywords === "")
          {  
            $article_list = Article::with('User')
-            ->orderBy('created_at','desc')->Paginate(10);
+            ->ArticleOpen()
+            ->Created_atDescPaginate();
         
            $keyword = '新着記事一覧';
 
@@ -60,7 +60,8 @@ class ArticleController extends Controller
             
             if($tag_number !== null)
             {
-                $article_list = Tag::find($tag_number->id)->articles->sortByDesc('created_at');
+                $article_list = Tag::find($tag_number->id)
+                ->articles->sortByDesc('created_at');
            
             }else{
                 $article_list = [];
@@ -104,8 +105,9 @@ class ArticleController extends Controller
                    }
                    /*記事情報と紐付けられたユーザー情報取得*/
                    $article_list = Article::with('User')
+                   ->ArticleOpen()
                    ->whereIn  ('id',$get_article_list)
-                   ->orderBy('created_at','desc')->Paginate(10);
+                   ->Created_atDescPaginate();
                    
                    $search_keyword = $keywords.'の検索結果';
              }else{
@@ -136,8 +138,9 @@ class ArticleController extends Controller
 
            /*記事情報と紐付けられたユーザー情報取得*/
            $article_list = Article::with('User')
-           ->whereIn  ('id',$get_article_list)               ->orderBy('created_at','desc')
-           ->Paginate(10);
+           ->ArticleOpen()
+           ->whereIn('id',$get_article_list)               
+           ->Created_atDescPaginate();
         }
 
 
@@ -168,8 +171,9 @@ class ArticleController extends Controller
                    }
                    /*記事情報と紐付けられたユーザー情報取得*/
                    $article_list = Article::with('User')
-                    ->whereIn  ('id',$get_article_list)
-                    ->orderBy('created_at','desc')->Paginate(10);
+                    ->ArticleOpen()
+                    ->whereIn('id',$get_article_list)
+                    ->Created_atDescPaginate();
                    
                    $search_keyword = $keywords.'の検索結果';
                 }else{
@@ -257,15 +261,37 @@ class ArticleController extends Controller
      */
     public function show(Request $request, int $id)
     {   
-
-        $article = Article::with('User')->find($id);
+        
+        $article = Article::with('User')
+        ->find($id);
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
+
        
         return view('article.show',[
             'article' => $article,
             'article_parse_body' => $article_parse_body
         ])->with('user',Auth::user());
+    }
+
+    public function status(Request $request)
+    {
+       $article = Article::find($request->article_id);
+     
+       if($article->status === Article::OPEN )
+        {
+            $article->status = Article::CLOSED;
+            $article->save();
+        }else
+        {
+            $article->status = Article::OPEN;
+            $article->save();
+        }
+        
+        
+
+        return redirect()->action('ArticleController@show',
+         $request->article_id); 
     }
 
     /**

@@ -15,7 +15,7 @@ class CreateArticlePostsTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->boolean('status');
             $table->integer('user_id');
             $table->string('title')->nullable();
             $table->string('body')->nullalbe();
