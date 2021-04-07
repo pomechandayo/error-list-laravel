@@ -17,7 +17,6 @@ Auth::routes([
     'register' => false
 ]);
 
-Route::get('/home', 'HomeController@index');
 
 Route::get('index','ArticleController@index')->name('index')->middleware('keyword');
 

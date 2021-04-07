@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Article;
 use App\Tag;
+use App\Comment;
 use Tests\TestCase;
 
 
@@ -39,7 +40,14 @@ class ViewControllerTest extends TestCase
         ->assertSee($articles->body)
         ->assertSee($articles->user->name);
 
-    
+   }
+
+   public function testShowComment()
+   {
+    $comment = Comment::find(1);
+
+    $this->get('/article/show')
+    ->assertSee($comment->body);
    }
 
    public function testArticleClosed()

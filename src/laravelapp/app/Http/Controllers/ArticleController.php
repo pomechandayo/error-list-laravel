@@ -17,7 +17,7 @@ use App\Comment;
 class ArticleController extends Controller
 {
     public function index(User $user,Request $request)
-    {     
+    {   
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];

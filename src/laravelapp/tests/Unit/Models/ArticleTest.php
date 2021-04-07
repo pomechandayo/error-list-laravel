@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Article;
 use App\Tag;
+use App\Comment;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
@@ -19,13 +20,18 @@ class ArticleTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $article_tag = Tag::find(1)->articles->first();
-        var_dump($article_tag);
-        $this->assertInstanceOf(Article::class,$article_tag->article);
+        
+        $this->assertInstanceOf(Article::class,$article_tag);
     }
 
-    /**commentリレーション */
-    public function testComment()
+    /**article,commentリレーション */
+    public function testArticleComment()
     {
+        $article_comment = Comment::with('User')
+        ->first();
 
+
+        $this->assertInstanceOf(Article::class,
+        $article_comment);
     }
 }
