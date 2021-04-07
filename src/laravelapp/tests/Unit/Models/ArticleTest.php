@@ -13,6 +13,7 @@ use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
+
     /**article,tegのリレーション */
     public function testTagArticle()
     {
@@ -20,5 +21,11 @@ class ArticleTest extends TestCase
         $article_tag = Tag::find(1)->articles->first();
         var_dump($article_tag);
         $this->assertInstanceOf(Article::class,$article_tag->article);
+    }
+
+    /**commentリレーション */
+    public function testComment()
+    {
+
     }
 }

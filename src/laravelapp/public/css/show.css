@@ -1,3 +1,10 @@
+.comment-error{
+  font-size: 1.7rem;
+  color: red;
+  text-align: center;
+  margin-top: 50px;
+}
+
 .show-main {
   background-color: #fff;
   height: auto;
@@ -18,7 +25,7 @@
   width: 100%;
   height: 90px;
   color:#111;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -37,6 +44,18 @@
   font-weight: bold;
   margin: 0 2px 2px 5px;
 }
+.show-form-status{
+  margin-left:auto;
+}
+.show-status-btn{
+  border:1px solid #eee;
+  font-size: 1.6rem;
+  color: #333;
+  cursor: pointer;
+}
+.show-status-btn:hover{
+  color: #007bff;
+}
 .show-title {
   font-size: 3rem;
   font-weight: bold;
@@ -48,6 +67,7 @@
   color: #111;
   width: 60%;
 }
+
 .show-linkbox {
   display: flex;
   justify-content:end;
@@ -69,9 +89,10 @@
   font-size: 1.7rem;
   color: #333;
   display: inline;
+  cursor: pointer;
 }
 .show-link-delete:hover {
-  color: #007bff;
+  color: #007bff
 }
 .show-body-box {
   width: 100%;
@@ -82,6 +103,88 @@
   font-size: 1.7rem;
   margin-top: 60px;
 }
+
+/* ここからコメント */
+
+.show-border{
+  border-bottom: 1px solid  #343a40;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.show-comment-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.show-comment-box{
+  height: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  background-color: #fff;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
+  margin: 10px 0;
+  padding: 10px;
+}
+.comment-user-img{
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+}
+.comment-user{
+  width: 100%;
+  height: 30px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.comment-user-name{
+  font-size: 1.5rem;
+
+}
+.comment-created-at{
+  font-size: 1.5rem;
+  margin-left: auto;
+}
+
+.comment-body{
+  min-height: 200px;
+  height: auto !important;
+  width: 100%;
+}
+
+/* ここからコメント投稿 */
+.comment-write-box{
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment-textarea{
+  min-height: 300px;
+  width: 90%;
+  height: auto !important;
+  margin: 0 5%;
+  font-size: 1.8rem;
+  padding: 10px;
+}
+.comment-sent{
+  background-color: #117ec6;
+  opacity: 0.9;
+  border-radius: 5px;
+  height: 40px;
+  max-width: 500px;
+  width: 40%;
+  color: #fff;
+  font-size: 1.8rem;
+  margin: 30px auto;
+  cursor: pointer;
+}
+.comment-sent:hover{
+  opacity: 0.6;
+}
+
 
 h1 {
   font-size: 2.5rem;

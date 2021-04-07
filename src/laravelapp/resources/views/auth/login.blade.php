@@ -18,8 +18,8 @@
     @csrf
     <div class="form-box" >
         <h3 style="margin-bottom: 30px;">簡単ログイン</h3>
-        <input type="hidden" name="email" value="ff@gmail.pom">
-        <input type="hidden" name="password" value="aa1000">
+        <input type="hidden" name="email" value="error@iya.com">
+        <input type="hidden" name="password" value="password">
         <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
     
         <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button>

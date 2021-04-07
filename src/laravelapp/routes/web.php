@@ -23,6 +23,16 @@ Route::get('index','ArticleController@index')->name('index')->middleware('keywor
 
 Route::get('/register','Auth\RegisterController@showregister')->name('showregister');
 Route::post('/register','Auth\RegisterController@register')->name('register');
+Route::get('/logout','Auth\LogoutController@getLogout')
+->name('logout');
+Route::post('/logout','Auth\LogoutController@getLogout')
+->name('post.logout');
+
+Route::get('article/status','ArticleController@status')
+->name('article.status');
+
+Route::get('article/comment','ArticleController@comment')
+->middleware('auth')->name('article.comment');
 
 
 Route::prefix('mypage')
@@ -44,8 +54,6 @@ Route::group(['middleware' => ['auth']],function()  {
     ['only' => ['create','store','edit','update','destroy']]);
     
 });
-Route::resource('article/show','ArticleController',['only' => ['show']]);
-Route::get('article/status','ArticleController@status')->name('article.status');
+Route::resource('article/show','ArticleController',['only'
+ => ['show']]);
 
-Route::get('/logout','Auth\LogoutController@getLogout')->name('logout');
-Route::post('/logout','Auth\LogoutController@getLogout')->name('post.logout');

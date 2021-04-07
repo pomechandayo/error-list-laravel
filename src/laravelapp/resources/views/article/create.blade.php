@@ -14,7 +14,7 @@
 
 <form action="/article" method="post" class="article-form">
       @csrf
-      <input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')}} ">
+      <input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')}}">
 
       @error('title')
         <div class="create-error">※{{ $message }} </div>
@@ -27,13 +27,12 @@
       @enderror
 
       <input type="text" name="tags" class="article-tag" placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-      value="{{ old('tags') }}">
+      value="{{ old('tags')}}">
       <div class="tab-bar">
         <div class="tab-bar-text">本文</div>
         <div class="tab-bar-preview">プレビュー</div>
       </div>
-      <textarea 
-      id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
+      <textarea id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
       </textarea>
 
 

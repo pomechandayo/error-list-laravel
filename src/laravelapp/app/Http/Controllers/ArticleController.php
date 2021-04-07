@@ -6,21 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\CommentRequest;
 use App\ArticleTag;
 use App\Article_tag;
 use App\Article;
 use App\Tag;
 use App\User;
+use App\Comment;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(User $user,Request $request)
-    {  
+    {     
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
@@ -210,19 +207,12 @@ class ArticleController extends Controller
         ->with('user',Auth::user());;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *       投稿した内容のレコードを作成
-     */
     public function store(ArticleRequest $request)
-    { 
-        
+    {  
         /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
         */
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+
         /* $match[0]に#(ハッシュタグ)あり、$match[1]に#(ハッシュタグ)なしの結果が入ってくるので、$match[1]で#(ハッシュタグ)なしの結果のみを使います。
         */
         $tags = [];
@@ -253,15 +243,12 @@ class ArticleController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Request $request, int $id)
     {   
-        
+        $comments = Comment::with('User')
+        ->where('article_id',$id)->get();
+    
         $article = Article::with('User')
         ->find($id);
         $article_parse = new Article;
@@ -270,6 +257,7 @@ class ArticleController extends Controller
        
         return view('article.show',[
             'article' => $article,
+            'comments' => $comments,
             'article_parse_body' => $article_parse_body
         ])->with('user',Auth::user());
     }
@@ -288,18 +276,24 @@ class ArticleController extends Controller
             $article->save();
         }
         
-        
-
         return redirect()->action('ArticleController@show',
          $request->article_id); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function comment(CommentRequest $request)
+    {   
+        $comment = new Comment;
+        $comment->article_id = $request->article_id;
+        $comment->user_id = $request->user_id;
+        $comment->body = $request->body;
+        $comment->save();
+
+        return redirect()
+        ->action('ArticleController@show',
+        $request->article_id)
+        ->with('user',Auth::user());
+    }
+   
     public function edit($id)
     {   
         
@@ -320,10 +314,7 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(ArticleRequest $request, $id)
-    {   
-        
-    
-        $article = Article::find($id);
+    {   $article = Article::find($id);
         $article->title = request('title');
         $article->body = request('body');
         $article->save();

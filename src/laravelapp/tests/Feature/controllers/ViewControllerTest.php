@@ -32,12 +32,12 @@ class ViewControllerTest extends TestCase
    {
         $this->withoutExceptionHandling();
         
-        $articles = Article::with('user')->first();
-        
+        $articles = Article::with('User')->first();
+      
         $this->get('/index')
         ->assertSee($articles->title)
         ->assertSee($articles->body)
-        ->assertSee($articles->name);
+        ->assertSee($articles->user->name);
 
     
    }
@@ -46,11 +46,22 @@ class ViewControllerTest extends TestCase
    {
        $this->withoutExceptionHandling();
 
-       $articles1 = Article::where('status','CLOSED')
+       $articles1 = Article::where('status',Article::CLOSED)
        ->first();
 
        $this->get('/index')
-       ->assertDontSee($articles1);
+       ->assertDontSee($articles1->title);
+
+   }
+   public function testArticleOpen()
+   {
+       $this->withoutExceptionHandling();
+
+       $articles1 = Article::where('status',Article::OPEN)
+       ->first();
+
+       $this->get('/index')
+       ->assertSee($articles1->title);
 
    }
 }
