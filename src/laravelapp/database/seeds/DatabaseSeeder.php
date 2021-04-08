@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         
         factory(App\Comment::class,15)
         ->create();
+
+        factory(App\Like::class,15)
+        ->create();
         
         $articles = App\Article::all();
 

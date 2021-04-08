@@ -92,7 +92,7 @@
   cursor: pointer;
 }
 .show-link-delete:hover {
-  color: #007bff
+  color: #007bff;
 }
 .show-body-box {
   width: 100%;
@@ -102,6 +102,33 @@
 .show-body {
   font-size: 1.7rem;
   margin-top: 60px;
+}
+
+.show-like-box{
+  margin-left: auto;
+  height: 30px;
+  width:25%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.show-like-box:hover{
+  opacity: 0.7;
+}
+.show-good-icon{
+  height: 25px;
+  margin-right: 5px;
+}
+.show-like{
+  margin-top: 5px;
+  color:  #333;
+  font-size: 1.8rem;
+}
+.show-like-count{
+  font-size: 1.7rem;
+  border: 1px solid #eee;
+  color: #333;
 }
 
 /* ここからコメント */

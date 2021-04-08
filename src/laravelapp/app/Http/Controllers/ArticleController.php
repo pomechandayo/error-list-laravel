@@ -10,9 +10,10 @@ use App\Http\Requests\CommentRequest;
 use App\ArticleTag;
 use App\Article_tag;
 use App\Article;
-use App\Tag;
-use App\User;
 use App\Comment;
+use App\User;
+use App\Like;
+use App\Tag;
 
 class ArticleController extends Controller
 {
@@ -196,11 +197,7 @@ class ArticleController extends Controller
                 ])->with('user',Auth::user());
     }
                 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {   
         return view('article.create')
@@ -293,6 +290,32 @@ class ArticleController extends Controller
         $request->article_id)
         ->with('user',Auth::user());
     }
+
+    public function like(int $id)
+    {
+        Like::create([
+            'article_id' => $id,
+            'user_id' => Auth::id(),
+        ]);
+
+        session()
+        ->flash('success','You Liked the Article');
+
+        return redirect()->back();
+    }
+    public function unlike(int $id)
+    {
+        $like = Like::where('article_id',$id)
+        ->where('user_id',Auth::id())
+        ->first();
+        $like->delete();
+
+        session()
+        ->flash('success','You Unliked the Article');
+
+        return redirect()->back();
+    }
+
    
     public function edit($id)
     {   
@@ -305,14 +328,6 @@ class ArticleController extends Controller
             'tag' => $tag,
         ])->with('user',Auth::user());
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ArticleRequest $request, $id)
     {   $article = Article::find($id);
         $article->title = request('title');
@@ -323,14 +338,6 @@ class ArticleController extends Controller
         ->action('ArticleController@show', $article->id)
         ->with('user',Auth::user());
     }
-
-  
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {  
         $article = Article::find($id);

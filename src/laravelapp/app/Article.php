@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use database\factories\ArticleFactory;
+use Illuminate\Support\Facades\Auth;
 use App\ArticleTag;
 
 class Article extends Model
@@ -55,5 +56,27 @@ class Article extends Model
                ->Paginate(10); 
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class,'article_id');
+    }
+
+    public function is_liked_by_auth_user()
+    {
+        $id = Auth::id();
+
+        $likers = array();
+        foreach($this->likes as $like)
+        {
+            array_push($likers,$like->user_id);
+        }
+
+        if(in_array($id,$likers,true))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

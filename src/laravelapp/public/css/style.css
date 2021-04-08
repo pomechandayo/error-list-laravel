@@ -477,7 +477,7 @@ a:hover {
   #nav1 {
     width: 250px;
   }
-
+  }
 
   @media screen and (min-width: 1025px) {
     .search {

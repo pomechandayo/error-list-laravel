@@ -12,6 +12,11 @@ Route::get('article/status','ArticleController@status')
 Route::get('article/comment','ArticleController@comment')
 ->middleware('auth')->name('article.comment');
 
+Route::get('like/{id}','ArticleController@like')
+->name('like');
+Route::get('unlike/{id}','ArticleController@unlike')
+->name('unlike');
+
 Route::group(['namespace' => 'Auth'],function()
 {
     Route::get('/register','RegisterController@showregister')

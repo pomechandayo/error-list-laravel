@@ -34,7 +34,7 @@
         <li class="show-title">{{$article->title}}</li>
         <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>
        
-        @if(true == Auth::check() && $article->user_id == Auth::user()->id)
+        @if(Auth::check() === true && $article->user_id === Auth::user()->id)
         <div class="show-linkbox">
           <a href="{{ action('ArticleController@edit',$article->id)}}" class="show-link-edit">編集</a>
 
@@ -45,6 +45,17 @@
             <input type='submit' value="削除" class="show-link-delete" onclick="return confirm('削除しますか？');">
           </form>
         </div>
+      @endif
+      @if(Auth::check() === true && Auth::id() !== $article->user_id)
+        <div class="show-like-box">
+        @if($article->is_liked_by_auth_user())
+           <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
+           <a href="{{ route('unlike',['id' => $article->id])}}" class="show-like">高評価<span class="show-like-count">{{$article->likes->count()}}</span></a>
+        @else
+           <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
+            <a href="{{ route('like',['id' => $article->id])}}" class="show-like">高評価<span class="show-like-count">{{$article->likes->count()}}</span></a>
+        @endif
+      </div>
       @endif
       </div>
      </div>
@@ -57,6 +68,7 @@
        color: #333;
        width: 100%;
        height: 40px;
+       margin-top: 10px;
        text-align: left;
        font-size: 2.5rem;
        margin-left: 5%;
