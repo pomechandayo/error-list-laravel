@@ -7,9 +7,10 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Collectioin;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use App\Article;
-use App\Tag;
 use App\Comment;
+use App\Article;
+use App\User;
+use App\Tag;
 use Tests\TestCase;
 
 
@@ -28,48 +29,33 @@ class ViewControllerTest extends TestCase
 
    }
 
-   /**test article */
+   /** 記事のユーザーとリレーションチェック*/
    public function testArticle()
    {
-        $this->withoutExceptionHandling();
-        
         $articles = Article::with('User')->first();
       
         $this->get('/index')
         ->assertSee($articles->title)
-        ->assertSee($articles->body)
         ->assertSee($articles->user->name);
-
    }
 
-   public function testShowComment()
-   {
-    $comment = Comment::find(1);
-
-    $this->get('/article/show')
-    ->assertSee($comment->body);
-   }
-
+   /**非公開状態の記事がindexページで表示されていないかチェック */
    public function testArticleClosed()
    {
-       $this->withoutExceptionHandling();
-
        $articles1 = Article::where('status',Article::CLOSED)
        ->first();
 
        $this->get('/index')
        ->assertDontSee($articles1->title);
-
    }
+   /**公開状態の記事がindexで表示されているかチェック */
    public function testArticleOpen()
    {
-       $this->withoutExceptionHandling();
-
        $articles1 = Article::where('status',Article::OPEN)
        ->first();
 
        $this->get('/index')
        ->assertSee($articles1->title);
-
    }
+
 }

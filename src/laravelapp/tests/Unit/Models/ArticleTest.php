@@ -30,7 +30,6 @@ class ArticleTest extends TestCase
         $article_comment = Comment::with('User')
         ->first();
 
-
         $this->assertInstanceOf(Article::class,
         $article_comment);
     }
