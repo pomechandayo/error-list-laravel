@@ -85,6 +85,7 @@
     @endforeach
   </div>
 
+  @if(true == Auth::check())
   <h2 style=
       "background-color: #eee; 
        color: #333;
@@ -104,15 +105,16 @@
       <div class="comment-write-box">
         <input type="hidden" name="user_id"
          value="{{Auth::user()->id}}">
-        <input type="hidden" name="article_id"
+         <input type="hidden" name="article_id"
          value="{{$article->id}}">
-        <textarea name="body" class="comment-textarea"
+         <textarea name="body" class="comment-textarea"
          placeholder="コメントを記入してください">
          {{ old('body')}}
         </textarea>
         <button type="submit" class="comment-sent">
-        コメント投稿</button>
+          コメント投稿</button>
         </div>
-    </form>
+      </form>
+  @endif   
   
 @endsection
