@@ -25,7 +25,6 @@ class ArticleRequest extends FormRequest
     {
         return [
             'title' => 'required | max:100' ,
-            'tags' => 'required',
             'body' =>  'required',
         ];
     }
@@ -34,7 +33,6 @@ class ArticleRequest extends FormRequest
         return [
             'title.required' => 'タイトルは必須です' ,
             'title.max' => 'タイトルは100文字までです' ,
-            'tags' => 'タグは必須です',
             'body.required' => '本文は必須です' ,
         ];
     }
@@ -43,7 +41,6 @@ class ArticleRequest extends FormRequest
     {
         return [
             'title' => 'タイトル',
-            'tags' => 'タグ',
             'body' => '本文',
         ];
     }

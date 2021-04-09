@@ -50,7 +50,7 @@
         <div class="show-like-box">
         @if($article->is_liked_by_auth_user())
            <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
-           <a href="{{ route('unlike',['id' => $article->id])}}" class="show-like">高評価<span class="show-like-count">{{$article->likes->count()}}</span></a>
+           <a href="{{ route('unlike',['id' => $article->id])}}" class="show-like" style="color:#55C500;">高評価<span class="show-like-count" style="color:#55C500;">{{$article->likes->count()}}</span></a>
         @else
            <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
             <a href="{{ route('like',['id' => $article->id])}}" class="show-like">高評価<span class="show-like-count">{{$article->likes->count()}}</span></a>
@@ -63,6 +63,8 @@
         <li class="show-body">{!! $article_parse_body !!}</li>
       </div>
   </div>
+
+  <!-- ここからコメント -->
   <h2 style=
       "background-color: #eee; 
        color: #333;
@@ -81,7 +83,6 @@
     @foreach($comments as $comment)
     <div class="show-comment-box">
       <li class=comment-user>
-        
         <img src="/storage/profile_image/{{$comment->user->profile_image}}"class="comment-user-img">
         <div class="comment-user-name">
           {{ $comment->user->name}}
@@ -89,15 +90,53 @@
         <div class="comment-created-at">
           {{ $comment->created_at->format('Y年m月d日')}}
         </div>
+        @if(Auth::id() === $comment->user_id)
+          <a href="{{ route('article.comment.delete',['id' => $comment->id]) }}" class="comment-delete">削除</a>
+        @endif
       </li>
       <li class="comment-body">
         {{ $comment->body}}
       </li>
+      @foreach($comment->replies as $reply)
+      <div class="reply-box">
+        <div class="reply-user-data">
+          <img src="/storage/profile_image/{{$user->profile_image}}" class="reply-img">
+          {{$reply->user->name}}
+          {{$reply->created_at->format('Y年m月d日')}}
+          @if(Auth::id() === $reply->user_id)
+            <a href="{{ route('article.reply.delete',['id' => $reply->id])
+            }}" class="reply-delete">削除</a>
+          @endif
+        </div>
+          <li class="replies">
+            {{$reply->body}}
+          </li>
       </div>
+      @endforeach
+      @if(!empty($comment->id) && Auth::check() === true)
+      <form action="{{route('article.reply')}}" class="reply-form">
+        @csrf
+        <div class="reply-sent-box">
+          <input type="hidden" name="user_id"
+          value="{{Auth::user()->id}}">
+          <input type="hidden" name="comment_id"
+          value="{{$comment->id}}">
+          <input type="hidden" name="article_id"
+          value="{{$article->id}}">
+          <textarea name="body" class="reply-textarea"
+          placeholder="コメントを記入してください">
+          {{ old('body')}}
+          </textarea>
+          <button type="submit" class="reply-sent">
+            返信する</button>
+          </div>
+      </form>
+     @endif
+    </div>
     @endforeach
   </div>
 
-  @if(true == Auth::check())
+  @if(Auth::check() === true)
   <h2 style=
       "background-color: #eee; 
        color: #333;
@@ -126,7 +165,8 @@
         <button type="submit" class="comment-sent">
           コメント投稿</button>
         </div>
-      </form>
+    </form>
+
   @endif   
   
 @endsection

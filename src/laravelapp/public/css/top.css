@@ -67,6 +67,13 @@ li {
   font-size: 1.6rem;
   margin-top: 13px;
   color: #444;
+  display: flex;
+  align-items: center;
+}
+.top-tag{
+  font-size: 1.5rem;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .top-article-title {
@@ -78,8 +85,14 @@ li {
   font-size: 1.5rem;
 }
 .top-article-created_at {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top-like-count{
+  font-size: 1.3rem;
 }
 
 .pagination {
@@ -124,5 +137,14 @@ li {
   width: 30px;
   color: #444;
   margin-right: 10px;
+}
+.top-article-created_at {
+  font-size: 1.5rem;
+}
+.top-like-count{
+  font-size: 1.6rem;
+}
+.top-tag{
+  font-size: 1.6rem;
 }
 }

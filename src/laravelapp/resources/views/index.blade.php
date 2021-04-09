@@ -49,13 +49,26 @@
         @foreach($article_list as $article)       
         <div class="top-article_box">
           <li class="top-article-user">
-            <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}</li>
+            <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}
+            <div class="top-tag">
+                  @foreach($article->tags as $tag)
+                   #{{$tag->name}}
+                  @endforeach             
+            </div>
+          </li>
                 <a href="{{ action('ArticleController@show', $article->id) }}" class="top-link-article">
-               <li class="top-article-title">{{ $article->title}}</li>
+                  <li class="top-article-title">{{ $article->title}}</li>
                 </a>
-            <li class="top-article-created_at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>          
+                <li class="top-article-created_at">{{      $article->created_at->format('Y年m月d日')}}に投稿
+                  <span class="top-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
+                </span>
+                  <span class="top-like-count">コメント数
+                    {{$article->comments->count()}}
+                  </span>
+                </li>
           </div>
           @endforeach
+         
       </ul>
       <div class="top-paginate">
           

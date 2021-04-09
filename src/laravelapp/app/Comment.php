@@ -11,4 +11,8 @@ class Comment extends Model
        return $this->belongsTo(User::class,'user_id','id')
        ->select('id','name','profile_image','created_at');
    }
+   public function replies()
+   {
+       return $this->hasMany(Reply::class);
+   }
 }

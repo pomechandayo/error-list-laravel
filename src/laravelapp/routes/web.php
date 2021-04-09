@@ -9,8 +9,22 @@ Route::get('index','ArticleController@index')->name('index')->middleware('keywor
 
 Route::get('article/status','ArticleController@status')
 ->name('article.status');
-Route::get('article/comment','ArticleController@comment')
-->middleware('auth')->name('article.comment');
+
+Route::prefix('article')
+->middleware('auth')
+->name('article.')
+->group(function()
+{
+    Route::get('comment','ArticleController@comment')
+    ->name('comment');
+    Route::get('comment/delete/{id}','ArticleController@comment')
+    ->name('comment.delete');
+    Route::get('reply','ArticleController@reply')
+    ->name('reply');
+    Route::get('reply/delete/{id}','ArticleController@reply_delete')
+    ->name('reply.delete');
+});
+
 
 Route::get('like/{id}','ArticleController@like')
 ->name('like');

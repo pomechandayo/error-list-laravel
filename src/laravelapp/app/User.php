@@ -9,4 +9,9 @@ use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 class User extends Model implements Authenticatable
 {
     use AuthenticableTrait;
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

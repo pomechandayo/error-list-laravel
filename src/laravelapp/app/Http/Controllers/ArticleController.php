@@ -11,6 +11,7 @@ use App\ArticleTag;
 use App\Article_tag;
 use App\Article;
 use App\Comment;
+use App\Reply;
 use App\User;
 use App\Like;
 use App\Tag;
@@ -233,19 +234,18 @@ class ArticleController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = Auth::user()->id;
+        $post->status = Article::OPEN;
         $post->save();
         $post->tags()->attach($tags_id);
         
         return redirect()->route('index');
 
     }
-
-    
+  
     public function show(Request $request, int $id)
     {   
-        $comments = Comment::with('User')
-        ->where('article_id',$id)->get();
-    
+        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();
+        
         $article = Article::with('User')
         ->find($id);
         $article_parse = new Article;
@@ -285,10 +285,32 @@ class ArticleController extends Controller
         $comment->body = $request->body;
         $comment->save();
 
-        return redirect()
-        ->action('ArticleController@show',
-        $request->article_id)
-        ->with('user',Auth::user());
+        return redirect()->back();
+    }
+    public function comment_delete(int $id)
+    {
+        $comment = Comment::where('id',$id)->first();
+        $comment->delete();
+
+        return redirect()->back();
+    }
+
+    public function reply(CommentRequest $request)
+    { 
+        Reply::create([
+            'body' => $request->body, 
+            'user_id' => Auth::id(),
+            'comment_id' => $request->comment_id,
+        ]);
+        return redirect()->back();
+       
+    }
+    public function reply_delete(int $id)
+    {
+        $reply = Reply::where('id',$id)->first();
+        $reply->delete();
+
+        return redirect()->back();
     }
 
     public function like(int $id)
@@ -319,7 +341,6 @@ class ArticleController extends Controller
    
     public function edit($id)
     {   
-        
         $tag = Article::find($id)->tags->first();
        
         $article_data = Article::find($id);
@@ -329,15 +350,39 @@ class ArticleController extends Controller
         ])->with('user',Auth::user());
     }
     public function update(ArticleRequest $request, $id)
-    {   $article = Article::find($id);
+    {    
+        /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
+        */
+        preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+
+        /* $match[0]に#(ハッシュタグ)あり、$match[1]に#(ハッシュタグ)なしの結果が入ってくるので、$match[1]で#(ハッシュタグ)なしの結果のみを使います。
+        */
+        $tags = [];
+        foreach ($match[1] as $tag) {
+            $record = Tag::firstOrCreate(['name' => $tag]);
+            array_push($tags,$record);
+            /* firstOrCreateメソッドで、tags_tableのnameカラムに該当のない$tagは新規登録される。
+            */
+        };
+        /*投稿に紐付けされるタグのidを配列化 */
+        $tags_id = [];
+        foreach ($tags as $tag) {
+            array_push($tags_id,$tag['id']);
+        };
+                
+        /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
+
+        $article = Article::find($id);
         $article->title = request('title');
         $article->body = request('body');
         $article->save();
+        $article->tags()->attach($tags_id);
 
         return redirect()
         ->action('ArticleController@show', $article->id)
         ->with('user',Auth::user());
     }
+
     public function destroy($id)
     {  
         $article = Article::find($id);

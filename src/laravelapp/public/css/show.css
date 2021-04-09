@@ -107,7 +107,7 @@
 .show-like-box{
   margin-left: auto;
   height: 30px;
-  width:25%;
+  width:30%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -117,16 +117,16 @@
   opacity: 0.7;
 }
 .show-good-icon{
-  height: 25px;
+  height: 20px;
   margin-right: 5px;
 }
 .show-like{
   margin-top: 5px;
   color:  #333;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
 }
 .show-like-count{
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   border: 1px solid #eee;
   color: #333;
 }
@@ -144,7 +144,8 @@
   flex-wrap: wrap;
 }
 .show-comment-box{
-  height: 250px;
+  min-height: 400px;
+  height: auto;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -172,6 +173,9 @@
 }
 .comment-created-at{
   font-size: 1.5rem;
+}
+.comment-delete{
+  font-size: 1.5rem;
   margin-left: auto;
 }
 
@@ -179,6 +183,70 @@
   min-height: 200px;
   height: auto !important;
   width: 100%;
+}
+.reply-box{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 50px;
+  height: auto !important;
+}
+
+.reply-user-data{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.6rem;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  margin-top: 20px;
+  width: 100%;
+  border-top: 1px solid rgba(42, 46, 49, 0.4);
+}
+.reply-img{
+  height: 20px !important;
+  width: 20px;
+}
+.replies{
+  width: 100%;
+  height: auto;
+}
+.reply-delete{
+  margin-left: auto;
+  margin-right: 10px;
+  font-size: 1.6rem;
+}
+.reply-form{
+  margin-top: 20px;
+  width: 100%;
+  border-top: 1px solid rgba(42, 46, 49, 0.4);
+  padding-top: 35px;
+}
+.reply-sent-box{
+  width: 100%;
+  text-align: center;
+}
+.reply-textarea{
+  width: 90%;
+  margin: 0 auto;
+}
+.reply-sent{
+  background-color: #117ec6;
+  opacity: 0.9;
+  border-radius: 5px;
+  height: 40px;
+  max-width: 500px;
+  width: 40%;
+  color: #fff;
+  font-size: 1.8rem;
+  margin: 20px auto 20px auto;
+  text-align: center;
+  cursor: pointer;
+}
+.reply-sent:hover{
+  opacity: 0.6;
 }
 
 /* ここからコメント投稿 */
@@ -275,5 +343,15 @@ hr {
     width: 70%;
     margin-bottom: 50px;
    margin-left: 5%;
+  }
+
+  .show-good-icon{
+    height: 25px;
+  }
+  .show-like{
+    font-size: 1.8rem;
+  }
+  .show-like-count{
+    font-size: 1.8rem;
   }
 }
