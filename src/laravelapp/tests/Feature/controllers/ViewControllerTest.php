@@ -17,45 +17,46 @@ use Tests\TestCase;
 
 class ViewControllerTest extends TestCase
 {
-    
+    use RefreshDatabase;
 
-   /**test index */
-   public function test_index()
+   /**test index タイトル、ユーザー名表示 */
+   public function testShowIndex()
    {    
-        $this->withoutExceptionHandling();
-    
+    $this->withoutExceptionHandling();
+        $article1 = factory(Article::class,1)
+        ->create();
+        $article2 = factory(Article::class,1)
+        ->create();
+        $article3 = factory(Article::class,1)
+        ->create();
+        
+        $users = User::get()->toArray();
+
         $this->get('/index')
-        ->assertOk();
-
+        ->assertOK()
+        ->assertSee($article1->pluck('title')->first())
+        ->assertSee($article2->pluck('title')->first())
+        ->assertSee($article3->pluck('title')->first())
+        ->assertSee($users[0]['name'])
+        ->assertSee($users[1]['name'])
+        ->assertSee($users[2]['name']);
    }
-
-   /** 記事のユーザーとリレーションチェック*/
-   public function testArticle()
-   {
-        $articles = Article::with('User')->first();
-      
-        $this->get('/index')
-        ->assertSee($articles->title)
-        ->assertSee($articles->user->name);
-   }
-
-   /**非公開状態の記事がindexページで表示されていないかチェック */
+   /**非公開設定した記事が非公開になっているかテスト */
    public function testArticleClosed()
-   {
-       $articles1 = Article::where('status',Article::CLOSED)
-       ->first();
+   { 
+        $article = factory(Article::class,1)
+        ->create(['status' => Article::CLOSED]);
 
-       $this->get('/index')
-       ->assertDontSee($articles1->title);
+        $this->get('/index')
+        ->assertDontSee($article->pluck('title')->first());
    }
-   /**公開状態の記事がindexで表示されているかチェック */
+   /**公開設定した記事が公開になっているかテスト */
    public function testArticleOpen()
-   {
-       $articles1 = Article::where('status',Article::OPEN)
-       ->first();
+   { 
+        $article1 = factory(Article::class,1)
+        ->create(['status' => Article::OPEN]);
 
-       $this->get('/index')
-       ->assertSee($articles1->title);
+        $this->get('/index')
+        ->assertSee($article1->pluck('title')->first());
    }
-
 }

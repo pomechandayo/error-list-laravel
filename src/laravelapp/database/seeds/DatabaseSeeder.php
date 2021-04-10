@@ -16,16 +16,17 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
         
+
         factory(App\Article::class,30)
         ->create();
         
-        factory(App\Comment::class,15)
+        factory(App\Comment::class,20)
         ->create();
 
-        factory(App\Reply::class,10)
+        factory(App\Reply::class,15)
         ->create();
 
-        factory(App\Like::class,15)
+        factory(App\Like::class,30)
         ->create();
         
         $articles = App\Article::all();

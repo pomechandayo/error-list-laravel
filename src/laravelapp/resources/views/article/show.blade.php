@@ -100,7 +100,7 @@
       @foreach($comment->replies as $reply)
       <div class="reply-box">
         <div class="reply-user-data">
-          <img src="/storage/profile_image/{{$user->profile_image}}" class="reply-img">
+          <img src="/storage/profile_image/{{$reply->user->profile_image}}" class="reply-img">
           {{$reply->user->name}}
           {{$reply->created_at->format('Y年m月d日')}}
           @if(Auth::id() === $reply->user_id)

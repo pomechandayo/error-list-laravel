@@ -44,7 +44,7 @@
           >
        </form>
      </div>
-        @if( $article_list != [])
+        @if( $article_list !== [])
       <ul>
         @foreach($article_list as $article)       
         <div class="top-article_box">

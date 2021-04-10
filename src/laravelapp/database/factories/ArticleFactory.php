@@ -2,18 +2,23 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
+use Illuminate\Database\Eloquent\Factory;
 use Faker\Generator as Faker;
 use App\Article;
 use App\Tag;
+use App\User;
+
 
 $factory->define(Article::class, 
     function(Faker $faker) {
         return [
-        'title' => $faker->text(10),
-        'body' => $faker->text(50),
-        'user_id' =>$faker->numberBetween(1,3),
-        'status' => $faker->randomElement([1,1,1,1,0]),
+        'title' => $this->faker->text(10),
+        'body' => $this->faker->text(50),
+        'status' => $this->faker->randomElement([1,1,1,1]),
+        // 'user_id' => $this->faker->numberBetween(1,3),
+        'user_id' => function(){
+          return factory(App\User::class)->create()->id;
+        },
     ];
 });
 

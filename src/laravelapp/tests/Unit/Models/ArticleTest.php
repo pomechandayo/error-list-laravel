@@ -8,29 +8,24 @@ use Illuminate\Database\Eloquent\Collectioin;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Article;
-use App\Tag;
 use App\Comment;
+use App\User;
+use App\Tag;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
+    use RefreshDatabase;
 
-    /**article,tegのリレーション */
-    public function testTagArticle()
+    /**articles */
+    public function testUserArticle()
     {
         $this->withoutExceptionHandling();
-        $article_tag = Tag::find(1)->articles->first();
         
-        $this->assertInstanceOf(Article::class,$article_tag);
+        $eloquent = app(Article::class);
+      
+        $this->assertEmpty($eloquent->get()); //初期状態は空か確認
+        
     }
 
-    /**article,commentリレーション */
-    public function testArticleComment()
-    {
-        $article_comment = Comment::with('User')
-        ->first();
-
-        $this->assertInstanceOf(Article::class,
-        $article_comment);
-    }
 }
