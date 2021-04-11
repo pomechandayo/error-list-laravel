@@ -252,7 +252,8 @@ class ArticleController extends Controller
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
 
-        if($article->status === Article::CLOSED)
+        if($article->status === Article::CLOSED &&
+        Auth::id() !== $article->user->id)
         {
             return redirect()->route('index');
         }else{
