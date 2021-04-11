@@ -244,6 +244,7 @@ class ArticleController extends Controller
   
     public function show(Request $request, int $id)
     {   
+
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();
         
         $article = Article::with('User')
@@ -251,12 +252,16 @@ class ArticleController extends Controller
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
 
-       
-        return view('article.show',[
-            'article' => $article,
-            'comments' => $comments,
-            'article_parse_body' => $article_parse_body
-        ])->with('user',Auth::user());
+        if($article->status === Article::CLOSED)
+        {
+            return redirect()->route('index');
+        }else{
+            return view('article.show',[
+                 'article' => $article,
+                 'comments' => $comments,
+                 'article_parse_body' => $article_parse_body
+             ])->with('user',Auth::user());
+        }
     }
 
     public function status(Request $request)

@@ -22,7 +22,6 @@ class ViewControllerTest extends TestCase
    /**test index タイトル、ユーザー名表示 */
    public function testShowIndex()
    {    
-    $this->withoutExceptionHandling();
         $article1 = factory(Article::class,1)
         ->create();
         $article2 = factory(Article::class,1)
@@ -30,6 +29,7 @@ class ViewControllerTest extends TestCase
         $article3 = factory(Article::class,1)
         ->create();
         
+
         $users = User::get()->toArray();
 
         $this->get('/index')
@@ -59,4 +59,5 @@ class ViewControllerTest extends TestCase
         $this->get('/index')
         ->assertSee($article1->pluck('title')->first());
    }
+  
 }

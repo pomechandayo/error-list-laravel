@@ -56,7 +56,7 @@
                   @endforeach             
             </div>
           </li>
-                <a href="{{ action('ArticleController@show', $article->id) }}" class="top-link-article">
+                <a href="{{route('article.show',[$article->id])}}" class="top-link-article">
                   <li class="top-article-title">{{ $article->title}}</li>
                 </a>
                 <li class="top-article-created_at">{{      $article->created_at->format('Y年m月d日')}}に投稿

@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']],function()
     Route::resource('article','ArticleController',
     ['only' => ['create','store','edit','update','destroy']]);  
 });
-Route::resource('article/show','ArticleController',
-['only' => ['show']]);
+
+Route::get('article/show/{id}','ArticleController@show')->name('article.show');
+
 

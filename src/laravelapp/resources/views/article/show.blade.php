@@ -83,7 +83,7 @@
     @foreach($comments as $comment)
     <div class="show-comment-box">
       <li class=comment-user>
-        <img src="/storage/profile_image/{{$comment->user->profile_image}}"class="comment-user-img">
+        <img src="/storage/profile_image/{{$comment->user->profile_image}}" class="comment-user-img">
         <div class="comment-user-name">
           {{ $comment->user->name}}
         </div>
@@ -114,7 +114,8 @@
       </div>
       @endforeach
       @if(!empty($comment->id) && Auth::check() === true)
-      <form action="{{route('article.reply')}}" class="reply-form">
+      <form action="{{route('article.reply')}}" class="reply-form"
+      method="get">
         @csrf
         <div class="reply-sent-box">
           <input type="hidden" name="user_id"
@@ -151,7 +152,7 @@
        コメントする
   </h2>
   <div class="show-border"></div>
-    <form action="{{ route('article.comment')}}">
+    <form action="{{ route('article.comment')}}" method="get">
       @csrf
       <div class="comment-write-box">
         <input type="hidden" name="user_id"
