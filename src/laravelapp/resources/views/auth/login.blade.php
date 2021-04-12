@@ -22,7 +22,7 @@
         <input type="hidden" name="password" value="password">
         <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
     
-        <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button>
+        <!-- <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button> -->
     
     </div>
 </form>

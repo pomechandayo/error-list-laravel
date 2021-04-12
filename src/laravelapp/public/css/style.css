@@ -386,15 +386,11 @@ a:hover {
       width: 30%;
       margin-left: 6%;
     }
-
-    .header-left:hover {
-      opacity: 0.6;
-    }
     
     .logo {
       font-size: 2.8rem;
       display: inline-block;
-      width: 100%;
+      width: 30%;
     }
     .logo:hover {
       opacity: 0.6;
