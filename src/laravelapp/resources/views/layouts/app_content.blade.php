@@ -48,10 +48,8 @@
         投稿する
       </button>
     </a>
-      <button class="icon-btn">
         <img src="/storage/profile_image/{{$user->profile_image}}" 
-          class="icon-img">
-      </button>
+          class="icon-img" style="margin: 0 10px;">
       <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
       @else
       <a href="{{ route('login') }}" class="link">
@@ -103,10 +101,18 @@
 <div class="header-around-behind"></div>
 
 <!-- 検索窓 -->
-<form  id="search" action="get">
+<form  id="search" action="{{route('index')}}" method="get">
   @csrf
-    <input class="search-input" type="text" placeholder="検索キーワード">
-    <input class="search-btn1" type="button" onfocus="this.blur(); " value="検索">
+    <input class="search-input" type="text" placeholder="検索キーワード" name="keyword">
+    <input class="search-btn1" type="image" onfocus="this.blur(); " 
+    src="{{ asset('/img/serch2.png')}} " 
+    style="
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    border: 0 none;
+    margin-left: 5px;
+    ">
 </form>
 
 @yield('content')

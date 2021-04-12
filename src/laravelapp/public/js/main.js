@@ -16,7 +16,7 @@ selector('.search-btn').onclick = function () {
 }
 // headerのユーザーアイコンをタップすると
 // ナビゲーションメニューが出る
-selector('.icon-btn').onclick = function () {
+selector('.icon-img').onclick = function () {
   if(selectNav.id == 'nav') {
     selectNav.setAttribute('id','nav1');
   }else {
