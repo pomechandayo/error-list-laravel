@@ -25,7 +25,7 @@
         投稿した記事</a>
         <a href="{{ url('mypage/profile/my_comment_article')}}" class="profile-link-menu">
             <div class="profile-likes-total">
-            {{$article_list->count()}}
+            {{$comment_count->count()}}
             </div>  
             コメントした記事
           </a>

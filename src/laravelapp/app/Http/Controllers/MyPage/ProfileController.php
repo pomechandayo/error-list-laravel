@@ -25,6 +25,7 @@ public function showProfile(Request $request) {
     $sort = 0;
     $article_list = [];
     $article_count = Article::where('user_id',$user->id)->get();
+    $comment_count = Comment::where('user_id',Auth::id())->get();
     
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
     if($request->menu_link === 'myarticle_all')
@@ -68,6 +69,7 @@ public function showProfile(Request $request) {
     }
          return view('mypage.profile',[
             'article_count' => $article_count,
+            'comment_count' => $comment_count,
             'article_list' => $article_list,
             'sort' => $sort,
             ])->with('user',Auth::user());
