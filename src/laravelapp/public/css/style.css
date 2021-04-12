@@ -122,16 +122,18 @@ a:hover {
     position: absolute;
     z-index: 99999;
     background-color: #fff;
-    box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
-    height: 400px;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
+    height: auto;
     width: 40%;
     top: 50px;
-    right: 5%;
+    right: 0;
     border-radius: 5px;
+    opacity: 0.9;
   }
   .nav-ul {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 0px;
   }
  
   .nav-list {

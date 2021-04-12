@@ -20,7 +20,9 @@ class CreateArticleTagsTable extends Migration
                 $table->timestamps();
                 $table->unsignedbigInteger('tag_id');
                 $table->unsignedbigInteger('article_id')->nullable();
+
                 $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+                
                 $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             });
     }

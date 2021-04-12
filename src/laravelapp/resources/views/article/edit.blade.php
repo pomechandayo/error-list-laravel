@@ -16,7 +16,7 @@
       @csrf
       @method('patch')
       <input type="text" name="title" class="article-title" placeholder="タイトル" value="{{ old('title')??$article_data->title}}">
-
+      
       @error('title')
         <div class="create-error">※{{ $message }} </div>
       @enderror
@@ -56,7 +56,8 @@
 
 
 <div id="markdown-preview">
-  </div>
+{!! $article_parse_body !!}
+</div>
   
   <div class="btn-bar">
     <button type="submit" class="article-post-btn">更新</button>

@@ -141,6 +141,8 @@ a:hover {
   font-size: 1.6rem;
   margin-top: 13px;
   color: #444;
+  display: flex;
+  align-items: center;
 }
 .profile-article-title {
   font-size: 2.2rem;
@@ -151,10 +153,30 @@ a:hover {
 .profile-article-tag {
   font-size: 1.5rem;
 }
+.mypage_article_tag{
+  font-size: 1.5rem;
+  margin-left: auto;
+  margin-right: 15px;
+}
 .profile-article-created_at {
   font-size: 1.5rem;
   color: #444;
+  display: flex;
+  align-items: center;
 }
+.count_box{
+  margin-left: auto;
+  margin-right: 10px;
+
+}
+.mypage-like-count{
+  font-size: 1.5rem;
+}
+
+.mypage-comment-count{
+  font-size: 1.5rem;
+}
+
 
 .pagination {
   box-sizing: border-box;

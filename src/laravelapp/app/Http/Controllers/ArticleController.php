@@ -123,10 +123,7 @@ class ArticleController extends Controller
             $tag_extract[] = 0; 
         }
 
-        /**
-         * タグ検索のみの時 
-         * 
-        */
+        /**タグ検索のみの時*/
         if($keywords === $tag_extract[0] &&
            $tag_number !== null)
         {
@@ -161,8 +158,7 @@ class ArticleController extends Controller
                   !== false;
                 });
 
-
-                if( $articles->isEmpty() == false )
+                if( $articles->isEmpty() === false )
                 {
                    foreach($articles as $article )
                    {
@@ -185,17 +181,15 @@ class ArticleController extends Controller
                         'keyword' => $search_keyword,
                      ])->with('user',Auth::user());
                 }
-        }
-               
+        } 
                  
-                $search_keyword = $keywords . 'の検索結果';
-                 
+            $search_keyword = $keywords . 'の検索結果';
 
-                 return view('index',[
-                    'search_keyword' => $search_keyword, 
-                    'article_list' => $article_list,
-                    'keywords' => $keywords,
-                ])->with('user',Auth::user());
+             return view('index',[
+                 'search_keyword' => $search_keyword, 
+                 'article_list' => $article_list,
+                 'keywords' => $keywords,
+             ])->with('user',Auth::user());
     }
                 
 
@@ -235,17 +229,19 @@ class ArticleController extends Controller
         $post->body = $request->body;
         $post->user_id = Auth::user()->id;
         $post->status = Article::OPEN;
+    DB::transaction(function() use ($post,$tags_id)
+    {
         $post->save();
         $post->tags()->attach($tags_id);
-        
+    });
         return redirect()->route('index');
 
     }
-  
+   
     public function show(Request $request, int $id)
     {   
-
-        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();
+        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)
+        ->get();
         
         $article = Article::with('User')
         ->find($id);
@@ -265,6 +261,7 @@ class ArticleController extends Controller
         }
     }
 
+    /**記事の公開、非公開を切り替える */
     public function status(Request $request)
     {
        $article = Article::find($request->article_id);
@@ -309,7 +306,6 @@ class ArticleController extends Controller
             'comment_id' => $request->comment_id,
         ]);
         return redirect()->back();
-       
     }
     public function reply_delete(int $id)
     {
@@ -319,6 +315,7 @@ class ArticleController extends Controller
         return redirect()->back();
     }
 
+    
     public function like(int $id)
     {
         Like::create([
@@ -350,7 +347,12 @@ class ArticleController extends Controller
         $tag = Article::find($id)->tags->first();
        
         $article_data = Article::find($id);
+      
+        $article_parse = new Article;
+        $article_parse_body = $article_data->parse($article_parse);
+
             return view('article.edit',[
+            'article_parse_body' => $article_parse_body,
             'article_data' => $article_data,
             'tag' => $tag,
         ])->with('user',Auth::user());
@@ -381,8 +383,11 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->title = request('title');
         $article->body = request('body');
+    DB::transaction(function () use ($article,$tags_id)
+    {
         $article->save();
         $article->tags()->attach($tags_id);
+    });
 
         return redirect()
         ->action('ArticleController@show', $article->id)

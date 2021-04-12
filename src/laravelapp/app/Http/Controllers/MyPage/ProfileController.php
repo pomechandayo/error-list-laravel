@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MyPage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mypage\Profile\EditRequest;
 use App\Article;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
@@ -51,6 +52,20 @@ public function showProfile(Request $request) {
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
         }
+    // ユーザーがコメントした記事だけ表示
+    if($request->menu_link === 'my_comment_article')
+    {
+        $sort = $request->sort;
+        $comment = Comment::where('user_id',Auth::id())->get();
+        $comment_id = $comment->pluck('article_id');
+       
+       
+        $article_list = Article::
+        whereIn('id',$comment_id)
+        ->ArticleOpen()
+        ->orderBy('created_at', 'desc')
+        ->Paginate(5);
+    }
          return view('mypage.profile',[
             'article_count' => $article_count,
             'article_list' => $article_list,

@@ -17,4 +17,8 @@ class Comment extends Model
    {
        return $this->hasMany(Reply::class);
    }
+   public function articles()
+   {
+       return $this->belogsTo(Article::class);
+   }
 }

@@ -22,12 +22,15 @@
         <div class="profile-article-total">
           {{count($article_count)}}
         </div>
-        投稿</a>
-        <a href="" class="profile-link-menu">
-          <div class="profile-likes-total">
-            0
-          </div>  
-          高評価</a>
+        投稿した記事</a>
+        <a href="{{ url('mypage/profile/my_comment_article')}}" class="profile-link-menu">
+            <div class="profile-likes-total">
+              0
+            </div>  
+            コメントした記事
+          </a>
+       
+        
           
         </div>
         <button class="profile-link-editprofile">
@@ -51,13 +54,28 @@
         @foreach($article_list as $article)
           <div class="profile-article-box">
              <li class="profile-article-user">
-             <img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage">  
-            {{$article->user->name}}</li>
+             <img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage"> 
+            {{$article->user->name}}
+            <div class="mypage_article_tag">
+              @foreach($article->tags as $tag)
+                #{{$tag->name}}
+              @endforeach
+            </div>
+            </li>
+            
              <a href="{{ action('ArticleController@show', $article->id) }}" class="profile-link-article">
              <li class="profile-article-title">{{$article->title}}</li>
              </a>
              <li class="profile-article-created_at">
-            {{$article->created_at->format('Y年m月d日')}}に投稿</li>
+                  {{$article->created_at->format('Y年m月d日')}}に投稿
+                  <div class="count_box">
+                    <span class="mypage-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
+                    </span>
+                      <span class="mypage-comment-count">コメント数
+                        {{$article->comments->count()}}
+                      </span>
+                  </div>
+            </li>
          </div>
         @endforeach
         <div class="profile-paginate">
