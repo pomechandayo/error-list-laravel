@@ -11,13 +11,13 @@
 </style>
 @section('content')
 <div class="relative">
-  <h2>ログイン</h2>
+  <h2 class="login-h2">ログイン</h2>
 </div>
 
 <form action="{{ route('login') }}" class="register-form" method="post">
     @csrf
     <div class="form-box" >
-        <h3 style="margin-bottom: 30px;">簡単ログイン</h3>
+        <h3 style="margin-bottom: 30px;" class="login-h3">簡単ログイン</h3>
         <input type="hidden" name="email" value="error@iya.com">
         <input type="hidden" name="password" value="password">
         <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
@@ -31,11 +31,12 @@
 <form action="{{ route('login') }}" class="register-form" method="post">
     @csrf
 <div class="form-box">
-    <h3 style="margin-bottom: 20px;"> 
+    <h3 style="margin-bottom: 20px;" class="login-h3"> 
         メールアドレスでログイン
     </h3>  
         <label for="email">メールアドレス</label>
-        <input class="input-box" type="text" name="email" value="{{ old('email')}}" placeholder="@iyatarou@makeruna.com">            @if ($errors->has('email'))
+        <input class="input-box" type="text" name="email" value="{{ old('email')}}" placeholder="@iyatarou@makeruna.com">            
+        @if ($errors->has('email'))
             <li class="error-message">{{ $errors->first('email') }}</li>
         @endif
             <label for="password">パスワード</label>

@@ -48,10 +48,7 @@
     <div class="tab-bar-text">本文</div>
     <div class="tab-bar-preview">プレビュー</div>
 </div>
-<textarea 
-  id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
-  {{old('body') ?? $article_data->body}}
-</textarea>
+<textarea id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">{{old('body') ?? $article_data->body}}</textarea>
 
 
 
@@ -65,8 +62,5 @@
   </div>
   
 </form>
-<script>
-  const 
-</script>
 
 @endsection

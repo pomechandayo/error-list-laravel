@@ -32,8 +32,7 @@
         <div class="tab-bar-text">本文</div>
         <div class="tab-bar-preview">プレビュー</div>
       </div>
-      <textarea id="markdown-editor-textarea" name="body" placeholder="本文を書いてください">
-      </textarea>
+      <textarea id="markdown-editor-textarea" name="body" placeholder="本文を書いてください"></textarea>
 
 
 
@@ -44,6 +43,6 @@
     <button type="submit" class="article-post-btn">投稿</button>
     
   </div>
-  
 </form>
+
 @endsection

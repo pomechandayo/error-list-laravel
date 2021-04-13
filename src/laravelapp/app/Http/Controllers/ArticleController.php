@@ -241,13 +241,14 @@ class ArticleController extends Controller
     public function show(Request $request, int $id)
     {   
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)
-        ->get();
+        ->get();       
         
         $article = Article::with('User')
         ->find($id);
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
 
+    
         if($article->status === Article::CLOSED &&
         Auth::id() !== $article->user->id)
         {
@@ -256,7 +257,8 @@ class ArticleController extends Controller
             return view('article.show',[
                  'article' => $article,
                  'comments' => $comments,
-                 'article_parse_body' => $article_parse_body
+                 'user_id' => Auth::id(),
+                 'article_parse_body' => $article_parse_body,
              ])->with('user',Auth::user());
         }
     }
@@ -316,29 +318,27 @@ class ArticleController extends Controller
     }
 
     
-    public function like(int $id)
+    public function like(Request $request)
     {
-        Like::create([
-            'article_id' => $id,
-            'user_id' => Auth::id(),
-        ]);
-
-        session()
-        ->flash('success','You Liked the Article');
-
-        return redirect()->back();
-    }
-    public function unlike(int $id)
-    {
-        $like = Like::where('article_id',$id)
-        ->where('user_id',Auth::id())
-        ->first();
-        $like->delete();
-
-        session()
-        ->flash('success','You Unliked the Article');
-
-        return redirect()->back();
+        $user_id = Auth::user()->id; 
+        $article_id = $request->article_id;
+        
+        $already_liked = Like::where('user_id', $user_id)->where('article_id', $article_id)->first();   
+        if (!$already_liked)
+        {   
+            Like::create([
+                'article_id' => $article_id,
+                'user_id' => $user_id 
+            ]);
+        } else { 
+            Like::where('article_id', $article_id)->where('user_id', $user_id)->delete();
+        }
+        //5.この投稿の最新の総いいね数を取得
+        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
+        $param = [
+            'review_likes_count' => $review_likes_count,
+        ];
+        return response()->json($param); //6.JSONデータをjQueryに返す
     }
 
    
