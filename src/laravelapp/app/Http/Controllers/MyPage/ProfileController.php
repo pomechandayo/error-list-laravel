@@ -23,6 +23,7 @@ public function showProfile(Request $request) {
 
     $user = Auth::user();
     $sort = 0;
+    $comment_id = [];
     $article_list = [];
     $article_count = Article::where('user_id',$user->id)->get();
     $comment_count = Comment::where('user_id',Auth::id())->get();
@@ -60,7 +61,6 @@ public function showProfile(Request $request) {
         $comment = Comment::where('user_id',Auth::id())->get();
         $comment_id = $comment->pluck('article_id');
        
-       
         $article_list = Article::
         whereIn('id',$comment_id)
         ->ArticleOpen()
@@ -70,6 +70,7 @@ public function showProfile(Request $request) {
          return view('mypage.profile',[
             'article_count' => $article_count,
             'comment_count' => $comment_count,
+            'comment_id' => $comment_id,
             'article_list' => $article_list,
             'sort' => $sort,
             ])->with('user',Auth::user());

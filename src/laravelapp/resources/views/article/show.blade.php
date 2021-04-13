@@ -5,6 +5,7 @@
 @endsection
 <head>
 <link rel="stylesheet" href="{{ asset('/css/show.css') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 @section('content')
 @error('body')
@@ -13,27 +14,62 @@
 <div class="show-main">
   
   <div class="show-box">
-    <div class="show-title-box">
-      <div class="show-user-data">
-        <img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image">
-        <li class="show-article-user">
-          {{ $article->user->name}}</li>
-          @if(true == Auth::check() && $article->user_id == Auth::user()->id)
-          <form action="{{ route('article.status')}}" class="show-form-status" method="get"> 
-            @csrf
-            @if($article->status === 0)
-              <input type="hidden" value="{{ $article->id }}" class="show-status" name="article_id">
-              <button type="submit" class="show-status-btn">公開する</button>
-            @else
-            <input type="hidden" value="{{ $article->id }}" class="show-status" name="article_id">
-            <button type="submit" class="show-status-btn">非公開にする</button>
-            @endif  
-          </form>
-          　@endif
-        </div>
-        <li class="show-title">{{$article->title}}</li>
+    <div class="show-user-data">
+      <img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image">
+      <li class="show-article-user">
+        {{ $article->user->name}}</li>
         <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>
-       
+    </div>     
+        <div class="show-title-box">
+          <li class="show-title">{{$article->title}}</li>
+        </div>
+
+        <div class="show-tag">
+            @foreach($article->tags as $tag)
+            #{{$tag->name}}
+            @endforeach             
+        </div>
+
+        <div class="show-like-box">
+          @auth
+              <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
+              @if (!$article->isLikedBy(Auth::user()))
+                <span class="likes">
+                    <i class="like-toggle" data-article-id="{{ $article->id }}">高評価</i>
+                      <span class="like-counter">{{ $article->likes_count ?? $article->likes->count()}}
+                      </span>
+                      </span>
+              @else
+                <span class="likes">
+                    <i class="like-toggle liked" data-article-id="{{ $article->id }}">高評価</i>
+                    <span class="like-counter">{{$article->likes_count ?? $article->likes->count()}}
+                    </span>
+                    </span>
+              @endif
+            @endauth
+            @guest
+              <span class="likes">
+                  <i class=""></i>
+                <span class="like-counter">
+                  {{$article->likes->count()}}</span>
+              </span>
+            @endguest
+
+           <!-- 記事を書いたユーザーであれば公開、非公開を切り替えるリンクを表示 -->
+           @if(true == Auth::check() && $article->user_id == Auth::user()->id)
+            <form action="{{ route('article.status')}}" class="show-form-status" method="get"> 
+              @csrf
+              @if($article->status === 0)
+                <input type="hidden" value="{{ $article->id }}" class="show-status" name="article_id">
+                <button type="submit" class="show-status-btn">公開する</button>
+              @else
+                <input type="hidden" value="{{ $article->id }}" class="show-status" name="article_id">
+                <button type="submit" class="show-status-btn">非公開にする</button>
+              @endif  
+            </form>
+          @endif
+
+       <!-- 記事を書いたユーザーであれば編集と削除のリンクを表示 -->
         @if(Auth::check() === true && $article->user_id === Auth::user()->id)
         <div class="show-linkbox">
           <a href="{{ action('ArticleController@edit',$article->id)}}" class="show-link-edit">編集</a>
@@ -45,24 +81,18 @@
             <input type='submit' value="削除" class="show-link-delete" onclick="return confirm('削除しますか？');">
           </form>
         </div>
-      @endif
-      @if(Auth::check() === true && Auth::id() !== $article->user_id)
-        <div class="show-like-box">
-        @if($article->is_liked_by_auth_user())
-           <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
-           <a href="{{ route('unlike',['id' => $article->id])}}" class="show-like" style="color:#55C500;">高評価<span class="show-like-count" style="color:#55C500;">{{$article->likes->count()}}</span></a>
-        @else
-           <img src="{{ asset('/img/good_icon.png')}}" class="show-good-icon">
-            <a href="{{ route('like',['id' => $article->id])}}" class="show-like">高評価<span class="show-like-count">{{$article->likes->count()}}</span></a>
         @endif
+        </div>
+        <!-- ここまでlike-box -->
       </div>
-      @endif
-      </div>
-     </div>
+      <!-- ここまでshowーbox -->
+
       <div class="show-body-box">
         <li class="show-body">{!! $article_parse_body !!}</li>
       </div>
+
   </div>
+  <!-- ここまでshow-main -->
 
   <!-- ここからコメント -->
   <h2 style=
@@ -91,28 +121,30 @@
           {{ $comment->created_at->format('Y年m月d日')}}
         </div>
         @if(Auth::id() === $comment->user_id)
-          <a href="{{ route('article.comment.delete',['id' => $comment->id]) }}" class="comment-delete">削除</a>
+          <a href="{{ route('article.comment.delete',['id' => $comment->id]) }}" class="comment-delete" onclick="return confirm('削除しますか？')">削除</a>
         @endif
       </li>
       <li class="comment-body">
         {{ $comment->body}}
       </li>
+     
       @foreach($comment->replies as $reply)
       <div class="reply-box">
         <div class="reply-user-data">
           <img src="/storage/profile_image/{{$reply->user->profile_image}}" class="reply-img">
           {{$reply->user->name}}
           {{$reply->created_at->format('Y年m月d日')}}
-          @if(Auth::id() === $reply->user_id)
-            <a href="{{ route('article.reply.delete',['id' => $reply->id])
-            }}" class="reply-delete">削除</a>
-          @endif
+        @if(Auth::id() === $reply->user_id)
+            <a href="{{ route('article.reply.delete',['id' => $reply->id])}}" class="reply-delete"onclick="return confirm('削除しますか？')">削除</a>
+        @endif
         </div>
+        
           <li class="replies">
             {{$reply->body}}
           </li>
       </div>
       @endforeach
+
       @if(!empty($comment->id) && Auth::check() === true)
       <form action="{{route('article.reply')}}" class="reply-form"
       method="get">
@@ -169,5 +201,6 @@
     </form>
 
   @endif   
-  
+
+ 
 @endsection

@@ -229,7 +229,7 @@ a:hover {
     cursor: pointer;
   }
   
-  h2{
+  .login-h2{
     font-size: 1.2rem;
     color: 	#fff;
     display: inline-block;
@@ -238,7 +238,7 @@ a:hover {
     background-color: #6c757d;
     height: 20px;
   }
-  h3{
+  .login-h3{
     font-size: 1.2rem;
     color: 	#fff;
     display: inline-block;
@@ -386,15 +386,11 @@ a:hover {
       width: 30%;
       margin-left: 6%;
     }
-
-    .header-left:hover {
-      opacity: 0.6;
-    }
     
     .logo {
       font-size: 2.8rem;
       display: inline-block;
-      width: 100%;
+      width: 30%;
     }
     .logo:hover {
       opacity: 0.6;

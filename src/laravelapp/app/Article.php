@@ -58,23 +58,10 @@ class Article extends Model
     {
         return $this->hasMany(Like::class,'article_id');
     }
-
-    public function is_liked_by_auth_user()
+    public function isLikedBy($user) :bool 
     {
-        $id = Auth::id();
-
-        $likers = array();
-        foreach($this->likes as $like)
-        {
-            array_push($likers,$like->user_id);
-        }
-
-        if(in_array($id,$likers,true))
-        {
-            return true;
-        }else{
-            return false;
-        }
+        return Like::where('user_id',$user->id)
+        ->where('article_id',$this->id)
+        ->first() !== null;
     }
-
 }

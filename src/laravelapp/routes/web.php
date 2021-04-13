@@ -17,8 +17,9 @@ Route::prefix('article')
 {
     Route::get('comment','ArticleController@comment')
     ->name('comment');
-    Route::get('comment/delete/{id}','ArticleController@comment')
+    Route::get('comment/delete/{id}','ArticleController@comment_delete')
     ->name('comment.delete');
+
     Route::get('reply','ArticleController@reply')
     ->name('reply');
     Route::get('reply/delete/{id}','ArticleController@reply_delete')
@@ -26,10 +27,8 @@ Route::prefix('article')
 });
 
 
-Route::get('like/{id}','ArticleController@like')
+Route::post('/like','ArticleController@like')
 ->name('like');
-Route::get('unlike/{id}','ArticleController@unlike')
-->name('unlike');
 
 Route::group(['namespace' => 'Auth'],function()
 {

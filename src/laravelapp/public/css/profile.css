@@ -1,9 +1,11 @@
+
 .profile-container-lg {
   background-color: #fff;
   width: 90%;
   height: auto;
   margin: 0 auto;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.6);
+  margin-top: 50px;
 }
 a:hover {
   text-decoration: none;
@@ -52,7 +54,7 @@ a:hover {
   display: inline-block;
   color: #444;
   height: 30px;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .profile-link-menu:hover{
   text-decoration: none;
@@ -170,11 +172,11 @@ a:hover {
 
 }
 .mypage-like-count{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .mypage-comment-count{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 
@@ -202,6 +204,9 @@ a:hover {
   font-size: 2rem;
   display: inline-block;
   height: auto;
+}
+footer{
+  margin-top: 30px;
 }
 
 @media screen and (min-width: 600px){ 
@@ -235,5 +240,14 @@ a:hover {
   }
   .profile-link{
     font-size: 2.0rem;
+  }
+  .profile-link-menu {
+    font-size: 2rem;
+  }
+  .mypage-like-count{
+    font-size: 1.5rem;
+  }
+  .mypage-comment-count{
+    font-size: 1.5rem;
   }
 }
