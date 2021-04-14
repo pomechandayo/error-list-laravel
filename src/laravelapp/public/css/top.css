@@ -23,7 +23,7 @@ li {
   padding: 0;
   margin: 0;
   width: 100%;
-  margin-right: 5%;
+ text-align: center !important;
 }
 .tag-form {
   width: 100%;
