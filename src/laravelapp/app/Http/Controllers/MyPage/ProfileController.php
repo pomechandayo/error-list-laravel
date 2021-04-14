@@ -77,7 +77,6 @@ public function showProfile(Request $request) {
         
 }
 
-
     public function showProfileEditForm()
     {   
         return view('mypage.profile_edit_form')
@@ -95,8 +94,6 @@ public function showProfile(Request $request) {
              $fileName = $this->saveAvatar($request->file('profile_image'));
              $user->profile_image= $fileName;
          }
-       
-
 
         $user->save();
 
@@ -121,7 +118,6 @@ public function showProfile(Request $request) {
           return basename($filePath);
       }
      
-
          /**
       * 一時的なファイルを生成してパスを返します。
       *

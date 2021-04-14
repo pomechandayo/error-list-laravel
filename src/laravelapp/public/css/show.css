@@ -80,6 +80,9 @@
 .like-toggle:hover{
   opacity: 0.6;
 }
+.like-toggle-guest{
+  font-size: 1.3rem;
+}
 .like-counter{
   font-size: 1.3rem;
   border: 1px solid #eee;
@@ -382,6 +385,9 @@ hr {
     font-size: 1.5rem;
   }
   .like-toggle{
+    font-size: 1.8rem;
+  }
+  .like-toggle-guest{
     font-size: 1.8rem;
   }
   .like-counter{

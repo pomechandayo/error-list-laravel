@@ -15,7 +15,7 @@
   
   <div class="show-box">
     <div class="show-user-data">
-      <img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image">
+    <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image"></a>
       <li class="show-article-user">
         {{ $article->user->name}}</li>
         <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>
@@ -49,7 +49,7 @@
             @endauth
             @guest
               <span class="likes">
-                  <i class=""></i>
+                  <i class="like-toggle-guest">高評価</i>
                 <span class="like-counter">
                   {{$article->likes->count()}}</span>
               </span>
@@ -113,7 +113,7 @@
     @foreach($comments as $comment)
     <div class="show-comment-box">
       <li class=comment-user>
-        <img src="/storage/profile_image/{{$comment->user->profile_image}}" class="comment-user-img">
+      <a href="{{ route('userpage.show',[$comment->user->id])}}"><img src="/storage/profile_image/{{$comment->user->profile_image}}" class="comment-user-img"></a>
         <div class="comment-user-name">
           {{ $comment->user->name}}
         </div>
@@ -128,10 +128,11 @@
         {{ $comment->body}}
       </li>
      
+      <!-- ここからリプライ -->
       @foreach($comment->replies as $reply)
       <div class="reply-box">
         <div class="reply-user-data">
-          <img src="/storage/profile_image/{{$reply->user->profile_image}}" class="reply-img">
+        <a href="{{ route('userpage.show',[$reply->user->id])}}"><img src="/storage/profile_image/{{$reply->user->profile_image}}" class="reply-img"></a>
           {{$reply->user->name}}
           {{$reply->created_at->format('Y年m月d日')}}
         @if(Auth::id() === $reply->user_id)

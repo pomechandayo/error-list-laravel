@@ -49,7 +49,8 @@
         @foreach($article_list as $article)       
         <div class="top-article_box">
           <li class="top-article-user">
-            <img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage">{{ $article->user->name}}
+            <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage"></a>
+            {{ $article->user->name}}
             <div class="top-tag">
                   @foreach($article->tags as $tag)
                    #{{$tag->name}}

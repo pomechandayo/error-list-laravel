@@ -63,4 +63,7 @@ Route::group(['middleware' => ['auth']],function()
 
 Route::get('article/show/{id}','ArticleController@show')->name('article.show');
 
+Route::get('userpage/show/{id}','UserPageController@showUserPage')
+->name('userpage.show');
+
 
