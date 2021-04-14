@@ -23,8 +23,8 @@
     <div class="form-box" style="width: 100%; margin: 0;">
         <h3 style="margin-bottom: 30px; width: 100%;" 
         class="login-h3">簡単ログイン</h3>
-        <input type="hidden" name="email" value="ff@gmail.pom">
-        <input type="hidden" name="password" value="aa1000">
+        <input type="hidden" name="email" value="error@iya.com">
+        <input type="hidden" name="password" value="password">
         <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
     
         <!-- <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button> -->
