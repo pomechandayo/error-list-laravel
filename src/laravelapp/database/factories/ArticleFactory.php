@@ -12,8 +12,8 @@ use App\User;
 $factory->define(Article::class, 
     function(Faker $faker) {
         return [
-        'title' => $this->faker->text(10),
-        'body' => $this->faker->text(50),
+        'title' => $this->faker->text(60),
+        'body' => $this->faker->text(255),
         'status' => $this->faker->randomElement([1,1,1,1]),
         'user_id' => $this->faker->numberBetween(1,3),
         // 'user_id' => function(){

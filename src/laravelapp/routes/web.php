@@ -9,6 +9,20 @@ Route::get('index','ArticleController@index')->name('index')->middleware('keywor
 
 Route::get('article/status','ArticleController@status')
 ->name('article.status');
+Route::post('/like','ArticleController@like')
+->name('like');
+
+Route::group(['namespace' => 'Auth'],function()
+{
+    Route::get('/register','RegisterController@showregister')
+    ->name('showregister');
+    Route::post('/register','RegisterController@register')
+    ->name('register');
+    Route::get('/logout','LogoutController@getLogout')
+    ->name('logout');
+    Route::post('/logout','LogoutController@getLogout')
+    ->name('post.logout');
+});
 
 Route::prefix('article')
 ->middleware('auth')
@@ -26,21 +40,6 @@ Route::prefix('article')
     ->name('reply.delete');
 });
 
-
-Route::post('/like','ArticleController@like')
-->name('like');
-
-Route::group(['namespace' => 'Auth'],function()
-{
-    Route::get('/register','RegisterController@showregister')
-    ->name('showregister');
-    Route::post('/register','RegisterController@register')
-    ->name('register');
-    Route::get('/logout','LogoutController@getLogout')
-    ->name('logout');
-    Route::post('/logout','LogoutController@getLogout')
-    ->name('post.logout');
-});
 
 Route::prefix('mypage')
 ->namespace('MyPage')

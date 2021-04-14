@@ -3,6 +3,7 @@
 function selector(select){
   return document.querySelector(select);
 }
+
 // 検索アイコンを押すと検索窓を出す(header)
 selectSearch = selector('#search');
 selectNav = selector('#nav');

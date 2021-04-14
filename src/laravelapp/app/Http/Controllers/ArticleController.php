@@ -43,6 +43,7 @@ class ArticleController extends Controller
          
         // 検索ワードからtag:の後に続く情報を抽出
         $tag_extract = preg_grep('/^tag:/',$keywords_array);
+
         /**
          * 
          * タグキーワードが入力されたか判定
@@ -81,6 +82,7 @@ class ArticleController extends Controller
        
         if($tag_number !== null && $keywords !== $tag_extract[0] )
         {   
+            // 検索ワードからタグの情報を取り除く
             $keyword = str_replace('tag:',"",$keywords);
             $keyword = str_replace($tag_keyword." ","",$keyword); 
            
@@ -96,6 +98,7 @@ class ArticleController extends Controller
                  return strpos($article->body,$keyword) !== false;
                 });
 
+                /*キーワードに該当する記事があったか判定*/
            if( $articles->isEmpty() == false )
                 {
                    foreach($articles as $article )
@@ -158,6 +161,7 @@ class ArticleController extends Controller
                   !== false;
                 });
 
+                /**該当する記事があるか判定*/
                 if( $articles->isEmpty() === false )
                 {
                    foreach($articles as $article )
@@ -219,29 +223,26 @@ class ArticleController extends Controller
         foreach ($tags as $tag) {
             array_push($tags_id,$tag['id']);
         };
-        
-        
-        
+               
         /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
-        
-        $post = new Article;
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->user_id = Auth::user()->id;
-        $post->status = Article::OPEN;
-    DB::transaction(function() use ($post,$tags_id)
+      
+        $article = new Article;
+        $article->title = $request->title;
+        $article->body = $request->body;
+        $article->user_id = Auth::user()->id;
+        $article->status = Article::OPEN;
+
+    DB::transaction(function() use ($article,$tags_id)
     {
-        $post->save();
-        $post->tags()->attach($tags_id);
+        $article->save();
+        $article->tags()->attach($tags_id);
     });
         return redirect()->route('index');
-
     }
    
     public function show(Request $request, int $id)
     {   
-        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)
-        ->get();       
+        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
         
         $article = Article::with('User')
         ->find($id);
@@ -284,11 +285,11 @@ class ArticleController extends Controller
 
     public function comment(CommentRequest $request)
     {   
-        $comment = new Comment;
-        $comment->article_id = $request->article_id;
-        $comment->user_id = $request->user_id;
-        $comment->body = $request->body;
-        $comment->save();
+        Comment::create([
+            'body' => $request->body,
+            'user_id' => $request->user_id,
+            'article_id' => $request->article_id,
+        ]);
 
         return redirect()->back();
     }
@@ -317,7 +318,6 @@ class ArticleController extends Controller
         return redirect()->back();
     }
 
-    
     public function like(Request $request)
     {
         $user_id = Auth::user()->id; 
