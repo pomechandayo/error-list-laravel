@@ -21,7 +21,6 @@ class Article extends Model
             ->withTimestamps();
     }
 
-
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -31,7 +30,6 @@ class Article extends Model
     {
         return $this->hasMany('App\Comment');
     }
-
 
     public function parse() {
       $parser = new \cebe\markdown\Markdown();
@@ -58,6 +56,7 @@ class Article extends Model
     {
         return $this->hasMany(Like::class,'article_id');
     }
+    // いいね済みか判定,show.blade.phpで使う
     public function isLikedBy($user) :bool 
     {
         return Like::where('user_id',$user->id)
