@@ -16,6 +16,8 @@ $factory->define(Article::class,
         'body' => $this->faker->text(255),
         'status' => $this->faker->randomElement([1,1,1,1]),
         'user_id' => $this->faker->numberBetween(1,3),
+        
+        // テスト実行時に使う
         // 'user_id' => function(){
         //   return factory(App\User::class)->create()->id;
         // },

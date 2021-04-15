@@ -39,4 +39,7 @@ libxpm-dev
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install -j$(nproc) gd
 
-
+Run apt-get update && \
+    apt-get install -y libmagickwand-dev && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick

@@ -344,8 +344,10 @@ class ArticleController extends Controller
    
     public function edit($id)
     {   
-        $tag = Article::find($id)->tags->first();
-       
+        $tag_list = Article::find($id)->tags->pluck('name');
+        $tags = $tag_list->toArray();
+        $tags_string = implode(" #",$tags);
+
         $article_data = Article::find($id);
       
         $article_parse = new Article;
@@ -354,7 +356,7 @@ class ArticleController extends Controller
             return view('article.edit',[
             'article_parse_body' => $article_parse_body,
             'article_data' => $article_data,
-            'tag' => $tag,
+            'tag' => $tags_string,
         ])->with('user',Auth::user());
     }
     public function update(ArticleRequest $request, $id)

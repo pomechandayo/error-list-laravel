@@ -40,7 +40,7 @@
         name="tags" 
         class="article-tag"  
         placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-        value="{{ old('tag') ?? $tag->name }}">
+        value="#{{ old('tag') ?? $tag }}">
       @endif
 
       
