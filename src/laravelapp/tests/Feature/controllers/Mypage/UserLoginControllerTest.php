@@ -16,14 +16,18 @@ class UserLoginControllerTest extends TestCase
      * @return void
      */
     public function testShowLogin()
-    {
+    { $this->withoutExceptionHandling();
        $this->get('login')
        ->assertOk();
+
+       $this->get('login')
+       ->assertSee('ログイン')
+       ->assertSee('簡単ログイン')
+       ->assertSee('メールアドレスでログイン');
     }
 
-    public function testlogin()
+    public function testLogin()
     {
-        
         $postData = [
             'email' => 'aaa@bbb.com',
             'password' => 'abcd1234'
@@ -38,5 +42,25 @@ class UserLoginControllerTest extends TestCase
         $this->post('login',$postData)
         ->assertRedirect('/index');
 
+    }
+
+    public function testFailedLogin()
+    {
+        $postData = [
+            'email' => 'aaa@bbb.com',
+            'password' => 'abcd1234'
+        ];
+        $dbData = [
+            'email' => 'ccc@bbb.com',
+            'password' => bcrypt('abcd1234')
+        ];
+
+        $url = 'login';
+
+        $this->From($url)->post($url,$postData)
+        ->assertRedirect($url);
+
+        $this->get($url)
+        ->assertSee('メールアドレスかパスワードが間違っています');
     }
 }
