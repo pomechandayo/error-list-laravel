@@ -28,7 +28,7 @@ class ArticleController extends Controller
         無ければ新着記事を表示する*/
         if($keywords === "")
          {  
-           $article_list = Article::with('User')
+           $article_list = Article::with('user','tags','likes','comments')
             ->ArticleOpen()
             ->Created_atDescPaginate();
         
@@ -106,7 +106,7 @@ class ArticleController extends Controller
                       $get_article_list[] = $article->id;
                    }
                    /*記事情報と紐付けられたユーザー情報取得*/
-                   $article_list = Article::with('User')
+                   $article_list = Article::with('user','tags','likes','comments')
                    ->ArticleOpen()
                    ->whereIn  ('id',$get_article_list)
                    ->Created_atDescPaginate();
@@ -136,7 +136,7 @@ class ArticleController extends Controller
               }
 
            /*記事情報と紐付けられたユーザー情報取得*/
-           $article_list = Article::with('User')
+           $article_list = Article::with('user','tags','likes','comments')
            ->ArticleOpen()
            ->whereIn('id',$get_article_list)               
            ->Created_atDescPaginate();
@@ -169,7 +169,7 @@ class ArticleController extends Controller
                       $get_article_list[] = $article->id;
                    }
                    /*記事情報と紐付けられたユーザー情報取得*/
-                   $article_list = Article::with('User')
+                   $article_list = Article::with('user','tags','likes','comments')
                     ->ArticleOpen()
                     ->whereIn('id',$get_article_list)
                     ->Created_atDescPaginate();

@@ -32,7 +32,8 @@ public function showProfile(Request $request) {
     if($request->menu_link === 'myarticle_all')
     {
         $sort = $request->sort;
-        $article_list = Article::where('user_id',$user->id)
+        $article_list = Article::with('user','tags','likes','comments')
+        ->where('user_id',$user->id)
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
         }
@@ -40,7 +41,8 @@ public function showProfile(Request $request) {
     if($request->menu_link === 'myarticle_open')
     {
         $sort = $request->sort;
-        $article_list = Article::where('user_id',$user->id)
+        $article_list = Article::with('user','tags','likes','comments')
+        ->where('user_id',$user->id)
         ->ArticleOpen()
         ->orderBy('created_at', 'desc')
         ->Paginate(5);   
@@ -49,7 +51,8 @@ public function showProfile(Request $request) {
     if($request->menu_link === 'myarticle_closed')
     {
         $sort = $request->sort;
-        $article_list = Article::where('user_id',$user->id)
+        $article_list = Article::with('user','tags','likes','comments')
+        ->where('user_id',$user->id)
         ->ArticleClosed()
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
@@ -62,7 +65,8 @@ public function showProfile(Request $request) {
         $comment_id = $comment->pluck('article_id');
        
         $article_list = Article::
-        whereIn('id',$comment_id)
+        with('user','tags','likes','comments')
+        ->whereIn('id',$comment_id)
         ->ArticleOpen()
         ->orderBy('created_at', 'desc')
         ->Paginate(5);

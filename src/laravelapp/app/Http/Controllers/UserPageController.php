@@ -11,7 +11,7 @@ class UserPageController extends Controller
     {
         $sort = 0;
         // ユーザーに紐づいた情報を取得
-        $article_list = Article::with('user')
+        $article_list = Article::with('user','tags','likes','comments')
         ->where('user_id',$id)
         ->ArticleOpen()
         ->Created_atDescPaginate();
