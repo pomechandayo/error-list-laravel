@@ -7,11 +7,12 @@ http://aws-infra-error-list-laravel.com:10080/index
 投稿機能やいいね機能を使う場合は、お手数ですがログインページの「簡単ログイン」ボタンからログインしてください。
 
 ## 使用技術
-言語:PHP7.4,Javascript,jQuery,Bootstrap,CSS,HTML  
+言語:PHP7.4/Javascript/jQuery/Bootstrap/CSS/HTML  
 フレームワーク:Laravel6  
 データベース:MySQL5.7  
-インフラ:AWS(VPC,EC2,Route53),Docker/Docker-Compose  
-Webサーバー:Apache,Amazon Linux,HTTP  
+インフラ:AWS(VPC,EC2,Route53)/Docker/Docker-Compose  
+Webサーバー:Apache/Amazon Linux/HTTP  
+バージョン管理:Git/Github
   
 ## 機能一覧
 - 認証機能  
