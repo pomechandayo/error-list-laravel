@@ -48,7 +48,11 @@
         @foreach($article_list as $article)       
         <div class="top-article_box">
           <li class="top-article-user">
+          @if($article->user->id !== Auth::id())
             <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage"></a>
+          @else
+            <a href="{{ route('mypage.profile') }}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage"></a>
+          @endif
             {{ $article->user->name}}
             <div class="top-tag">
                   @foreach($article->tags as $tag)
