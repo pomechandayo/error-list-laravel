@@ -184,8 +184,10 @@
        id="comment-h2">
        コメントする
   </h2>
+
+  <ul id="error_message"></ul>
   <div class="show-border"></div>
-    <form action="{{ route('article.comment')}}" method="get">
+    <form action="{{ route('article.comment')}}" method="post">
       @csrf
       <div class="comment-write-box">
         <input type="hidden" name="user_id"
@@ -196,7 +198,7 @@
          placeholder="コメントを記入してください">
          {{ old('body')}}
         </textarea>
-        <button type="submit" class="comment-sent">
+        <button type="submit" id="comment-sent" class="comment-sent">
           コメント投稿</button>
         </div>
     </form>

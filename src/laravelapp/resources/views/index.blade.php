@@ -15,7 +15,6 @@
 <div class="top-main">
 
 <div class="top-article-container">
- 
     <div class="search-result">
      @if(!empty($article_list))
       <h2 class="search-article">
@@ -76,7 +75,7 @@
       </div>
       @endif
       @if(!empty($article_list))
-          {{ $article_list->links() }}
+          {{ $article_list->appends(request()->input())->links() }}
       @endif
     </div>
   </div> 

@@ -78,7 +78,7 @@
           </div>
         @endforeach
         <div class="profile-paginate">
-          {{ $article_list->appends(['sort' => $sort])->links() }}
+          {{ $article_list->links() }}
         </div>
         @endif
         <!-- ここまで記事一覧 -->

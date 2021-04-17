@@ -22,7 +22,6 @@ class ProfileController extends Controller
 public function showProfile(Request $request) {
 
     $user = Auth::user();
-    $sort = 0;
     $comment_id = [];
     $article_list = [];
     $article_count = Article::where('user_id',$user->id)->get();
@@ -71,12 +70,12 @@ public function showProfile(Request $request) {
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
     }
+    
          return view('mypage.profile',[
             'article_count' => $article_count,
             'comment_count' => $comment_count,
             'comment_id' => $comment_id,
             'article_list' => $article_list,
-            'sort' => $sort,
             ])->with('user',Auth::user());
         
 }

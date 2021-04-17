@@ -20,6 +20,9 @@ class ArticleController extends Controller
 {
     public function index(User $user,Request $request)
     {   
+        $url = $request->fullurl();
+       
+
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];

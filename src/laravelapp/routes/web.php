@@ -29,7 +29,7 @@ Route::prefix('article')
 ->name('article.')
 ->group(function()
 {
-    Route::get('comment','ArticleController@comment')
+    Route::post('comment','ArticleController@comment')
     ->name('comment');
     Route::get('comment/delete/{id}','ArticleController@comment_delete')
     ->name('comment.delete');

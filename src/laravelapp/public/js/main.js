@@ -42,9 +42,9 @@ $(function () {
       let $this = $(this); //this=イベントの発火した要素＝iタグを代入
       likeArticleId = $this.data('article-id'); //iタグに仕込んだdata-review-idの値を取得
      
+      // ここからajax
       $.ajax({
-        headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
-          'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+        headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
         },  
         url: '/like', 
         method: 'POST', 
@@ -64,3 +64,36 @@ $(function () {
     });
     });
   
+
+  //   $(function () {
+  //     $('#comment-sent').click(function(event){
+  //       let comment = $('textarea[name="body"]').val();
+  //       let comment_data = {
+  //         'comment' : comment,
+  //       };
+      
+
+  //     $.ajax({
+  //       headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+  //       },
+  //       url: '/article/comment',
+  //       method: 'post',
+  //       dataType: "json",
+  //       data: comment_data,
+  //     })
+  //     .done(function(){
+  //       console.log('OK');
+
+  //     }).fail(function(jqXHR,responseText){
+        
+  //       let text = $.parseJSON(jqXHR.responseText);
+  //       let errors = text.errors;
+  //       for(key in errors){
+  //         let errorMessage = errors[key][0];
+  //         $('#error_message').append('<li>${errorMessage}</li>')
+  //       }
+  //       console.log('fail');
+
+  //     });
+  //   });
+  // });

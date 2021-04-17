@@ -17,8 +17,12 @@ class KeywordExploder
     {
         $keyword = $request->input('keyword');
         $ret = [];
-
+       
         if(!empty($keyword)){
+            if(!is_string($keyword))
+            {
+                $keyword = implode('',$keyword);
+            }
             // +を半角スペースに変換
             $keyword = str_replace('+','',$keyword);
             // 全角スペースを半角スペースに変換
