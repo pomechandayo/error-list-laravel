@@ -14,7 +14,7 @@ $factory->define(Article::class,
         return [
         'title' => $this->faker->text(60),
         'body' => $this->faker->text(255),
-        'status' => $this->faker->randomElement([1,1,1,1]),
+        'status' => $this->faker->randomElement([1,1,1,1,1,1,1,0]),
         'user_id' => $this->faker->numberBetween(1,3),
         
         // テスト実行時に使う

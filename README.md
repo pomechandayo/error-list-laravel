@@ -7,12 +7,13 @@ http://aws-infra-error-list-laravel.com:10080/index
 投稿機能や高評価機能を使う場合は、お手数ですがログインページの「簡単ログイン」ボタンからログインしてください。
 
 ## 使用技術
-言語:PHP7.4/Javascript/jQuery/Bootstrap/CSS/HTML  
-フレームワーク:Laravel6  
-DB:MySQL5.7  
-インフラ:AWS(VPC,EC2,Route53)/Docker/Docker-Compose  
-Webサーバー:Apache/Amazon Linux/HTTP  
-バージョン管理:Git/Github
+言語: PHP7.4/Javascript/jQuery/Bootstrap/CSS/HTML  
+フレームワーク: Laravel6  
+DB: MySQL5.7  
+インフラ: AWS(VPC,EC2,Route53)
+ツール: Docker/Docker-Compose
+Webサーバー: Apache/Amazon Linux/HTTP  
+バージョン管理: Git/Github
   
 ## 機能一覧
 - 認証機能  
@@ -38,7 +39,7 @@ Webサーバー:Apache/Amazon Linux/HTTP
 ## 工夫したところ  
 - N+1問題を意識してコードを書いた 
 - 記事投稿機能、記事編集機能にトランザクション機能を使い実装した   
-- Ajaxでいいいね機能を実装した  
+- Ajaxで高評価ボタン機能を実装した  
 - タグのみの検索、フリーワードのみの検索、タグ&フリ-ワードで検索できるよう実装した
 - インフラにAWSを使った
 - 環境構築にDcokerを使った  
