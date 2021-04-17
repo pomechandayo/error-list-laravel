@@ -28,7 +28,7 @@
 <div class="profile-container-lg">
   <div class="profile-container1">
     <div class="profile-box1">
-   <img src="/storage/profile_image/{{ $user->profile_image}}" class="profile-icon">
+   <img src="/storage/profile_image/{{ $user_data->profile_image}}" class="profile-icon">
       <div class="profile-user-name">
         {{ $user->name }}
       </div>
@@ -50,7 +50,7 @@
           @foreach($article_list as $article)
             <div class="profile-article-box">
               <li class="profile-article-user">
-              <a href="{{ route('userpage.show',[$user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage"></a>
+              <a href="{{ route('userpage.show',[$user_data->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage"></a>
               {{$article->user->name}}
               <div class="mypage_article_tag">
                 @foreach($article->tags as $tag)
@@ -74,7 +74,7 @@
           </div>
         @endforeach
         <div class="profile-paginate">
-          {{ $article_list->appends(['sort' => $sort])->links() }}
+          {{ $article_list->links() }}
         </div>
         @endif
         <!-- ここまで記事一覧 -->
