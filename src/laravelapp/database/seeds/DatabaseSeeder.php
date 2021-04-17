@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         factory(App\Article::class,50)
         ->create();
         
-        factory(App\Comment::class,20)
+        factory(App\Comment::class,50)
         ->create();
 
-        factory(App\Reply::class,15)
+        factory(App\Reply::class,50)
         ->create();
 
-        factory(App\Like::class,30)
+        factory(App\Like::class,50)
         ->create();
         
         $articles = App\Article::all();
