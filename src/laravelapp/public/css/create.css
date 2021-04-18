@@ -1,3 +1,4 @@
+
 .article-form {
   height: auto;
   display: flex;
@@ -109,6 +110,8 @@ pre {
 
 code{
   font-size: 1.7rem;
+  background-color: #eee;
+  height: auto;
 }
 li {
   text-align: left;
