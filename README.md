@@ -47,4 +47,4 @@ Webサーバー: Apache/Amazon Linux/HTTP
 - 記事投稿機能関連をリソースコントローラーで実装した  
 - インフラにAWSを使った
 - 環境構築にDcokerを使った  
-- GitHubのプルリクエストやIssuesを使って実践を意識しながらポートフォリオを作った  
+- GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った  
