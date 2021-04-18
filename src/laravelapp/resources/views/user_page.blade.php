@@ -30,7 +30,7 @@
     <div class="profile-box1">
    <img src="/storage/profile_image/{{ $user_data->profile_image}}" class="profile-icon">
       <div class="profile-user-name">
-        {{ $user->name }}
+        {{ $user_data->name }}
       </div>
       <div class="profile-linkbox">
         <div href="" class="profile-link-menu">
