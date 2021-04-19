@@ -18,7 +18,7 @@ class CreateArticlePostsTable extends Migration
             $table->boolean('status');
             $table->unsignedbigInteger('user_id');
             $table->string('title')->nullable();
-            $table->string('body')->nullalbe();
+            $table->text('body')->nullalbe();
             $table->timestamps();
 
             $table->foreign('user_id')
