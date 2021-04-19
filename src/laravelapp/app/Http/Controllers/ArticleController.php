@@ -22,7 +22,6 @@ class ArticleController extends Controller
     {   
         $url = $request->fullurl();
        
-
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
@@ -247,7 +246,7 @@ class ArticleController extends Controller
     {   
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
         
-        $article = Article::with('User')
+        $article = Article::with('User','tags')
         ->find($id);
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
@@ -363,7 +362,7 @@ class ArticleController extends Controller
         ])->with('user',Auth::user());
     }
     public function update(ArticleRequest $request, $id)
-    {    
+    {
         /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
         */
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
@@ -374,15 +373,17 @@ class ArticleController extends Controller
         foreach ($match[1] as $tag) {
             $record = Tag::firstOrCreate(['name' => $tag]);
             array_push($tags,$record);
+            
             /* firstOrCreateメソッドで、tags_tableのnameカラムに該当のない$tagは新規登録される。
             */
         };
+
         /*投稿に紐付けされるタグのidを配列化 */
         $tags_id = [];
         foreach ($tags as $tag) {
             array_push($tags_id,$tag['id']);
         };
-                
+
         /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
 
         $article = Article::find($id);

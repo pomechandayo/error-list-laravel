@@ -27,22 +27,12 @@
         <div class="create-error">※{{ $message }}</div>
       @enderror
       
-      @if($tag === null)
         <input 
         type="text" 
         name="tags" 
         class="article-tag"  
         placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
         value="{{ old('tag')}}">
-      @else
-        <input 
-        type="text" 
-        name="tags" 
-        class="article-tag"  
-        placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-        value="#{{ old('tag') ?? $tag }}">
-      @endif
-
       
     <div class="tab-bar">
     <div class="tab-bar-text">本文</div>
