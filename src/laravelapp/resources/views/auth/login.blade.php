@@ -14,19 +14,19 @@
   <h2 class="login-h2">ログイン</h2>
 </div>
 
-<form action="{{ route('login') }}" class="register-form" method="post">
+<div class="register-form" >
+<form action="{{ route('login') }}" class="form-box" method="post">
     @csrf
-    <div class="form-box" >
         <h3 style="margin-bottom: 30px;" class="login-h3">簡単ログイン</h3>
         <input type="hidden" name="email" value="error@iya.com">
         <input type="hidden" name="password" value="password">
         <button class="easy-btn" type="submit" onfocus="this.blur(); ">簡単ログイン</button>
+        
+        
+    </form>
+    <a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
+</div>
     
-        <!-- <button class="easy-btn" type="button" onfocus="this.blur(); "> Googleからログイン</button> -->
-    
-    </div>
-</form>
-
 
 <form action="{{ route('login') }}" class="register-form" method="post">
     @csrf

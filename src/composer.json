@@ -1,5 +1,6 @@
 {
     "require": {
-        "intervention/image": "2.5.1"
+        "intervention/image": "2.5.1",
+        "laravel/socialite": "3.2"
     }
 }

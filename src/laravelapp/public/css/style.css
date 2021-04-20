@@ -2,6 +2,7 @@
   text-decoration: none;
   font-size: 10px;
   outline: 0;
+  letter-spacing: 1px;
 }
 li {
   list-style-type: none;
@@ -230,7 +231,8 @@ a:hover {
   }
   
   .login-h2{
-    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
     color: 	#fff;
     display: inline-block;
     text-align: center;
@@ -247,6 +249,8 @@ a:hover {
     background-color: #6c757d;
     height: 20px;
     margin-top: 40px;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
   }
 
   .easy-login-btn {
@@ -257,32 +261,52 @@ a:hover {
   
     .easy-btn {
       margin: 20px auto;
-      width: 90%;
+      width: 80%;
       height: 40px;
       border-radius: 5px;
-      color: #000;
-      background-color: #00dd00;
-      font-size: 1.0rem;
+      color: #fff;
+      background-color: #00CC00;
+      font-size: 1.6rem;
       font-weight: bold;
+      border: solid 1px #000;
+      cursor: pointer;
+    }
+    .easy-btn:hover {
+      opacity: 0.6;
+    }
+    .google-login {
+      cursor: pointer;
+      margin: 20px auto 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80%;
+      height: 40px;
+      border-radius: 5px;
+      color: #fff;
+      background-color: #4285f4;
+      font-size: 1.6rem;
+      font-weight: bold;
+      border: solid 1px #000;
+    }
+    .google-login:hover{
+      opacity: 0.6;
     }
   
   .register-form{
-     width: 100%; 
+     width: 80%; 
      height: auto;
      margin: auto;
+     background-color:  #fff;
     }
   .form-box{
-    margin: 0 5%; 
-    height: auto;
     display: flex;
     flex-direction: column;
+
+    height: auto;
     background-color:  #fff;
   }
   
-  .easy-btn:hover {
-    opacity: 0.6;
-    cursor: pointer;
-  }
   
   label{
     display: block; 
@@ -456,8 +480,7 @@ a:hover {
     }
     
     .easy-btn {
-        width: 75%;
-        font-size: 1.3rem;
+        font-size: 1.6rem;
     }
     .input-box{ 
       width: 60%; 

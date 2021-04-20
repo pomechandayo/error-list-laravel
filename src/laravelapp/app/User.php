@@ -10,6 +10,8 @@ class User extends Model implements Authenticatable
 {
     use AuthenticableTrait;
 
+    protected $fillable = ['name','email','password'];
+
     public function replies()
     {
         return $this->hasMany(Reply::class);
