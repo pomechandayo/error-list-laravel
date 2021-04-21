@@ -48,5 +48,5 @@ Webサーバー: Apache/Amazon Linux/HTTP
 - タグのみの検索、フリーワードのみの検索、タグ&フリーワードで検索できるよう実装した  
 - 記事投稿機能関連をリソースコントローラーで実装した  
 - インフラにAWSを使った
-- 環境構築にDcokerを使った  
-- GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作 った  
+- 環境構築にDockerを使った  
+- GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った  
