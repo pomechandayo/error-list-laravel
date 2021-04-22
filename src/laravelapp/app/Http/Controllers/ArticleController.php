@@ -143,9 +143,10 @@ class ArticleController extends Controller
          * フリーキーワードのみの検索の場合
          */
         if($article_list === [] && $keywords !== "") {   
+            
             $articles = Article::get()->filter(
             function($article) use ($keywords) {
-                    return strpos($article->title,$keywords) !==false;
+                    return strpos($article->title,$keywords) !== false;
                 });
                 
             $articles = Article::get()->filter(
@@ -329,7 +330,7 @@ class ArticleController extends Controller
     }
 
    
-    public function edit($id)
+    public function edit(int $id)
     {   
         $tag_list = Article::find($id)->tags->pluck('name');
         $tags = $tag_list->toArray();
@@ -346,7 +347,7 @@ class ArticleController extends Controller
             'tag' => $tags_string,
         ])->with('user',Auth::user());
     }
-    public function update(ArticleRequest $request, $id)
+    public function update(ArticleRequest $request, int $id)
     {
         /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
         */
@@ -385,7 +386,7 @@ class ArticleController extends Controller
         ->with('user',Auth::user());
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {  
         $article = Article::find($id);
         $article->delete();

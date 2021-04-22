@@ -19,8 +19,8 @@ class ProfileController extends Controller
     /*
     マイページ表示
     */
-public function showProfile(Request $request) {
-
+public function showProfile(Request $request)
+ {
     $user = Auth::user();
     $comment_id = [];
     $article_list = [];
@@ -39,8 +39,8 @@ public function showProfile(Request $request) {
     if($request->menu_link === 'myarticle_open') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
-        ->where('user_id',$user->id)
         ->ArticleOpen()
+        ->where('user_id',$user->id)
         ->orderBy('created_at', 'desc')
         ->Paginate(5);   
         }
@@ -48,8 +48,8 @@ public function showProfile(Request $request) {
     if($request->menu_link === 'myarticle_closed') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
-        ->where('user_id',$user->id)
         ->ArticleClosed()
+        ->where('user_id',$user->id)
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
         }
@@ -61,8 +61,8 @@ public function showProfile(Request $request) {
        
         $article_list = Article::
         with('user','tags','likes','comments')
-        ->whereIn('id',$comment_id)
         ->ArticleOpen()
+        ->whereIn('id',$comment_id)
         ->orderBy('created_at', 'desc')
         ->Paginate(5);
     }

@@ -31,22 +31,23 @@ class Article extends Model
         return $this->hasMany('App\Comment');
     }
 
-    public function parse() {
+    public function parse() :string
+    {
       $parser = new \cebe\markdown\Markdown();
       return $parser->parse($this->body);
     }
 
-    public function scopeArticleOpen($query)
+    public function scopeArticleOpen(object $query) :object
     {
         return $query->where('status',self::OPEN);
     }
     
-    public function scopeArticleClosed($query)
+    public function scopeArticleClosed(object $query) :object
     {
         return $query->where('status',self::CLOSED);
     }
 
-    public function scopeCreated_atDescPaginate($query)
+    public function scopeCreated_atDescPaginate(object $query) :object
     {
         return $query->orderBy('created_at','desc')
                ->Paginate(10); 
@@ -57,7 +58,7 @@ class Article extends Model
         return $this->hasMany(Like::class,'article_id');
     }
     // いいね済みか判定,show.blade.phpで使う
-    public function isLikedBy($user) :bool 
+    public function isLikedBy(object $user) :bool 
     {
         return Like::where('user_id',$user->id)
         ->where('article_id',$this->id)

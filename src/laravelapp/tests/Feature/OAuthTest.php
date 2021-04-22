@@ -21,4 +21,9 @@ class OAuthTest extends TestCase
         $this->get(route('login.google',['provider' => $this->providerName]))->assertStatus(302);
     }
 
+    // public function testGoogleAcountRegister()
+    // {
+       
+    //     $this->get(route('login.google.callback',['provider' => $this->providerName]))->assertStatus(200);
+    // }
 }
