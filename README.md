@@ -50,4 +50,4 @@ Webサーバー: Apache/Amazon Linux
 - インフラにAWSを使った
 - 環境構築にDockerを使った  
 - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った  
-- 命名規則を意識してコーディグした
+- 命名規則を意識してコーディングした
