@@ -59,8 +59,7 @@ class LoginController extends Controller
         // emailが合致するユーザーを取得
         $user = User::where('email',$gUser->email)->first();
         // 見つからなければユーザーを作成
-        if($user === null)
-        {
+        if($user === null) {
             $user = $this->createUserByGoogle($gUser);
         }
 

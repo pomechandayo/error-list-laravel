@@ -28,8 +28,7 @@ public function showProfile(Request $request) {
     $comment_count = Comment::where('user_id',Auth::id())->get();
     
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
-    if($request->menu_link === 'myarticle_all')
-    {
+    if($request->menu_link === 'myarticle_all') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
         ->where('user_id',$user->id)
@@ -37,8 +36,7 @@ public function showProfile(Request $request) {
         ->Paginate(5);
         }
     // 公開中の記事だけ表示
-    if($request->menu_link === 'myarticle_open')
-    {
+    if($request->menu_link === 'myarticle_open') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
         ->where('user_id',$user->id)
@@ -47,8 +45,7 @@ public function showProfile(Request $request) {
         ->Paginate(5);   
         }
     // 非公開中の記事だけ表示
-    if($request->menu_link === 'myarticle_closed')
-    {
+    if($request->menu_link === 'myarticle_closed') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
         ->where('user_id',$user->id)
@@ -57,8 +54,7 @@ public function showProfile(Request $request) {
         ->Paginate(5);
         }
     // ユーザーがコメントした記事だけ表示
-    if($request->menu_link === 'my_comment_article')
-    {
+    if($request->menu_link === 'my_comment_article') {
         $sort = $request->sort;
         $comment = Comment::where('user_id',Auth::id())->get();
         $comment_id = $comment->pluck('article_id');

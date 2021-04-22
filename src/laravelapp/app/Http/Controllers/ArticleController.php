@@ -19,29 +19,24 @@ use App\Tag;
 class ArticleController extends Controller
 {
     public function index(User $user,Request $request)
-    {   
-        $url = $request->fullurl();
-       
+    {          
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
               
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
-        if($keywords === "")
-         {  
-           $article_list = Article::with('user','tags','likes','comments')
-            ->ArticleOpen()
-            ->Created_atDescPaginate();
+        if($keywords === "") {  
+           $article_list = Article::with('user','tags','likes','comments')->ArticleOpen()->Created_atDescPaginate();
         
            $keyword = '新着記事一覧';
 
-             return view('index',[
+           return view('index',[
                 'article_list' => $article_list,
                 'keyword' => $keyword,
                 'keywords' => $keywords,
-               ])->with('user',Auth::user());
-         }
+            ])->with('user',Auth::user());
+        }
          
         // 検索ワードからtag:の後に続く情報を抽出
         $tag_extract = preg_grep('/^tag:/',$keywords_array);
@@ -54,14 +49,16 @@ class ArticleController extends Controller
          * タグキーワードに該当する記事があればarticle_listに代入
          * 無ければ$article_listに[]を代入
          */
-        if(!empty($tag_extract))
-        {  
-            $tag_keyword = str_replace('tag:',"",$tag_extract[0]);
-            $tag_number = Tag::where('name',$tag_keyword)
+        if(!empty($tag_extract)) {  
+            
+            $tag_keyword = 
+            str_replace('tag:',"",$tag_extract[0]);
+            $tag_number = 
+            Tag::where('name',$tag_keyword)
             ->first('id');
             
-            if($tag_number !== null)
-            {
+            if($tag_number !== null){
+
                 $article_list = Tag::find($tag_number->id)
                 ->articles->sortByDesc('created_at');
            
@@ -82,8 +79,7 @@ class ArticleController extends Controller
          * article_listに絞り込んだ結果を代入する
          */
        
-        if($tag_number !== null && $keywords !== $tag_extract[0] )
-        {   
+        if($tag_number !== null && $keywords !== $tag_extract[0] ) {   
             // 検索ワードからタグの情報を取り除く
             $keyword = str_replace('tag:',"",$keywords);
             $keyword = str_replace($tag_keyword." ","",$keyword); 
@@ -101,8 +97,7 @@ class ArticleController extends Controller
                 });
 
                 /*キーワードに該当する記事があったか判定*/
-           if( $articles->isEmpty() == false )
-                {
+           if( $articles->isEmpty() == false ) {
                    foreach($articles as $article )
                    {
                       $get_article_list[] = $article->id;
@@ -130,8 +125,7 @@ class ArticleController extends Controller
 
         /**タグ検索のみの時*/
         if($keywords === $tag_extract[0] &&
-           $tag_number !== null)
-        {
+           $tag_number !== null) {
             foreach($article_list as $article )
               {
                 $get_article_list[] = $article->id;
@@ -148,24 +142,20 @@ class ArticleController extends Controller
         /**
          * フリーキーワードのみの検索の場合
          */
-        if($article_list === [] && $keywords !== "")
-        {   
+        if($article_list === [] && $keywords !== "") {   
             $articles = Article::get()->filter(
-            function($article) use ($keywords)
-                {
+            function($article) use ($keywords) {
                     return strpos($article->title,$keywords) !==false;
                 });
                 
             $articles = Article::get()->filter(
-            function($article) use ($keywords)
-                {
+            function($article) use ($keywords){
                  return strpos($article->body,$keywords)
                   !== false;
                 });
 
                 /**該当する記事があるか判定*/
-                if( $articles->isEmpty() === false )
-                {
+                if( $articles->isEmpty() === false ) {
                    foreach($articles as $article )
                    {
                       $get_article_list[] = $article->id;
@@ -234,8 +224,7 @@ class ArticleController extends Controller
         $article->user_id = Auth::user()->id;
         $article->status = Article::OPEN;
 
-    DB::transaction(function() use ($article,$tags_id)
-    {
+    DB::transaction(function() use ($article,$tags_id) {
         $article->save();
         $article->tags()->attach($tags_id);
     });
@@ -253,8 +242,7 @@ class ArticleController extends Controller
 
     
         if($article->status === Article::CLOSED &&
-        Auth::id() !== $article->user->id)
-        {
+        Auth::id() !== $article->user->id) {
             return redirect()->route('index');
         }else{
             return view('article.show',[
@@ -271,12 +259,10 @@ class ArticleController extends Controller
     {
        $article = Article::find($request->article_id);
      
-       if($article->status === Article::OPEN )
-        {
+       if($article->status === Article::OPEN ) {
             $article->status = Article::CLOSED;
             $article->save();
-        }else
-        {
+        }else {
             $article->status = Article::OPEN;
             $article->save();
         }
@@ -326,8 +312,7 @@ class ArticleController extends Controller
         $article_id = $request->article_id;
         
         $already_liked = Like::where('user_id', $user_id)->where('article_id', $article_id)->first();   
-        if (!$already_liked)
-        {   
+        if (!$already_liked) {   
             Like::create([
                 'article_id' => $article_id,
                 'user_id' => $user_id 
@@ -355,7 +340,7 @@ class ArticleController extends Controller
         $article_parse = new Article;
         $article_parse_body = $article_data->parse($article_parse);
 
-            return view('article.edit',[
+        return view('article.edit',[
             'article_parse_body' => $article_parse_body,
             'article_data' => $article_data,
             'tag' => $tags_string,
