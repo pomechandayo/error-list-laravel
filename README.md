@@ -9,12 +9,12 @@ http://aws-infra-error-list-laravel.com:10080/index
 http://aws-infra-error-list-laravel.com:10080/login
 
 ## 使用技術
-言語: PHP7.4/Javascript/jQuery/Bootstrap/CSS/HTML  
+言語: PHP7.4/Javascript/jQuery/Bootstrap    
 フレームワーク: Laravel6  
 DB: MySQL5.7  
 インフラ: AWS(VPC,EC2,Route53)  
-ツール: Docker/Docker-Compose  
-Webサーバー: Apache/Amazon Linux/HTTP  
+ツール: Docker  
+Webサーバー: Apache/Amazon Linux  
 バージョン管理: Git/Github  
   
 ## 機能一覧
