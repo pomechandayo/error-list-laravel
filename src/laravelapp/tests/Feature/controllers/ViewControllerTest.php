@@ -31,7 +31,7 @@ class ViewControllerTest extends TestCase
         
 
         $users = User::get()->toArray();
-
+       
         $this->get('/index')
         ->assertOK()
         ->assertSee($article1->pluck('title')->first())

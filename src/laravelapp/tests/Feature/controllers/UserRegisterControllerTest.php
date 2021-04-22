@@ -49,8 +49,6 @@ class UserRegisterControllerTest extends TestCase
        ];
 
        $this->from($url)->post($url,$postData)
-       ->assertRedirect('login');
-
-       
+       ->assertRedirect('login');       
    }
 }

@@ -31,7 +31,7 @@
     
     </div>
 </form>
-
+<a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
     
     <h3 style="margin-bottom: 20px; width:100%;" class="login-h3"> メールアドレスで登録</h3>
     <form action="{{ route('register') }}" class="register-form" method="post">

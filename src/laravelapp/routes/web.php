@@ -66,5 +66,13 @@ Route::get('article/show/{id}','ArticleController@show')->name('article.show');
 Route::get('userpage/show/{id}','UserPageController@showUserPage')
 ->name('userpage.show');
 
-Route::get('login/google','Auth\LoginController@redirectToGoogle');
-Route::get('login/google/callback','Auth\LoginController@handleGoogleCallback');
+Route::prefix('login/google')
+->namespace('Auth')
+->name('login.google')
+->group(function(){
+
+    Route::get('','LoginController@redirectToGoogle')
+    ->name('');
+    Route::get('callback','LoginController@handleGoogleCallback')
+    ->name('.callback');
+});
