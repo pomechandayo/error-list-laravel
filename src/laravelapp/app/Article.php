@@ -7,6 +7,7 @@ use database\factories\ArticleFactory;
 use Illuminate\Support\Facades\Auth;
 use App\ArticleTag;
 
+
 class Article extends Model
 {   
     protected $fillable = ['title','body','update_at'];
@@ -51,6 +52,15 @@ class Article extends Model
     {
         return $query->orderBy('created_at','desc')
                ->Paginate(10); 
+    }
+    public function scopeCreatedAtDescPagenate5(object $query) :object
+    {
+        return $query->orderBy('created_at', 'desc')
+                     ->Paginate(5);
+    }
+    public function scopeWhereUserId(object $query,$user) :object
+    {
+        return $query->where('user_id',$user->id);
     }
 
     public function likes()
