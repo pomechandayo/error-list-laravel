@@ -31,27 +31,24 @@ public function showProfile(Request $request)
     if($request->menu_link === 'myarticle_all') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
-        ->where('user_id',$user->id)
-        ->orderBy('created_at', 'desc')
-        ->Paginate(5);
+        ->WhereUserId($user)
+        ->CreatedAtDescPagenate5();
         }
     // 公開中の記事だけ表示
     if($request->menu_link === 'myarticle_open') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
         ->ArticleOpen()
-        ->where('user_id',$user->id)
-        ->orderBy('created_at', 'desc')
-        ->Paginate(5);   
+        ->WhereUserId($user)
+        ->CreatedAtDescPagenate5();
         }
     // 非公開中の記事だけ表示
     if($request->menu_link === 'myarticle_closed') {
         $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
         ->ArticleClosed()
-        ->where('user_id',$user->id)
-        ->orderBy('created_at', 'desc')
-        ->Paginate(5);
+        ->WhereUserId($user)
+        ->CreatedAtDescPagenate5();
         }
     // ユーザーがコメントした記事だけ表示
     if($request->menu_link === 'my_comment_article') {
@@ -63,8 +60,7 @@ public function showProfile(Request $request)
         with('user','tags','likes','comments')
         ->ArticleOpen()
         ->whereIn('id',$comment_id)
-        ->orderBy('created_at', 'desc')
-        ->Paginate(5);
+        ->CreatedDescPagenate5();
     }
     
          return view('mypage.profile',[
