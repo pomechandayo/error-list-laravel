@@ -23,11 +23,14 @@ class ArticleController extends Controller
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
+
               
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
         if($keywords === "") {  
-           $article_list = Article::with('user','tags','likes','comments')->ArticleOpen()->Created_atDescPaginate();
+           $article_list = Article::with('user','tags','likes','comments')
+           ->ArticleOpen()
+           ->Created_atDescPaginate();
         
            $keyword = '新着記事一覧';
 

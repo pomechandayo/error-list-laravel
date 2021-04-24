@@ -37,7 +37,7 @@ Webサーバー: Apache/Amazon Linux
 ## テスト  
 - PHPUnit  
     - 単体テスト(Unit)  
-    - 統合テスト(Feature)  
+    - 結合テスト(Feature)  
 
 ## 工夫したところ  
 - N+1問題を意識してコードを書いた 

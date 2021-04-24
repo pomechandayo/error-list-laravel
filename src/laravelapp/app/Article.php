@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use database\factories\ArticleFactory;
 use Illuminate\Support\Facades\Auth;
 use App\ArticleTag;
-
+use App\Article;
 
 class Article extends Model
 {   
