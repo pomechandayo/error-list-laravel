@@ -64,11 +64,13 @@
                   <li class="top-article-title">{{ $article->title}}</li>
                 </a>
                 <li class="top-article-created_at">{{      $article->created_at->format('Y年m月d日')}}に投稿
+                <div class="top-count-box">
                   <span class="top-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
-                </span>
+                  </span>
                   <span class="top-like-count">コメント数
                     {{$article->comments->count()}}
                   </span>
+                </div>
                 </li>
           </div>
           @endforeach

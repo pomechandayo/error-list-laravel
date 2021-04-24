@@ -161,22 +161,29 @@ a:hover {
   margin-right: 15px;
 }
 .profile-article-created_at {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #444;
   display: flex;
   align-items: center;
+  letter-spacing: 0.5;
 }
 .count_box{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-left: auto;
-  margin-right: 10px;
-
+  margin-right: 5px;
+  padding-bottom: 5px;
 }
 .mypage-like-count{
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  margin-right: 0;
 }
 
 .mypage-comment-count{
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  margin-left: 2px;
+  margin-right: 0;
 }
 
 
@@ -243,6 +250,9 @@ footer{
   }
   .profile-link-menu {
     font-size: 2rem;
+  }
+  .profile-article-created_at {
+    font-size: 1.5rem;
   }
   .mypage-like-count{
     font-size: 1.5rem;
