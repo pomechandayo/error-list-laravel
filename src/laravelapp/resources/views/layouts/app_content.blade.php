@@ -60,7 +60,7 @@
           ログイン
         </button>
       </a>
-     <span></span>
+     <span style="margin: 0 0 0 0;"></span>
       <a href="{{ route('showregister') }}" class="link">
         <button 
         class="btn" 

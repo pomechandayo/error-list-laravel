@@ -161,7 +161,7 @@ a:hover {
   margin-right: 15px;
 }
 .profile-article-created_at {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   color: #444;
   display: flex;
   align-items: center;
@@ -176,7 +176,7 @@ a:hover {
   padding-bottom: 5px;
 }
 .mypage-like-count{
-  font-size: 1.1rem;
+  font-size: 1.0rem;
   margin-right: 0;
 }
 

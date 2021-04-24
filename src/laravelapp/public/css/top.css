@@ -85,7 +85,7 @@ li {
   font-size: 1.5rem;
 }
 .top-article-created_at {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   color: #444;
   display: flex;
   justify-content: flex-start;
@@ -97,10 +97,10 @@ li {
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
 }
 .top-like-count{
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   margin-left: 0;
   margin-right: 0;
   letter-spacing: 0.5;
