@@ -85,14 +85,25 @@ li {
   font-size: 1.5rem;
 }
 .top-article-created_at {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #444;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  letter-spacing: 0.5;
+}
+.top-count-box{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  padding-bottom: 5px;
 }
 .top-like-count{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  margin-left: 0;
+  margin-right: 0;
+  letter-spacing: 0.5;
 }
 
 .pagination {
