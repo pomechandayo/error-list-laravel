@@ -9,13 +9,14 @@
     rel="stylesheet" 
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-      .profile-container1{ height: 450px;}
-      .profile-article-total{ font-size: 1.7rem;}
+      .profile-container1{ min-height: 330px; height: auto;}
+      .profile-article-total{ font-size: 1.7rem; margin-top: 5px;}
       .profile-link-menu {
         display: inline-block;
         color: #444;
         height: 30px;
-        font-size: 1.7rem;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
       }
       
       .profile-link-menu:hover{
@@ -63,7 +64,7 @@
               <li class="profile-article-title">{{$article->title}}</li>
               </a>
               <li class="profile-article-created_at">
-                    {{$article->created_at->format('Y年m月d日')}}に投稿
+                    {{$article->created_at->format('Y年m月d日')}}
                     <div class="count_box">
                       <span class="mypage-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
                       </span>

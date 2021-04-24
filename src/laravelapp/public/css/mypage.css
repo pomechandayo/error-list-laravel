@@ -1,6 +1,7 @@
 .edit-profile-box {
   width: 80%;
   height: auto;
+  min-height: 350px;
   background-color: #fff;
   margin: auto;
   height: 50vh;
@@ -25,7 +26,8 @@
   background-color: #fff;
   color: #000;
   font-size: 1.6rem;
-  margin: 3% auto 3% auto;
+  margin: 20px auto 10px auto;
+  text-align: center;
 }
 
 .edit-profile-border {
@@ -56,7 +58,7 @@
 
 .edit-profile-label2 {
   font-size: 1.3rem;
-  width: 30%;
+  width: 35%;
   margin-top: 5px;
   margin-left: 15%;
 }

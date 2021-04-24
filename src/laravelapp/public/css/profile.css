@@ -43,18 +43,18 @@ a:hover {
   margin: 10px auto;
 }
 .profile-article-total {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
 }
 .profile-likes-total {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
 }
 .profile-link-menu {
   display: inline-block;
   color: #444;
   height: 30px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 .profile-link-menu:hover{
   text-decoration: none;
@@ -68,7 +68,7 @@ a:hover {
   max-width: 800px;
   width: 80vw;
   height: 40px;
-  margin: 50px auto 2.5rem auto;
+  margin: 20px auto 20px auto;
   border-radius: 5px;
 }
 .profile-link-editprofile:hover {
@@ -173,7 +173,7 @@ a:hover {
   align-items: center;
   margin-left: auto;
   margin-right: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
 }
 .mypage-like-count{
   font-size: 1.0rem;
@@ -236,14 +236,12 @@ footer{
     height: 230px;
   }
   .profile-link-editprofile {
-  height:5vh;
   width: 70vw;
+  margin-top: 40px;
+  height: 50px;
 }
   .profile-link-myarticle {
     height: 5vh;
-  }
-  .profile-link-editprofile {
-    height: 50px;
   }
   .profile-link{
     font-size: 2.0rem;

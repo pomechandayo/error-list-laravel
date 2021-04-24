@@ -67,7 +67,7 @@
               <li class="profile-article-title">{{$article->title}}</li>
               </a>
               <li class="profile-article-created_at">
-                    {{$article->created_at->format('Y年m月d日')}}に投稿
+                    {{$article->created_at->format('Y年m月d日')}}
                     <div class="count_box">
                       <span class="mypage-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
                       </span>

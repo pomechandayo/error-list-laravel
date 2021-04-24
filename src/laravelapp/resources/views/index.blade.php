@@ -63,7 +63,7 @@
                 <a href="{{route('article.show',[$article->id])}}" class="top-link-article">
                   <li class="top-article-title">{{ $article->title}}</li>
                 </a>
-                <li class="top-article-created_at">{{      $article->created_at->format('Y年m月d日')}}に投稿
+                <li class="top-article-created_at">{{      $article->created_at->format('Y年m月d日')}}
                 <div class="top-count-box">
                   <span class="top-like-count" style="margin-left: auto;">高評価{{$article->likes->count()}}
                   </span>
