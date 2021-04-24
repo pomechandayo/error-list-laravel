@@ -18,7 +18,7 @@
     <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image"></a>
       <li class="show-article-user">
         {{ $article->user->name}}</li>
-        <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}に投稿</li>
+        <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}</li>
     </div>     
         <div class="show-title-box">
           <li class="show-title">{{$article->title}}</li>
