@@ -87,7 +87,7 @@ public function showProfile(Request $request)
         
          if ($request->has('profile_image')) {
              $fileName = $this->saveAvatar($request->file('profile_image'));
-             $user->profile_image= $fileName;
+             $user->profile_image = $fileName;
          }
 
         $user->save();
@@ -107,8 +107,8 @@ public function showProfile(Request $request)
   
           Image::make($file)->fit(200, 200)->save($tempPath);
   
-          $filePath = Storage::disk('public')
-            ->putFile('profile_image', new File($tempPath));
+          $filePath = Storage::disk('s3')
+            ->putFile('/', new File($tempPath),'public');
 
           return basename($filePath);
       }
