@@ -18,13 +18,14 @@ use App\Tag;
 
 class ArticleController extends Controller
 {
+   
+
     public function index(User $user,Request $request)
     {          
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
 
-              
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
         if($keywords === "") {  
