@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Storage;
 use Intervention\Image\Facades\Image;
 
 
