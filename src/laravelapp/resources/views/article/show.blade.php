@@ -132,7 +132,7 @@
       @foreach($comment->replies as $reply)
       <div class="reply-box">
         <div class="reply-user-data">
-        <a href="{{ route('userpage.show',[$reply->user->id])}}"><img src="/storage/profile_image/{{$reply->user->profile_image}}" class="reply-img"></a>
+        <a href="{{ route('userpage.show',[$reply->user->id])}}"><img src="{{ $user_image.$reply->user->profile_image ?? asset ('/img/default_image.png')}}" class="reply-img"></a>
           {{$reply->user->name}}
           {{$reply->created_at->format('Y年m月d日')}}
         @if(Auth::id() === $reply->user_id)
