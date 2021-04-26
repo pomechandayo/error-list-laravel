@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Mypage\Profile\EditRequest;
 use App\Article;
 use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 
@@ -26,7 +27,9 @@ public function showProfile(Request $request)
     $article_list = [];
     $article_count = Article::where('user_id',$user->id)->get();
     $comment_count = Comment::where('user_id',Auth::id())->get();
-    
+    $user_image = User::GetS3Url();
+    $s3_profile_image = User::GetAuthUserImage();
+
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
     if($request->menu_link === 'myarticle_all') {
         $sort = $request->sort;
@@ -60,7 +63,7 @@ public function showProfile(Request $request)
         with('user','tags','likes','comments')
         ->ArticleOpen()
         ->whereIn('id',$comment_id)
-        ->CreatedDescPagenate5();
+        ->CreatedAtDescPagenate5();
     }
     
          return view('mypage.profile',[
@@ -68,13 +71,19 @@ public function showProfile(Request $request)
             'comment_count' => $comment_count,
             'comment_id' => $comment_id,
             'article_list' => $article_list,
+            'user_image' => $user_image,
+            's3_profile_image' => $s3_profile_image
             ])->with('user',Auth::user());
         
-}
+    }
 
     public function showProfileEditForm()
-    {   
-        return view('mypage.profile_edit_form')
+    {  
+        $s3_profile_image = User::GetAuthUserImage();
+
+        return view('mypage.profile_edit_form',[
+            's3_profile_image' => $s3_profile_image
+        ])
         ->with('user',Auth::user());
     }
     
@@ -89,7 +98,7 @@ public function showProfile(Request $request)
              $fileName = $this->saveAvatar($request->file('profile_image'));
              $user->profile_image = $fileName;
          }
-
+        
         $user->save();
 
         return redirect()->back()

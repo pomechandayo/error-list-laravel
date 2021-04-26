@@ -27,7 +27,7 @@
         name="profile_image" 
         accept="image/png,image/jpeg,image/gif" class="edit-profile-input" id="profile_image" style="display: none;;" />
         @if(!empty($user->profile_image))
-          <img src="/storage/profile_image/{{$user->profile_image}}" alt="プロフィールの画像です" class="profile_img">
+          <img src="{{$s3_profile_image ?? asset ('/img/default_image.png')}}" alt="プロフィールの画像です" class="profile_img">
         @else
           <img src="{{ asset('/img/default_image.png')}}" alt="プロフィールの画像です" class="profile_img">
         @endif

@@ -15,16 +15,17 @@ use App\Reply;
 use App\User;
 use App\Like;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-   
-
     public function index(User $user,Request $request)
-    {          
+    {         
         $keywords_array = $request->input('keyword');
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
+        $user_image = User::GetS3Url();
+        $s3_profile_image = User::GetAuthUserImage();
 
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
@@ -32,13 +33,14 @@ class ArticleController extends Controller
            $article_list = Article::with('user','tags','likes','comments')
            ->ArticleOpen()
            ->Created_atDescPaginate();
-        
            $keyword = '新着記事一覧';
 
            return view('index',[
                 'article_list' => $article_list,
                 'keyword' => $keyword,
                 'keywords' => $keywords,
+                'user_image' => $user_image,
+                's3_profile_image' => $s3_profile_image,
             ])->with('user',Auth::user());
         }
          
@@ -121,6 +123,7 @@ class ArticleController extends Controller
                     return view('index',[
                         'article_list' => $article_list,
                         'keyword' => $search_keyword,
+                        's3_profile_image' => $s3_profile_image,
                      ])->with('user',Auth::user());
              }
         }else{
@@ -180,6 +183,7 @@ class ArticleController extends Controller
                     return view('index',[
                         'article_list' => $article_list,
                         'keyword' => $search_keyword,
+                        's3_profile_image' => $s3_profile_image,
                      ])->with('user',Auth::user());
                 }
         } 
@@ -190,14 +194,19 @@ class ArticleController extends Controller
                  'search_keyword' => $search_keyword, 
                  'article_list' => $article_list,
                  'keywords' => $keywords,
+                 'user_image' => $user_image,
+                 's3_profile_image' => $s3_profile_image,
              ])->with('user',Auth::user());
     }
                 
 
     public function create()
     {   
-        return view('article.create')
-        ->with('user',Auth::user());;
+        $s3_profile_image = User::GetAuthUserImage();
+
+        return view('article.create',[
+            's3_profile_image' => $s3_profile_image,
+        ])->with('user',Auth::user());;
     }
 
     public function store(ArticleRequest $request)
@@ -238,6 +247,9 @@ class ArticleController extends Controller
    
     public function show(Request $request, int $id)
     {   
+        $user_image = User::GetS3Url();
+        $s3_profile_image = User::GetAuthUserImage();
+
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
         
         $article = Article::with('User','tags')
@@ -251,6 +263,8 @@ class ArticleController extends Controller
             return redirect()->route('index');
         }else{
             return view('article.show',[
+                'user_image' => $user_image,
+                's3_profile_image' => $s3_profile_image,
                  'article' => $article,
                  'comments' => $comments,
                  'user_id' => Auth::id(),
@@ -336,6 +350,7 @@ class ArticleController extends Controller
    
     public function edit(int $id)
     {   
+        $s3_profile_image = User::GetAuthUserImage();
         $tag_list = Article::find($id)->tags->pluck('name');
         $tags = $tag_list->toArray();
         $tags_string = implode(" #",$tags);
@@ -346,6 +361,7 @@ class ArticleController extends Controller
         $article_parse_body = $article_data->parse($article_parse);
 
         return view('article.edit',[
+            's3_profile_image' => $s3_profile_image,
             'article_parse_body' => $article_parse_body,
             'article_data' => $article_data,
             'tag' => $tags_string,

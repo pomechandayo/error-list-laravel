@@ -48,7 +48,7 @@
         投稿する
       </button>
     </a>
-        <img src="/storage/profile_image/{{$user->profile_image}}" 
+        <img src="{{ $s3_profile_image ?? asset ('/img/default_image.png')}}" 
           class="icon-img" style="margin: 0 10px;">
       <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
       @else
