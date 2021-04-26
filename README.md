@@ -12,7 +12,7 @@ http://aws-infra-error-list-laravel.com:10080/login
 言語: PHP7.4/Javascript/jQuery/Bootstrap    
 フレームワーク: Laravel6  
 DB: MySQL5.7  
-インフラ: AWS(VPC,EC2,Route53)/Docker    
+インフラ: AWS(VPC,EC2,Route53,S3)/Docker  
 Webサーバー: Apache/Amazon Linux  
 バージョン管理: Git/Github  
   
@@ -43,7 +43,7 @@ Webサーバー: Apache/Amazon Linux
 - マイページ関連機能  
     - 管理者投稿記事表示  
     - 管理者がコメントした記事表示  
-    - プロフィール編集機能(アイコン画像登録機能)  
+    - アイコン画像登録機能(AWS S3)  
 - 自分以外のユーザーページ  
     - プロフィール表示機能  
     - 投稿一覧表示機能  
@@ -68,6 +68,7 @@ Webサーバー: Apache/Amazon Linux
 - その他    
     - Googleアカウントでログインできるよう実装した    
     - ユーザーアイコン画像を登録できるようにした  
-    - インフラにAWSを使った
+    - 画像をAWS S3で保存し表示できるよう実装した  
+    - インフラにAWSを使った  
     - 環境構築にDockerを使った  
-    - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った
+    - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った  
