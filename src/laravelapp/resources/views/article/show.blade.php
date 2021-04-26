@@ -15,7 +15,7 @@
   
   <div class="show-box">
     <div class="show-user-data">
-    <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="show-user-image"></a>
+    <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="{{ $user_image.$article->user->profile_image ?? asset ('/img/default_image.png')}}" class="show-user-image"></a>
       <li class="show-article-user">
         {{ $article->user->name}}</li>
         <li class="show-created-at">{{ $article->created_at->format('Y年m月d日')}}</li>
@@ -113,7 +113,7 @@
     @foreach($comments as $comment)
     <div class="show-comment-box">
       <li class=comment-user>
-      <a href="{{ route('userpage.show',[$comment->user->id])}}"><img src="/storage/profile_image/{{$comment->user->profile_image}}" class="comment-user-img"></a>
+      <a href="{{ route('userpage.show',[$comment->user->id])}}"><img src="{{ $user_image.$comment->user->profile_image ?? asset ('/img/default_image.png')}}" class="comment-user-img"></a>
         <div class="comment-user-name">
           {{ $comment->user->name}}
         </div>

@@ -13,7 +13,7 @@
 <div class="profile-container-lg">
   <div class="profile-container1">
     <div class="profile-box1">
-      <img src="/storage/profile_image/{{ $user->profile_image}}" class="profile-icon">
+      <img src="{{$s3_profile_image ?? asset ('/img/default_image.png')}}" class="profile-icon">
       <div class="profile-user-name">
         {{ $user->name }}
       </div>
@@ -54,7 +54,9 @@
           @foreach($article_list as $article)
             <div class="profile-article-box">
               <li class="profile-article-user">
-              <img src="/storage/profile_image/{{$article->user->profile_image}}" class="profile-myimage"> 
+              <a href="{{ route('userpage.show',[$article->user->id])}}">
+                <img src="{{$user_image.$article->user->profile_image ?? asset ('/img/default_image.png')}}" class="profile-myimage"> 
+              </a>
               {{$article->user->name}}
               <div class="mypage_article_tag">
                 @foreach($article->tags as $tag)

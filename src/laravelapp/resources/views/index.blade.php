@@ -49,9 +49,10 @@
         <div class="top-article_box">
           <li class="top-article-user">
           @if($article->user->id !== Auth::id())
-            <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage"></a>
+            <a href="{{ route('userpage.show',[$article->user->id])}}"><img src="{{ $user_image.$article->user->profile_image ?? asset ('/img/default_image.png')}}" class="top-article-myimage"></a>
           @else
-            <a href="{{ route('mypage.profile') }}"><img src="/storage/profile_image/{{$article->user->profile_image}}" class="top-article-myimage"></a>
+            <a href="{{ route('mypage.profile') }}"><img src="{{ $user_image.$article->user->profile_image 
+             ?? asset('/img/default_image.png')}}" class="top-article-myimage"></a>
           @endif
             {{ $article->user->name}}
             <div class="top-tag">
