@@ -23,17 +23,17 @@ class User extends Model implements Authenticatable
         return $this->hasMany('App\Like');
     }
 
-    public function scopeGetS3Url()
+    public function scopeGetS3Url() :string
     {
         $user = User::where('id',1)->first();
         $path = Storage::disk('s3')->url($user->profile_image);
 
         $path = str_replace($user->profile_image,'',$path);
-        
+    
         return $path;
     }
 
-    public function scopeGetAuthUserImage()
+    public function scopeGetAuthUserImage() :string
     {
         $s3_url = 0;
         
