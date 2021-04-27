@@ -13,7 +13,7 @@ http://aws-infra-error-list-laravel.com:10080/login
 フレームワーク: Laravel6  
 DB: MySQL5.7  
 インフラ: AWS(VPC,EC2,Route53,S3)/Docker  
-Webサーバー: Apache/Amazon Linux  
+Webサーバー: Apache/Amazon Linux2  
 バージョン管理: Git/Github  
   
 ## 機能一覧
