@@ -56,7 +56,9 @@
         <button 
           class="btn" 
           type="button" 
-          onfocus="this.blur(); ">
+          onfocus="this.blur();"
+           style=" padding-right: 2px;"
+           >
           ログイン
         </button>
       </a>
@@ -65,8 +67,10 @@
         <button 
         class="btn" 
         type="button" 
-        onfocus="this.blur();">
-        新規会員登録</button></a>
+        onfocus="this.blur();"
+        style=" padding-left: 2px;"
+        >
+        会員登録</button></a>
       @endif
   </div>
 </div>

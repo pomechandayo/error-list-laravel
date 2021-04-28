@@ -54,7 +54,7 @@ a:hover {
   }
   
   .header-right {
-    width: 60%;
+    width: 55%;
     margin-left: 2%;
     margin-right: 2%;
     display: flex;
@@ -96,6 +96,7 @@ a:hover {
     border-radius: 50%;
     cursor: pointer;
   }
+
   .btn {
     margin: 0 2px;
     background-color: #343a40;

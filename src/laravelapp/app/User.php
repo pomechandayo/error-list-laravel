@@ -24,12 +24,14 @@ class User extends Model implements Authenticatable
     }
 
     public function scopeGetS3Url() :string
-    {
+    {   $path = '';
         $user = User::where('id',1)->first();
-        $path = Storage::disk('s3')->url($user->profile_image);
 
+        if($user->profile_image !== null){
+        $path = Storage::disk('s3')->url($user->profile_image);
+    }
         $path = str_replace($user->profile_image,'',$path);
-    
+
         return $path;
     }
 
