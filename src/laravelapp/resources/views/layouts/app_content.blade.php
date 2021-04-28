@@ -54,10 +54,9 @@
       @else
       <a href="{{ route('login') }}" class="link">
         <button 
-          class="btn" 
+          id="btn" 
           type="button" 
           onfocus="this.blur();"
-           style=" padding-right: 2px;"
            >
           ログイン
         </button>
@@ -65,10 +64,9 @@
      <span style="margin: 0 0 0 0;"></span>
       <a href="{{ route('showregister') }}" class="link">
         <button 
-        class="btn" 
+        id="btn" 
         type="button" 
         onfocus="this.blur();"
-        style=" padding-left: 2px;"
         >
         会員登録</button></a>
       @endif
