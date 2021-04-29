@@ -2,11 +2,11 @@
 Web系エンジニアやプログラマーが解決したエラーを共有するための記事投稿アプリです  
 
 ## URL  
-トップページに繋がります。ログインせずに検索や記事の閲覧ができます    
-http://aws-infra-error-list-laravel.com:10080/index  
+トップページに繋がります。ログインせずに検索や記事の閲覧ができます  
+http://aws-infra-error-list-laravel.com:10080/index
 
 全ての機能を使う場合は、お手数ですが下記URLからログインページへと進み「簡単ログイン」ボタンからログインしてください。  
-http://aws-infra-error-list-laravel.com:10080/login
+http://aws-infra-error-list-laravel.com:10080/login  
 
 ## 使用技術
 言語: PHP7.4/Javascript/jQuery/Bootstrap    
