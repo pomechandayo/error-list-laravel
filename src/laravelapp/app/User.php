@@ -29,7 +29,8 @@ class User extends Model implements Authenticatable
 
         if($user->profile_image !== null){
         $path = Storage::disk('s3')->url($user->profile_image);
-    }
+        }
+        
         $path = str_replace($user->profile_image,'',$path);
 
         return $path;
