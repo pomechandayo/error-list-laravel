@@ -76,3 +76,5 @@ Route::prefix('login/google')
     Route::get('callback','LoginController@handleGoogleCallback')
     ->name('.callback');
 });
+
+Route::view('index1','index1');
