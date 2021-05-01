@@ -1,6 +1,6 @@
 <template>
   <div>
-    <the-header></the-header>
+    <the-header :auth="auth" />
     Hello World
     Hello World
     Hello World
@@ -12,13 +12,18 @@
   </div>
 </template>
 <script>
-     import TheFooter from "./layout/TheFooter";
      import TheHeader from "./layout/TheHeader"; 
+     import TheFooter from "./layout/TheFooter";
 
     export default {
       components: {
-        TheFooter,
         TheHeader,
+        TheFooter,
+      },
+      props: {
+        auth: {
+          type: Object|Array
+      }
       },
       data() {
         return {

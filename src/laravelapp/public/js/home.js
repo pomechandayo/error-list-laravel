@@ -1908,8 +1908,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _layout_TheFooter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layout/TheFooter */ "./resources/js/components/layout/TheFooter.vue");
-/* harmony import */ var _layout_TheHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layout/TheHeader */ "./resources/js/components/layout/TheHeader.vue");
+/* harmony import */ var _layout_TheHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layout/TheHeader */ "./resources/js/components/layout/TheHeader.vue");
+/* harmony import */ var _layout_TheFooter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layout/TheFooter */ "./resources/js/components/layout/TheFooter.vue");
 //
 //
 //
@@ -1927,8 +1927,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    TheFooter: _layout_TheFooter__WEBPACK_IMPORTED_MODULE_0__["default"],
-    TheHeader: _layout_TheHeader__WEBPACK_IMPORTED_MODULE_1__["default"]
+    TheHeader: _layout_TheHeader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TheFooter: _layout_TheFooter__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    auth: {
+      type: Object | Array
+    }
   },
   data: function data() {
     return {
@@ -1941,6 +1946,121 @@ __webpack_require__.r(__webpack_exports__);
     this.$http.get('index2').then(function (response) {
       return _this.users = response.data;
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    };
+  },
+  props: {
+    auth: {
+      type: Object | Array
+    }
   }
 });
 
@@ -37610,7 +37730,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("the-header"),
+      _c("the-header", { attrs: { auth: _vm.auth } }),
       _vm._v("\n  Hello World\n  Hello World\n  Hello World\n\n  "),
       _c(
         "ul",
@@ -37684,138 +37804,161 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("header", [
+    _c("div", { staticClass: "header-box" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "header-right" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._m(2),
+        _vm._v(" "),
+        _vm.auth.length !== 0
+          ? _c(
+              "a",
+              {
+                staticClass: "link-write-article",
+                attrs: { href: "article.create" }
+              },
+              [
+                _c("button", { staticClass: "link-write-article-btn" }, [
+                  _vm._v("\n            投稿する\n          ")
+                ])
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.auth.length !== 0
+          ? _c("img", {
+              staticClass: "icon-img",
+              staticStyle: { margin: "0 10px" },
+              attrs: {
+                src: "{{ $s3_profile_image ?? /pulic/img/default_image.png"
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.auth.length === 0
+          ? _c("a", { staticClass: "link", attrs: { href: "login" } }, [
+              _c(
+                "button",
+                {
+                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" }
+                },
+                [_vm._v("\n          ログイン\n        ")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.auth.length === 0
+          ? _c("span", { staticStyle: { margin: "0 0 0 0" } })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.auth.length === 0
+          ? _c("a", { staticClass: "link", attrs: { href: "showregister" } }, [
+              _c(
+                "button",
+                {
+                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" }
+                },
+                [_vm._v("\n        会員登録")]
+              )
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.auth.length !== 0
+      ? _c("nav", { attrs: { id: "nav" } }, [_vm._m(3)])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("header", [
-      _c("div", { staticClass: "header-box" }, [
-        _c("div", { staticClass: "header-left" }, [
-          _c("a", { staticClass: "logo", attrs: { href: "/index" } }, [
-            _vm._v("ErrorList")
-          ])
-        ]),
+    return _c("div", { staticClass: "header-left" }, [
+      _c("a", { staticClass: "logo", attrs: { href: "/index" } }, [
+        _vm._v("ErrorList")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "form",
+      { staticClass: "search", attrs: { method: "get", action: "index" } },
+      [
+        _c("input", {
+          staticClass: "search-input-pc",
+          attrs: {
+            type: "text",
+            placeholder: "tag:タグ名 キーワード",
+            name: "keyword"
+          }
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "header-right" }, [
-          _c(
-            "form",
-            {
-              staticClass: "search",
-              attrs: { method: "get", action: "index" }
-            },
-            [
-              _vm._v("\n      @csrf\n      "),
-              _c("input", {
-                staticClass: "search-input-pc",
-                attrs: {
-                  type: "text",
-                  placeholder: "tag:タグ名 キーワード",
-                  name: "keyword"
-                }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "search-btn-pc",
-                attrs: {
-                  type: "image",
-                  onfocus: "this.blur(); ",
-                  src: "/pulic/img/serch1.png",
-                  value: "検索"
-                }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "search-btn",
-              attrs: { type: "button", onfocus: "this.blur(); " }
-            },
-            [
-              _c("img", {
-                staticClass: "search-img",
-                attrs: { src: "/pulic/img/serch1.png" }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _vm._v("\n      @if(true == Auth::check())\n      "),
-          _c(
-            "a",
-            {
-              staticClass: "link-write-article",
-              attrs: { href: "article.create" }
-            },
-            [
-              _c("button", { staticClass: "link-write-article-btn" }, [
-                _vm._v("\n        投稿する\n      ")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "icon-img",
-            staticStyle: { margin: "0 10px" },
-            attrs: {
-              src: "{{ $s3_profile_image ?? /pulic/img/default_image.png"
-            }
-          }),
-          _vm._v(" "),
-          _vm._v("\n      @else\n      "),
-          _c("a", { staticClass: "link", attrs: { href: "login" } }, [
-            _c(
-              "button",
-              { attrs: { id: "btn", type: "button", onfocus: "this.blur();" } },
-              [_vm._v("\n          ログイン\n        ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("span", { staticStyle: { margin: "0 0 0 0" } }),
-          _vm._v(" "),
-          _c("a", { staticClass: "link", attrs: { href: "showregister" } }, [
-            _c(
-              "button",
-              { attrs: { id: "btn", type: "button", onfocus: "this.blur();" } },
-              [_vm._v("\n        会員登録")]
-            )
-          ]),
-          _vm._v("\n      @endif\n  ")
-        ])
+        _c("input", {
+          staticClass: "search-btn-pc",
+          attrs: {
+            type: "image",
+            onfocus: "this.blur(); ",
+            src: "/pulic/img/serch1.png",
+            value: "検索"
+          }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "search-btn",
+        attrs: { type: "button", onfocus: "this.blur(); " }
+      },
+      [
+        _c("img", {
+          staticClass: "search-img",
+          attrs: { src: "/pulic/img/serch1.png" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "nav-ul" }, [
+      _c("li", { staticClass: "nav-list" }, [
+        _c(
+          "a",
+          { staticClass: "nav-link", attrs: { href: "mypage.profile" } },
+          [_vm._v("\n          マイページ\n        ")]
+        )
       ]),
-      _vm._v("\n@if(true == Auth::check())\n"),
-      _c("nav", { attrs: { id: "nav" } }, [
-        _c("ul", { staticClass: "nav-ul" }, [
-          _c("li", { staticClass: "nav-list" }, [
-            _c(
-              "a",
-              { staticClass: "nav-link", attrs: { href: "mypage.profile" } },
-              [_vm._v("\n          マイページ\n        ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-list" }, [
-            _c(
-              "a",
-              { staticClass: "nav-link", attrs: { href: "article.create" } },
-              [_vm._v("投稿")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-list" }, [
-            _c("form", { attrs: { action: "logout", method: "POST" } }, [
-              _vm._v("\n        @csrf\n        "),
-              _c("a", { staticClass: "nav-link", attrs: { href: "logout" } }, [
-                _vm._v("\n        ログアウト\n      ")
-              ])
-            ])
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-list" }, [
+        _c(
+          "a",
+          { staticClass: "nav-link", attrs: { href: "article.create" } },
+          [_vm._v("投稿")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-list" }, [
+        _c("form", { attrs: { action: "logout", method: "POST" } }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "logout" } }, [
+            _vm._v("\n        ログアウト\n      ")
           ])
         ])
-      ]),
-      _vm._v("\n@endif\n")
+      ])
     ])
   }
 ]
@@ -50158,21 +50301,24 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/layout/TheHeader.vue ***!
   \******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TheHeader_vue_vue_type_template_id_12a31364___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TheHeader.vue?vue&type=template&id=12a31364& */ "./resources/js/components/layout/TheHeader.vue?vue&type=template&id=12a31364&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TheHeader.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TheHeader_vue_vue_type_template_id_12a31364___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TheHeader_vue_vue_type_template_id_12a31364___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -50186,6 +50332,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/layout/TheHeader.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TheHeader.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/TheHeader.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TheHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

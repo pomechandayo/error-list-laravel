@@ -10,7 +10,7 @@
 
 </head>
   <div id="app">
-    <router-view /> 
+    <router-view :auth="{{ Auth::user() ?? '[]' }}"/> 
   </div>
   <script src="{{ mix('js/app.js') }}"></script> <!-- コンパイルされた/public/js/app.jsを読み込みます。コンパイル前のresources/js/app.jsではないことに注意してください -->
 
