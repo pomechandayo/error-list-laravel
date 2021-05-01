@@ -6,12 +6,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
-  <div id="app">  <!-- `resources/js/app.js`で設定したセレクタ(el)を指定します -->
-    <app /> <!-- `resources/js/app.js`で設定したコンポーネントの名称を記述します -->
+  <div id="app">
+    <router-view /> 
   </div>
-  <script src="{{ mix('js/home.js') }}"></script> <!-- コンパイルされた/public/js/app.jsを読み込みます。コンパイル前のresources/js/app.jsではないことに注意してください -->
+  <script src="{{ mix('js/app.js') }}"></script> <!-- コンパイルされた/public/js/app.jsを読み込みます。コンパイル前のresources/js/app.jsではないことに注意してください -->
 
 

@@ -77,4 +77,7 @@ Route::prefix('login/google')
     ->name('.callback');
 });
 
+Route::get('index2',function(){
+    return App\User::all();
+});
 Route::view('index1','index1');

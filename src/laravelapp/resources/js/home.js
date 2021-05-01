@@ -1,7 +1,7 @@
 require('./bootstrap');
 
 import Vue from 'vue'
-import  App from './components/HelloWorld'
+import  App from './components/HelloWorld.vue'
 
 new Vue({
   el: 'app',
