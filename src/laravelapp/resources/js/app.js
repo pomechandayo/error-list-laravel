@@ -1,11 +1,9 @@
-require('./bootstrap');
-
 import Vue from 'vue'
-import  App from './components/HelloWorld'
+import router from './router.js'
+import axios from 'axios'
+
+Vue.prototype.$http = axios;
 
 new Vue({
-  el: 'app',
-  components: {
-    app: App
-  }
-})
+  router: router,
+}).$mount('#app')
