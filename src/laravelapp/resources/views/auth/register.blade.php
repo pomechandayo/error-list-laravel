@@ -1,4 +1,4 @@
-@extends('layouts.app_content')
+@extends('layouts.app')
 
 @section('title')
 新規会員登録
