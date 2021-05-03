@@ -12,10 +12,16 @@ Route::get('article/status','ArticleController@status')
 Route::post('/like','ArticleController@like')
 ->name('like');
 
-Route::group(['namespace' => 'Auth'],function()
-{
-    Route::get('/register','RegisterController@showregister')
-    ->name('showregister');
+
+Route::get('/register',function() {
+    return view('auth.register');
+});
+Route::get('/login',function() {
+    return view('auth.register');
+});
+
+Route::group(['namespace' => 'Auth'],function(){
+
     Route::post('/register','RegisterController@register')
     ->name('register');
     Route::get('/logout','LogoutController@getLogout')
