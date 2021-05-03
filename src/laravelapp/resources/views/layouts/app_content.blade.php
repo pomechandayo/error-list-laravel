@@ -55,7 +55,7 @@
           class="icon-img" style="margin: 0 10px;">
       <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
       @else
-      <a href="{{ route('login') }}" class="link">
+      <a href="/login" class="link">
         <button 
           id="btn" 
           type="button" 
@@ -65,7 +65,7 @@
         </button>
       </a>
      <span style="margin: 0 0 0 0;"></span>
-      <a href="{{ route('showregister') }}" class="link">
+      <a href="/register" class="link">
         <button 
         id="btn" 
         type="button" 
