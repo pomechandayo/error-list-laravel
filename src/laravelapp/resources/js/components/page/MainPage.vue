@@ -1,7 +1,7 @@
 <template>
   <div>
     <the-header :auth="auth" />
-    <router-view/>
+    <router-view :errors="errors" />
     <the-footer />
   </div>
 </template>
@@ -20,6 +20,9 @@ export default {
     auth: {
       type: Object|Array
     },
+    errors: {
+      type: Object|Array
+    }
   }
 }
 </script>

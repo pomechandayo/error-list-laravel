@@ -5,6 +5,7 @@ import MainPage from './components/page/MainPage'
 
 Vue.prototype.$http = axios;
 
+
 new Vue({
   router: router,
   components: {

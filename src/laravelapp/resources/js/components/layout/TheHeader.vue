@@ -57,7 +57,7 @@
       </a>
      <span style="margin: 0 0 0 0;"
      v-if="auth.length === 0"></span>
-      <a href="showregister" class="link"
+      <a href="register" class="link"
       v-if="auth.length === 0">
         <button 
         id="btn" 
