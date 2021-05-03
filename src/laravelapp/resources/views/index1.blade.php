@@ -1,7 +1,6 @@
-
-
+<!DOCTYPE html>
+<html>
 <head>
- 
   <meta charset="utf-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +8,11 @@
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
-  <div id="app">
-    <router-view :auth="{{ Auth::user() ?? '[]' }}"/> 
+<body>
+  <div id="app">  
+    <app :auth="{{ Auth::user() ?? '[]' }}"/> 
   </div>
-  <script src="{{ mix('js/app.js') }}"></script> <!-- コンパイルされた/public/js/app.jsを読み込みます。コンパイル前のresources/js/app.jsではないことに注意してください -->
-
+  <script src="{{ mix('js/app.js') }}"></script> 
+</body>
+</html>
 

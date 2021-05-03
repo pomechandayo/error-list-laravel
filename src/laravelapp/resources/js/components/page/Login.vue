@@ -1,7 +1,7 @@
 <template>
 <div>
  <div class="relative">
-  <h2 class="login-h2">新規会員登録</h2>
+  <h2 class="login-h2">ログイン</h2>
 </div>
 
 <div class="form-box" style="width: 72%; margin: 0 auto; ">
@@ -25,7 +25,7 @@ style="margin: 0; width: 100%;"
 
 <a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
     
-    <h3 class="login-h3"> メールアドレスで登録</h3>
+    <h3 class="login-h3">ログイン</h3>
 
 <div class="" v-if="errors.length !== 0">
   <li class="">
@@ -34,30 +34,15 @@ style="margin: 0; width: 100%;"
   </li>
 </div>
     <ValidationObserver
-    action="/register" 
+    action="/login" 
     class="register-form" 
     method="post"
-    id="register"
+    id="login"
     tag="form"
     ref="observer"
     v-slot="{ invalid }"
     >
         <input type="hidden" name="_token" :value="csrf" />
-        <label class=auth-label for="name">ユーザー名</label>
-
-        <validation-provider 
-        class="validation-v"
-         name="名前" 
-         rules="requiredmax:20" 
-         v-slot="{ errors }"
-         >
-          <input v-model="name" class="input-box"  type="text" name="name" value="" placeholder="エラー嫌太郎" />
-      
-          <li class="error-message " v-show="errors[0]" >
-           {{ errors[0] }}
-          </li>
-
-        </validation-provider>
         
             <label class=auth-label for="email">メールアドレス</label>
 
@@ -67,7 +52,6 @@ style="margin: 0; width: 100%;"
 
          </validation-provider>
           
-        
         <label class=auth-label for="password">パスワード</label>
         
         <validation-provider 
@@ -82,7 +66,7 @@ style="margin: 0; width: 100%;"
 
         </validation-provider>
 
-        <button class="register">登録</button>
+        <button class="register">ログイン</button>
 
 </ValidationObserver>
     </div>
@@ -138,7 +122,7 @@ export default {
     async register() {
       const isValid = await this.$refs.observer.validate();
       if(isValid) {
-        document.querySelector("#register").submit();
+        document.querySelector("#login").submit();
       }
     }
   }
