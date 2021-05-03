@@ -46,23 +46,25 @@
           v-if="auth.length !== 0">
         <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
    
-      <a href="login" class="link"  v-if="auth.length === 0">
+      <a href="" class="link"  v-if="auth.length === 0">
         <button 
           id="btn" 
           type="button" 
           onfocus="this.blur();"
+          @click.stop.prevent="goLoginPage()"
            >
           ログイン
         </button>
       </a>
      <span style="margin: 0 0 0 0;"
      v-if="auth.length === 0"></span>
-      <a href="register" class="link"
+      <a href="" class="link"
       v-if="auth.length === 0">
         <button 
         id="btn" 
         type="button" 
         onfocus="this.blur();"
+        @click.stop.prevent="goRegisterPage()"
         >
         会員登録</button></a>
       
@@ -136,6 +138,12 @@ v-show="show_contents.indexOf('1000') >= 0">
           this.show_contents.push(data)
         }
       },
-    },
+     goRegisterPage() {
+       this.$router.push("/register");
+     },
+     goLoginPage() {
+       this.$router.push("/login");
+     },
+    }
 }
 </script>

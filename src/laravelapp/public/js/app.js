@@ -2069,6 +2069,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2091,6 +2093,12 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.show_contents.push(data);
       }
+    },
+    goRegisterPage: function goRegisterPage() {
+      this.$router.push("/register");
+    },
+    goLoginPage: function goLoginPage() {
+      this.$router.push("/login");
     }
   }
 });
@@ -2327,6 +2335,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -6670,11 +6679,18 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _vm.auth.length === 0
-          ? _c("a", { staticClass: "link", attrs: { href: "login" } }, [
+          ? _c("a", { staticClass: "link", attrs: { href: "" } }, [
               _c(
                 "button",
                 {
-                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" }
+                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      $event.preventDefault()
+                      return _vm.goLoginPage()
+                    }
+                  }
                 },
                 [_vm._v("\n          ログイン\n        ")]
               )
@@ -6686,11 +6702,18 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _vm.auth.length === 0
-          ? _c("a", { staticClass: "link", attrs: { href: "register" } }, [
+          ? _c("a", { staticClass: "link", attrs: { href: "" } }, [
               _c(
                 "button",
                 {
-                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" }
+                  attrs: { id: "btn", type: "button", onfocus: "this.blur();" },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      $event.preventDefault()
+                      return _vm.goRegisterPage()
+                    }
+                  }
                 },
                 [_vm._v("\n        会員登録")]
               )

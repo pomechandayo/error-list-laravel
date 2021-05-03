@@ -32,6 +32,7 @@ style="margin: 0; width: 100%;"
    <div class="validation-message" v-for="(error, key, index) in errors" :key="index">
    {{error}}</div>
   </li>
+
 </div>
     <ValidationObserver
     action="/register" 
