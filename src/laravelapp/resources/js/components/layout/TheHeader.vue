@@ -2,7 +2,9 @@
   <header>
 <div class="header-box">
   <div class="header-left">
-    <a href="/index" class="logo">ErrorList</a>
+    <a href="" class="logo"
+     @click.stop.prevent="goTopPage()"
+        >ErrorList</a>
   </div>
   <div class="header-right">
    
@@ -143,6 +145,9 @@ v-show="show_contents.indexOf('1000') >= 0">
      },
      goLoginPage() {
        this.$router.push("/login");
+     },
+     goTopPage() {
+       this.$router.push("/index1");
      },
     }
 }

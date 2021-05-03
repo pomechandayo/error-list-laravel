@@ -19,6 +19,9 @@ Route::get('/register',function() {
 Route::get('/login',function() {
     return view('auth.register');
 });
+Route::get('/index1',function(){
+    return view('/index1');
+});
 
 Route::group(['namespace' => 'Auth'],function(){
 
@@ -83,7 +86,4 @@ Route::prefix('login/google')
     ->name('.callback');
 });
 
-Route::get('index2',function(){
-    return App\User::all();
-});
-Route::view('index1','index1');
+

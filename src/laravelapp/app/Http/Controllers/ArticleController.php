@@ -20,8 +20,12 @@ use Illuminate\Support\Facades\Storage;
 class ArticleController extends Controller
 {
     public function index(User $user,Request $request)
-    {         
+    {   
         $keywords_array = $request->input('keyword');
+        if($keywords_array === null){
+            
+            $keywords_array = [];
+        }
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
         $user_image = User::GetS3Url();
@@ -35,13 +39,13 @@ class ArticleController extends Controller
            ->Created_atDescPaginate();
            $keyword = '新着記事一覧';
             
-           return view('index',[
+           return [
                 'article_list' => $article_list,
                 'keyword' => $keyword,
                 'keywords' => $keywords,
                 'user_image' => $user_image,
                 's3_profile_image' => $s3_profile_image,
-            ])->with('user',Auth::user());
+           ];
         }
          
         // 検索ワードからtag:の後に続く情報を抽出
