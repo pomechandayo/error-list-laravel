@@ -22,7 +22,7 @@ export default new Router({
     },
     {
     path: '/index1',
-    name: 'index',
+    name: 'index1',
     component: Top
     },
   ]

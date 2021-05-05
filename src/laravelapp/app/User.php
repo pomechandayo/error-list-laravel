@@ -36,15 +36,18 @@ class User extends Model implements Authenticatable
         return $path;
     }
 
-    public function scopeGetAuthUserImage() :string
+    public function scopeGetAuthUserImage() 
     {
-        $s3_url = 0;
+        $s3_url = "";
         
         if(Auth::id() !== null){
 
         $user = User::where('id',Auth::id())
         ->first();
-        $s3_url = $this->scopeGetS3Url().$user->profile_image;
+        $s3_url = $user->profile_image;
+        }
+        if($s3_url === null){
+            $s3_url = "dd";
         }
         return $s3_url;
     }

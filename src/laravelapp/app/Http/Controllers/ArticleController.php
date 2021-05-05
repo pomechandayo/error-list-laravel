@@ -38,7 +38,7 @@ class ArticleController extends Controller
            ->ArticleOpen()
            ->Created_atDescPaginate();
            $keyword = '新着記事一覧';
-            
+           
            return [
                 'article_list' => $article_list,
                 'keyword' => $keyword,

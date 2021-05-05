@@ -3,7 +3,7 @@
 <div class="header-box">
   <div class="header-left">
     <a href="" class="logo"
-     @click.stop.prevent="goTopPage()"
+     @click.stop.prevent="goUrlPage('/index1')"
         >ErrorList</a>
   </div>
   <div class="header-right">
@@ -35,9 +35,11 @@
       </button>
  
         <!-- ログインしていればユーザーのアイコンが表示される -->
-      <a href="article.create" class="link-write-article"
+      <a  class="link-write-article"
        v-if="auth.length !== 0">
-          <button  class="link-write-article-btn">
+          <button  class="link-write-article-btn"
+          @click.stop.prevent="goUrlPage('/article/create')"
+          >
             投稿する
           </button>
        </a>
@@ -46,6 +48,7 @@
         src="{{ $s3_profile_image ?? /pulic/img/default_image.png" 
           class="icon-img" style="margin: 0 10px;"
           v-if="auth.length !== 0">
+
         <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
    
       <a href="" class="link"  v-if="auth.length === 0">
@@ -53,7 +56,7 @@
           id="btn" 
           type="button" 
           onfocus="this.blur();"
-          @click.stop.prevent="goLoginPage()"
+          @click.stop.prevent="goUrlPage('/login')"
            >
           ログイン
         </button>
@@ -66,7 +69,7 @@
         id="btn" 
         type="button" 
         onfocus="this.blur();"
-        @click.stop.prevent="goRegisterPage()"
+        @click.stop.prevent="goUrlPage('/register')"
         >
         会員登録</button></a>
       
@@ -77,12 +80,16 @@
 v-show="show_contents.indexOf('1000') >= 0"> 
   <ul class="nav-ul">
       <li class="nav-list" >
-        <a href="mypage.profile" class="nav-link">
+        <a class="nav-link"
+        @click.stop.prevent="goUrlPage('/mypage/profile')">
           マイページ
         </a>
     </li>
       <li class="nav-list" >
-        <a href="article.create" class="nav-link">投稿</a>
+        <a href="article.create" class="nav-link"
+        @click.stop.prevent="goUrlPage('/article/create')">
+          投稿
+        </a>
       </li>
       <li class="nav-list">
         <form action="logout"
@@ -140,14 +147,8 @@ v-show="show_contents.indexOf('1000') >= 0">
           this.show_contents.push(data)
         }
       },
-     goRegisterPage() {
-       this.$router.push("/register");
-     },
-     goLoginPage() {
-       this.$router.push("/login");
-     },
-     goTopPage() {
-       this.$router.push("/index1");
+     goUrlPage(url) {
+       this.$router.push(url);
      },
     }
 }

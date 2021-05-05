@@ -18,5 +18,7 @@
        mounted() {
          this.$http.get('index2').then(response => this.users = response.data)
        },
+   
     };
+    
 </script>
