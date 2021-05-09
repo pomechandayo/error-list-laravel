@@ -15,6 +15,7 @@ li {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding-top: 10px;
 }
 .search-article {
   background-color: #fff;
@@ -23,7 +24,7 @@ li {
   padding: 0;
   margin: 0;
   width: 100%;
- text-align: center !important;
+  text-align: center !important;
 }
 .tag-form {
   width: 100%;
@@ -35,6 +36,7 @@ li {
   height: 25px;
   width: 70%;
   font-size: 1.7rem;
+  margin-bottom: 10px;
 }
 .tag-search-btn {
   height: 20px;
@@ -46,7 +48,7 @@ li {
 .top-article-container {
   background-color: #fff;
   height: auto;
-  margin-top: 40px;
+  margin-top: 80px;
   border-radius: 5px;
 }
 .top-article_box {

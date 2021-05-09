@@ -38,7 +38,7 @@ class ArticleController extends Controller
            ->ArticleOpen()
            ->Created_atDescPaginate();
            $keyword = '新着記事一覧';
-            
+           
            return [
                 'article_list' => $article_list,
                 'keyword' => $keyword,
@@ -194,13 +194,13 @@ class ArticleController extends Controller
                  
             $search_keyword = $keywords . 'の検索結果';
 
-             return view('index',[
+             return [
                  'search_keyword' => $search_keyword, 
                  'article_list' => $article_list,
                  'keywords' => $keywords,
                  'user_image' => $user_image,
                  's3_profile_image' => $s3_profile_image,
-             ])->with('user',Auth::user());
+             ];
     }
                 
 
@@ -251,11 +251,12 @@ class ArticleController extends Controller
    
     public function show(Request $request, int $id)
     {   
-        $user_image = User::GetS3Url();
-        $s3_profile_image = User::GetAuthUserImage();
+        // dd($id);
+        // $user_image = User::GetS3Url();
+        // $s3_profile_image = User::GetAuthUserImage();
 
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
-        
+
         $article = Article::with('User','tags')
         ->find($id);
         $article_parse = new Article;
@@ -266,14 +267,12 @@ class ArticleController extends Controller
         Auth::id() !== $article->user->id) {
             return redirect()->route('index');
         }else{
-            return view('article.show',[
-                'user_image' => $user_image,
-                's3_profile_image' => $s3_profile_image,
+            return [
                  'article' => $article,
                  'comments' => $comments,
                  'user_id' => Auth::id(),
                  'article_parse_body' => $article_parse_body,
-             ])->with('user',Auth::user());
+            ];
         }
     }
 

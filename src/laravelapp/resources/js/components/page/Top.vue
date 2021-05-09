@@ -8,16 +8,18 @@
     rel="stylesheet" 
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<div class="top-main">
-
+<div class="top-main"
+>
 <div class="top-article-container">
     <div class="search-result">
       <h2 class="search-article">
+ 
   　  </h2>
       <h2 class="search-article">
      
   　  </h2>
-       <form action="index" method="get" class="tag-form">
+       <form action="/index" method="get" class="tag-form">
+       <input type="hidden" name="_token" :value="csrf" />
          <input 
           class="tag-search" 
           type="text" 
@@ -30,46 +32,78 @@
             type="image" onfocus="this.blur(); " 
             src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png" 
             value="検索"
+           
           >
        </form>
      </div>
        
       <ul>
-             
+  
+     <template v-for="(article_list,index) in top.data">
+      
+         <li id="li-none">
+
+        
         <div class="top-article_box">
+         
+
+        
+      
           <li class="top-article-user">
-         
-            <a href="userpage.show">
-              <img src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/default_image.png" class="top-article-myimage">
+        
+            <a href="/userpage/show">
+              <img class="top-article-myimage"
+              :src="article_list.user.profile_image">
+             
             </a>
+          <span>{{ article_list.user.name }}</span>
           
-            <a href="mypage.profile">
-              <img src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/default_image.png" class="top-article-myimage">
-            </a>
-          
-          
-            
+            <template v-for="(tags,index) in article_list.tags">
             <div class="top-tag">
-                              
+              {{ tags.name}}
             </div>
+            </template>
           </li>
-                  <dl class="top-article-title"v-for="(info,index) in top.article_list" :key="index"
-                  >
-                  <dd></dd>
-                  </dl>
-                <li class="top-article-created_at">
-                <div class="top-count-box">
-                  <span class="top-like-count" style="margin-left: auto;">
-                  </span>
-                  <span class="top-like-count">コメント数
-                  </span>
+                 <router-link :to="{name: 'article.show',
+                 query: {articleId: article_list.id}}">
+                  <li 
+                  class="top-article-title"
+                  >{{article_list.title}}</li>
+                 </router-link>
+
+                <div>
+                <div class="top-article-created_at">
+                  {{ article_list.created_at}}
                 </div>
-                </li>
+                <div class="top-count-box">
+
+                  <div style="margin-left: auto;"
+                  v-for="(likes,index) in article_list.likes" :key="`first-${index}`"
+                  v-if="index > 0 && index < 2"
+                  >
+                    <div class="top-like-count">高評価数{{ Object.keys(article_list.likes).length }}
+                    </div>
+                  </div>
+
+                  <div 
+                  v-for="(comments,index) in article_list.comments" :key="`second-${index}`"
+                  v-if="index > 0 && index < 2"
+                  >
+                      <div class="top-like-count">コメント数{{ Object.keys(article_list.comments).length }}
+                      </div>
+                  </div>
+                </div>
+                </div>
           </div>
-         
+      </li>
+       
+     </template>
+    
+      
       </ul>
       <div class="top-paginate">
           
+    <Pagination :data=top @move-page="movePage($event)"/>
       </div>
     </div>
   </div> 
@@ -77,6 +111,8 @@
 </template>
 
 <script>
+import Pagination from '../Pagination';
+
 export default {
  data(){
     return{
@@ -84,13 +120,37 @@ export default {
       .querySelector('meta[name="csrf-token"]')
       .getAttribute("content"),
 
-      top: []
+      page: 1,
+      top: [],
+      keywords: [],
+      showUrl: [],
     };
   },
-  mounted() {
-    this.$http.get("/api/index1").then(response => {
-      this.top = response.data;
-    });
+  props: {
+    auth:{
+     type: Object|Array
+    } ,
   },
+ methods: {
+   getArticles() {
+   const url = '/api/index?page=' + this.page
+   this.$http.get(url).then((response) => {
+     this.top = response.data.article_list;
+   }).catch(error => {
+     console.log(error.response)
+   });
+   },
+   movePage(page) {
+      this.page = page;
+      this.getArticles();
+  },
+ },
+  mounted() {
+    this.getArticles();
+  },
+  components: {
+    Pagination
+  },
+  
 }
 </script>

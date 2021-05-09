@@ -4,7 +4,7 @@ import axios from 'axios'
 import MainPage from './components/page/MainPage'
 
 Vue.prototype.$http = axios;
-
+require('./bootstrap');
 
 new Vue({
   router: router,

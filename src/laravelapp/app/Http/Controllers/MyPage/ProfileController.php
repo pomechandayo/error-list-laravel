@@ -17,6 +17,14 @@ use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {   
+    public function getProfileImage(int $id): string
+    {
+        $user_image = User::where('id',$id)->first('profile_image')->toJson();
+       
+        
+        return $user_image;
+        
+    }
     /*
     マイページ表示
     */
@@ -96,7 +104,7 @@ public function showProfile(Request $request)
         
          if ($request->has('profile_image')) {
              $fileName = $this->saveAvatar($request->file('profile_image'));
-             $user->profile_image = $fileName;
+             $user->profile_image = 'https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/'.$fileName;
          }
         
         $user->save();
