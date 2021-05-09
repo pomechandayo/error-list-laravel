@@ -5,7 +5,7 @@ Auth::routes([
 ]);
 
 
-Route::get('index','ArticleController@index')->name('index')->middleware('keyword');
+// Route::get('index','ArticleController@index')->name('index')->middleware('keyword');
 
 Route::get('article/status','ArticleController@status')
 ->name('article.status');
@@ -19,8 +19,11 @@ Route::get('/register',function() {
 Route::get('/login',function() {
     return view('auth.register');
 });
-Route::get('/index1',function(){
-    return view('/index1');
+Route::get('/index',function(){
+    return view('/index');
+});
+Route::get('article/show',function() {
+    return view('/article/show');
 });
 
 Route::group(['namespace' => 'Auth'],function(){
@@ -59,9 +62,9 @@ Route::prefix('mypage')
     ->name('mypage.edit-profile');
     Route::post('edit-profile','ProfileController@editProfile')
     ->name('mypage.edit-profile');
-    Route::get('profile','ProfileController@showProfile')
+    Route::get('/profile','ProfileController@showProfile')
     ->name('mypage.profile');
-    Route::get('profile/{menu_link}','ProfileController@showProfile');
+    Route::get('/profile/{menu_link}','ProfileController@showProfile');
 });
 
 Route::group(['middleware' => ['auth']],function() 
@@ -70,7 +73,7 @@ Route::group(['middleware' => ['auth']],function()
     ['only' => ['create','store','edit','update','destroy']]);  
 });
 
-Route::get('article/show/{id}','ArticleController@show')->name('article.show');
+
 
 Route::get('userpage/show/{id}','UserPageController@showUserPage')
 ->name('userpage.show');
@@ -86,4 +89,4 @@ Route::prefix('login/google')
     ->name('.callback');
 });
 
-
+Route::post('/api/profile','MyPage\ProfileController@getProfileImage');

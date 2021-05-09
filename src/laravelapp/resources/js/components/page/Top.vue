@@ -13,11 +13,13 @@
 <div class="top-article-container">
     <div class="search-result">
       <h2 class="search-article">
+ 
   　  </h2>
       <h2 class="search-article">
      
   　  </h2>
-       <form action="index1" method="get" class="tag-form">
+       <form action="/index" method="get" class="tag-form">
+       <input type="hidden" name="_token" :value="csrf" />
          <input 
           class="tag-search" 
           type="text" 
@@ -30,6 +32,7 @@
             type="image" onfocus="this.blur(); " 
             src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png" 
             value="検索"
+           
           >
        </form>
      </div>
@@ -50,21 +53,23 @@
         
             <a href="/userpage/show">
               <img class="top-article-myimage"
-              v-bind:src="article_list.user.profile_image">
+              :src="article_list.user.profile_image">
              
             </a>
           <span>{{ article_list.user.name }}</span>
           
-            
+            <template v-for="(tags,index) in article_list.tags">
             <div class="top-tag">
-       
+              {{ tags.name}}
             </div>
+            </template>
           </li>
-                 <a href="">
+                 <router-link :to="{name: 'article.show',
+                 query: {articleId: article_list.id}}">
                   <li 
                   class="top-article-title"
                   >{{article_list.title}}</li>
-                  </a>
+                 </router-link>
 
                 <div>
                 <div class="top-article-created_at">
@@ -102,7 +107,6 @@
       </div>
     </div>
   </div> 
-{{a()}}
   </div>
 </template>
 
@@ -118,34 +122,35 @@ export default {
 
       page: 1,
       top: [],
+      keywords: [],
+      showUrl: [],
     };
   },
   props: {
     auth:{
      type: Object|Array
-    } 
+    } ,
   },
  methods: {
-   a: function(){
-     console.log(this.top);
-   },
    getArticles() {
-   const url = '/api/index1?page=' + this.page
+   const url = '/api/index?page=' + this.page
    this.$http.get(url).then((response) => {
      this.top = response.data.article_list;
+   }).catch(error => {
+     console.log(error.response)
    });
    },
    movePage(page) {
       this.page = page;
       this.getArticles();
- }
+  },
  },
   mounted() {
-   
     this.getArticles();
   },
   components: {
     Pagination
   },
+  
 }
 </script>

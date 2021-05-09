@@ -17,6 +17,14 @@ use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {   
+    public function getProfileImage(int $id): string
+    {
+        $user_image = User::where('id',$id)->first('profile_image')->toJson();
+       
+        
+        return $user_image;
+        
+    }
     /*
     マイページ表示
     */

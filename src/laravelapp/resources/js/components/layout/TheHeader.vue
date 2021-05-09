@@ -3,7 +3,7 @@
 <div class="header-box">
   <div class="header-left">
     <a href="" class="logo"
-     @click.stop.prevent="goUrlPage('/index1')"
+     @click.stop.prevent="goUrlPage('/index')"
         >ErrorList</a>
   </div>
   <div class="header-right">
@@ -43,12 +43,13 @@
             投稿する
           </button>
        </a>
+    
         <img 
         @click="toggle('1000')"
-        src="{{ $s3_profile_image ?? /pulic/img/default_image.png" 
+        :src="userImage" 
           class="icon-img" style="margin: 0 10px;"
           v-if="auth.length !== 0">
-
+     
         <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
    
       <a href="" class="link"  v-if="auth.length === 0">
@@ -131,6 +132,8 @@ v-show="show_contents.indexOf('1000') >= 0">
         .getAttribute("content"),
       show_contents: [],
       show_menu: [],
+      userid: "",
+      userImage: "",
       };
       
     },
@@ -150,6 +153,20 @@ v-show="show_contents.indexOf('1000') >= 0">
      goUrlPage(url) {
        this.$router.push(url);
      },
+    getProfileImage() {
+      const data = {
+        userid: this.auth.id
+      }
+     const self = this;
+     const Url ='/api/profile/' + this.auth.id;
+     this.$http.get(Url)
+      .then(response => {
+        self.userImage = response.data.profile_image;
+      }).catch( error => {console.log(error);});
     }
+    },
+    created() {
+      this.getProfileImage()
+    },
 }
 </script>

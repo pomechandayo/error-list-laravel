@@ -17,7 +17,7 @@ class KeywordExploder
     {
         $keyword = $request->input('keyword');
         $ret = [];
-       
+    
         if(!empty($keyword)){
             if(!is_string($keyword))
             {

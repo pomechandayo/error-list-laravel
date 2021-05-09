@@ -18,7 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['api']],function() {
-    Route::get('index1','ArticleController@index');
-
+    Route::get('/index','ArticleController@index')->middleware('keyword');
+    Route::get('/article/show/{id}','ArticleController@show');
+    Route::get('/profile/{id}','MyPage\ProfileController@getProfileImage');
 });
 
