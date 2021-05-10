@@ -87,20 +87,15 @@ v-show="show_contents.indexOf('1000') >= 0">
         </a>
     </li>
       <li class="nav-list" >
-        <a href="article.create" class="nav-link"
+        <a href="/article/create" class="nav-link"
         @click.stop.prevent="goUrlPage('/article/create')">
           投稿
         </a>
       </li>
       <li class="nav-list">
-        <form action="logout"
-        method="POST">
-        <a 
-        href=
-        "logout" class="nav-link">
-        ログアウト
-      </a>
-      </form>
+        <a href="/logout" class="nav-link">
+            ログアウト
+        </a>
     </li>
     </div>
   </ul>

@@ -32,8 +32,10 @@
         <div class="show-like-box">
     
               <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
-              
-              <article-like>
+              <article-like 
+              :user_id ="auth.id"
+              :article_id="article.id"
+              >
               </article-like>
        
            <!-- 記事を書いたユーザーであれば公開、非公開を切り替えるリンクを表示 -->
@@ -66,12 +68,22 @@
           >編集</a>
 
           <form 
-            action="/comment/delete/{id}"
+            action="/destroy"
             method="post" 
             class="destroy-form"
             >
-            
-            <input type='submit' value="削除" class="show-link-delete" onclick="return confirm('削除しますか？');">
+            <input type="hidden" name="_token" :value="csrf" />
+            <input 
+            type="hidden" 
+            name="article_id"
+            :value="article.id"
+            >
+            <input 
+            type='submit' 
+            value="削除" 
+            class="show-link-delete"
+            onclick="return confirm('削除しますか？');"
+            >
           </form>
         </div>
       
@@ -119,15 +131,27 @@
         <div class="comment-created-at">
           {{ comment.created_at }}
         </div>
-          <a 
-          href="" 
-          class="comment-delete" 
-          onclick="return 
-          confirm('削除しますか？');"
-          v-if="comment.user.id === auth.id "
+
+        <form
+          action="/article/comment/delete"
+          method="get"
+          class="comment-delete"
+        >
+          <input type="hidden" name="_token" :value="csrf" />
+          <input
+            type="hidden"
+            name="comment_id"
+            :value="comment.id" 
+          >
+          <button
+            class="comment-delete" 
+            onclick="return 
+            confirm('削除しますか？');"
+            v-if="comment.user.id === auth.id "
           >
           削除
-          </a>
+          </button>
+        </form>
       
       </li>
       <li class="comment-body">
@@ -141,14 +165,27 @@
         <div class="reply-user-data">
         <a href=""><img :src="replies.user.profile_image" class="reply-img"></a>
           {{ replies.user.name }}
-            <a 
-            href="" 
-            class="reply-delete" 
-            onclick="return confirm('削除しますか？');"
+         
+        <form
+          action="/article/reply/delete"
+          method="get"
+          class="reply-delete" 
+        >
+          <input type="hidden" name="_token" :value="csrf" />
+          <input
+            type="hidden"
+            name="reply_id"
+            :value="replies.id" 
+          >
+          <button
+            class="reply-delete"  
+            onclick="return 
+            confirm('削除しますか？');"
             v-if="replies.user.id === auth.id "
-            >
-            削除
-            </a>
+          >
+          削除
+          </button>
+        </form>
       
         </div>
         
