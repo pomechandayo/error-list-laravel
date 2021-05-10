@@ -1,71 +1,119 @@
 <template>
   <div>
        
-         
-        <span class="likes">
-                    <i class="like-toggle liked" 
-                    @click="clickLike"
-                    >
-                      高評価
-                    </i>
+      <template v-if="user_id !== null">
 
-                    <span class="like-counter">
-                      {{ countLikes }}
-                    </span>
+        <span 
+        class="likes"
+        v-if="status === false"
+        >
+
+          <i 
+          class="like-toggle"
+          @click.prevent="likeCheck"
+          >
+            高評価
+          </i>
+          <span class="like-counter">
+            {{ likeCount }}
+          </span>
+
         </span>
-           
-            
+        <span class="likes" v-else>
+
+          <i
+          class="like-toggle liked"
+          @click.prevent="likeCheck"
+          > 高評価</i>
+
+          <span class="like-counter">
+            {{ likeCount }}
+          </span>
+        </span>
+
+      </template>
+      
+    <template v-if="user_id === null">
+      <span class="likes">
+        <span class="like-toggle-guest">高評価</span>
+        <span class="like-counter">
+          {{ likeCount }}
+        </span>
+       </span>
+    </template>
+      
   </div>
 </template>
 
 <script>
   export default{
-    props: {
-      initiallsLikedBy: {
-        type: Boolean,
-        default: false,
-      },
-      intialCountLikes: {
-        type: Number,
-        default: 0,
-      },
-      authorized: {
-        type: Boolean,
-        default: false,
-      },
-      endpoint: {
-        type: String,
-      },
-    },
+    props: ['article_id','user_id'],
    data() {
       return{
-      isLikedBy: this.initiallsLikedBy,
-      countLikes: this.initialCountLikes,
+      status: false,
+      likeCount: []
        }
     },
     methods: {
-      clickLike() {
-        if(!this.authorized) {
-          alert('高評価機能はログイン中のみ使用できます')
-          return
-        }
-
-        this.isLikedBy
-        ?this.unlike()
-        :this.like()
+      firstCheck() {
+        const article_id = this.article_id;
+        const user_id    = this.user_id;
+        const Url = "/api/like/" + article_id + "/" + user_id +"/likeFirstCheck";
+        console.log(Url);
+        axios.get(Url)
+        .then(res => {
+          if(res.data[0] === true){
+            console.log(res)
+            this.status = res.data[0];
+            this.likeCount  = res.data[1]
+          }else{
+            console.log(res)
+            this.status = res.data[0]
+            this.count  = res.data[1]
+          }
+        }).catch(error => {
+          console.log(error)
+        });
       },
-      async like() {
-        const response = await axios.put(this.endpoint)
+      likeCheck() {
+        const article_id = this.article_id
+        const user_id = this.user_id
+         const Url = "/api/like/" + article_id + "/" + user_id +"/likeCheck";
 
-        this.isLikeBy = true
-        this.countLikes = response.data.countLikes
+         axios.get(Url)
+         .then(res => {
+           if(res.data[0] === true){
+             this.status = res.data[0]
+             this.likeCount  = res.data[1]
+           }else{
+             this.status = res.data[0]
+             this.likeCount  = res.data[1]
+           }
+         }).catch(error => {
+           console.log(error)
+         });
       },
-      async unlike() {
-        const response = await axios.delete(this.endpoint)
+       getLikeCount() {
 
-        this.isLikeBy = false
-        this.countLikes = response.data.countLikes
-      },
+      const likeCountUrl = '/api/likeCount/' + this.$route.query.articleId;
+      let self = this;
+      
+      this.$http.get(likeCountUrl)
+      .then( response => {
+        
+        self.likeCount = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      }); 
     },
+    a() {
+      console.log(this.article_id);
+    }
+    },
+    mounted() {
+      this.a();
+      this.firstCheck();
+  },
   }
 </script>

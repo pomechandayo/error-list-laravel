@@ -13,7 +13,6 @@ use App\Article;
 use App\Comment;
 use App\Reply;
 use App\User;
-use App\Like;
 use App\Tag;
 use Illuminate\Support\Facades\Storage;
 
@@ -303,9 +302,10 @@ class ArticleController extends Controller
 
         return redirect()->back();
     }
-    public function comment_delete(int $id)
+    public function commentDelete(Request $request)
     {
-        $comment = Comment::where('id',$id)->first();
+        $comment = Comment::where('id',$request->comment_id)->first();
+        
         $comment->delete();
 
         return redirect()->back();
@@ -320,34 +320,12 @@ class ArticleController extends Controller
         ]);
         return redirect()->back();
     }
-    public function reply_delete(int $id)
+    public function replyDelete(Request $request)
     {
-        $reply = Reply::where('id',$id)->first();
+        $reply = Reply::where('id',$request->reply_id)->first();
         $reply->delete();
 
         return redirect()->back();
-    }
-
-    public function like(Request $request)
-    {
-        $user_id = Auth::user()->id; 
-        $article_id = $request->article_id;
-        
-        $already_liked = Like::where('user_id', $user_id)->where('article_id', $article_id)->first();   
-        if (!$already_liked) {   
-            Like::create([
-                'article_id' => $article_id,
-                'user_id' => $user_id 
-            ]);
-        } else { 
-            Like::where('article_id', $article_id)->where('user_id', $user_id)->delete();
-        }
-        //5.この投稿の最新の総いいね数を取得
-        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
-        $param = [
-            'review_likes_count' => $review_likes_count,
-        ];
-        return response()->json($param); //6.JSONデータをjQueryに返す
     }
 
    
@@ -409,9 +387,9 @@ class ArticleController extends Controller
         ->with('user',Auth::user());
     }
 
-    public function destroy(int $id)
+    public function destroy(Request $request)
     {  
-        $article = Article::find($id);
+        $article = Article::find($request->article_id);
         $article->delete();
 
         return redirect(route('index'))

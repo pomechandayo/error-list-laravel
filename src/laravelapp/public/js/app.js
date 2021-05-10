@@ -1920,14 +1920,33 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1949,88 +1968,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    initiallsLikedBy: {
-      type: Boolean,
-      "default": false
-    },
-    intialCountLikes: {
-      type: Number,
-      "default": 0
-    },
-    authorized: {
-      type: Boolean,
-      "default": false
-    },
-    endpoint: {
-      type: String
-    }
-  },
+  props: ['article_id', 'user_id'],
   data: function data() {
     return {
-      isLikedBy: this.initiallsLikedBy,
-      countLikes: this.initialCountLikes
+      status: false,
+      likeCount: []
     };
   },
   methods: {
-    clickLike: function clickLike() {
-      if (!this.authorized) {
-        alert('高評価機能はログイン中のみ使用できます');
-        return;
-      }
-
-      this.isLikedBy ? this.unlike() : this.like();
-    },
-    like: function like() {
+    firstCheck: function firstCheck() {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.put(_this.endpoint);
-
-              case 2:
-                response = _context.sent;
-                _this.isLikeBy = true;
-                _this.countLikes = response.data.countLikes;
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      var article_id = this.article_id;
+      var user_id = this.user_id;
+      var Url = "/api/like/" + article_id + "/" + user_id + "/likeFirstCheck";
+      console.log(Url);
+      axios.get(Url).then(function (res) {
+        if (res.data[0] === true) {
+          console.log(res);
+          _this.status = res.data[0];
+          _this.likeCount = res.data[1];
+        } else {
+          console.log(res);
+          _this.status = res.data[0];
+          _this.count = res.data[1];
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
-    unlike: function unlike() {
+    likeCheck: function likeCheck() {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios["delete"](_this2.endpoint);
-
-              case 2:
-                response = _context2.sent;
-                _this2.isLikeBy = false;
-                _this2.countLikes = response.data.countLikes;
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+      var article_id = this.article_id;
+      var user_id = this.user_id;
+      var Url = "/api/like/" + article_id + "/" + user_id + "/likeCheck";
+      axios.get(Url).then(function (res) {
+        if (res.data[0] === true) {
+          _this2.status = res.data[0];
+          _this2.likeCount = res.data[1];
+        } else {
+          _this2.status = res.data[0];
+          _this2.likeCount = res.data[1];
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getLikeCount: function getLikeCount() {
+      var likeCountUrl = '/api/likeCount/' + this.$route.query.articleId;
+      var self = this;
+      this.$http.get(likeCountUrl).then(function (response) {
+        self.likeCount = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    a: function a() {
+      console.log(this.article_id);
     }
+  },
+  mounted: function mounted() {
+    this.a();
+    this.firstCheck();
   }
 });
 
@@ -2112,11 +2112,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2907,6 +2902,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2941,8 +2978,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     a: function a() {
-      console.log(this.articleList);
-      console.log(this.comments);
+      console.log(this.likeCount);
     }
   },
   mounted: function mounted() {
@@ -40387,23 +40423,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("span", { staticClass: "likes" }, [
-      _c(
-        "i",
-        { staticClass: "like-toggle liked", on: { click: _vm.clickLike } },
-        [_vm._v("\n                    高評価\n                  ")]
-      ),
+  return _c(
+    "div",
+    [
+      _vm.user_id !== null
+        ? [
+            _vm.status === false
+              ? _c("span", { staticClass: "likes" }, [
+                  _c(
+                    "i",
+                    {
+                      staticClass: "like-toggle",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.likeCheck($event)
+                        }
+                      }
+                    },
+                    [_vm._v("\n          高評価\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "like-counter" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.likeCount) + "\n        "
+                    )
+                  ])
+                ])
+              : _c("span", { staticClass: "likes" }, [
+                  _c(
+                    "i",
+                    {
+                      staticClass: "like-toggle liked",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.likeCheck($event)
+                        }
+                      }
+                    },
+                    [_vm._v(" 高評価")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "like-counter" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.likeCount) + "\n        "
+                    )
+                  ])
+                ])
+          ]
+        : _vm._e(),
       _vm._v(" "),
-      _c("span", { staticClass: "like-counter" }, [
-        _vm._v(
-          "\n                    " +
-            _vm._s(_vm.countLikes) +
-            "\n                  "
-        )
-      ])
-    ])
-  ])
+      _vm.user_id === null
+        ? [
+            _c("span", { staticClass: "likes" }, [
+              _c("span", { staticClass: "like-toggle-guest" }, [
+                _vm._v("高評価")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "like-counter" }, [
+                _vm._v("\n        " + _vm._s(_vm.likeCount) + "\n      ")
+              ])
+            ])
+          ]
+        : _vm._e()
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40740,7 +40826,7 @@ var render = function() {
                   "a",
                   {
                     staticClass: "nav-link",
-                    attrs: { href: "article.create" },
+                    attrs: { href: "/article/create" },
                     on: {
                       click: function($event) {
                         $event.stopPropagation()
@@ -40813,10 +40899,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-list" }, [
-      _c("form", { attrs: { action: "logout", method: "POST" } }, [
-        _c("a", { staticClass: "nav-link", attrs: { href: "logout" } }, [
-          _vm._v("\n        ログアウト\n      ")
-        ])
+      _c("a", { staticClass: "nav-link", attrs: { href: "/logout" } }, [
+        _vm._v("\n            ログアウト\n        ")
       ])
     ])
   }
@@ -41471,7 +41555,9 @@ var render = function() {
             "div",
             { staticClass: "show-like-box" },
             [
-              _c("article-like"),
+              _c("article-like", {
+                attrs: { user_id: _vm.auth.id, article_id: _vm.article.id }
+              }),
               _vm._v(" "),
               _vm.postUser.id === _vm.auth.id
                 ? _c(
@@ -41530,7 +41616,33 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c(
+                      "form",
+                      {
+                        staticClass: "destroy-form",
+                        attrs: { action: "/destroy", method: "post" }
+                      },
+                      [
+                        _c("input", {
+                          attrs: { type: "hidden", name: "_token" },
+                          domProps: { value: _vm.csrf }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: { type: "hidden", name: "article_id" },
+                          domProps: { value: _vm.article.id }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "show-link-delete",
+                          attrs: {
+                            type: "submit",
+                            value: "削除",
+                            onclick: "return confirm('削除しますか？');"
+                          }
+                        })
+                      ]
+                    )
                   ])
                 : _vm._e()
             ],
@@ -41596,20 +41708,41 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  comment.user.id === _vm.auth.id
-                    ? _c(
-                        "a",
-                        {
-                          staticClass: "comment-delete",
-                          attrs: {
-                            href: "",
-                            onclick:
-                              "return \n          confirm('削除しますか？');"
-                          }
-                        },
-                        [_vm._v("\n          削除\n          ")]
-                      )
-                    : _vm._e()
+                  _c(
+                    "form",
+                    {
+                      staticClass: "comment-delete",
+                      attrs: {
+                        action: "/article/comment/delete",
+                        method: "get"
+                      }
+                    },
+                    [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.csrf }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "comment_id" },
+                        domProps: { value: comment.id }
+                      }),
+                      _vm._v(" "),
+                      comment.user.id === _vm.auth.id
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "comment-delete",
+                              attrs: {
+                                onclick:
+                                  "return \n            confirm('削除しますか？');"
+                              }
+                            },
+                            [_vm._v("\n          削除\n          ")]
+                          )
+                        : _vm._e()
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "comment-body" }, [
@@ -41629,21 +41762,43 @@ var render = function() {
                         _vm._v(
                           "\n          " +
                             _vm._s(replies.user.name) +
-                            "\n            "
+                            "\n         \n        "
                         ),
-                        replies.user.id === _vm.auth.id
-                          ? _c(
-                              "a",
-                              {
-                                staticClass: "reply-delete",
-                                attrs: {
-                                  href: "",
-                                  onclick: "return confirm('削除しますか？');"
-                                }
-                              },
-                              [_vm._v("\n            削除\n            ")]
-                            )
-                          : _vm._e()
+                        _c(
+                          "form",
+                          {
+                            staticClass: "reply-delete",
+                            attrs: {
+                              action: "/article/reply/delete",
+                              method: "get"
+                            }
+                          },
+                          [
+                            _c("input", {
+                              attrs: { type: "hidden", name: "_token" },
+                              domProps: { value: _vm.csrf }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: { type: "hidden", name: "reply_id" },
+                              domProps: { value: replies.id }
+                            }),
+                            _vm._v(" "),
+                            replies.user.id === _vm.auth.id
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "reply-delete",
+                                    attrs: {
+                                      onclick:
+                                        "return \n            confirm('削除しますか？');"
+                                    }
+                                  },
+                                  [_vm._v("\n          削除\n          ")]
+                                )
+                              : _vm._e()
+                          ]
+                        )
                       ]),
                       _vm._v(" "),
                       _c("li", { staticClass: "replies" }, [
@@ -41661,7 +41816,7 @@ var render = function() {
                   "form",
                   {
                     staticClass: "reply-form",
-                    attrs: { action: "", method: "get" }
+                    attrs: { action: "/article/reply", method: "get" }
                   },
                   [
                     _c("input", {
@@ -41669,7 +41824,39 @@ var render = function() {
                       domProps: { value: _vm.csrf }
                     }),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("div", { staticClass: "reply-sent-box" }, [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "user_id" },
+                        domProps: { value: _vm.auth.id }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "comment_id" },
+                        domProps: { value: comment.id }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "article_id" },
+                        domProps: { value: _vm.article.id }
+                      }),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        staticClass: "reply-textarea",
+                        attrs: {
+                          name: "body",
+                          placeholder: "コメントを記入してください"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "reply-sent",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("\n            返信する")]
+                      )
+                    ])
                   ]
                 )
               ],
@@ -41703,13 +41890,37 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "show-border" }),
     _vm._v(" "),
-    _c("form", { attrs: { action: "", method: "post" } }, [
+    _c("form", { attrs: { action: "/article/comment", method: "post" } }, [
       _c("input", {
         attrs: { type: "hidden", name: "_token" },
         domProps: { value: _vm.csrf }
       }),
       _vm._v(" "),
-      _vm._m(3)
+      _c("div", { staticClass: "comment-write-box" }, [
+        _c("input", {
+          attrs: { type: "hidden", name: "user_id" },
+          domProps: { value: _vm.auth.id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "article_id" },
+          domProps: { value: _vm.article.id }
+        }),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "comment-textarea",
+          attrs: { name: "body", placeholder: "コメントを記入してください" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "comment-sent",
+            attrs: { type: "submit", id: "comment-sent" }
+          },
+          [_vm._v("\n          コメント投稿")]
+        )
+      ])
     ])
   ])
 }
@@ -41722,70 +41933,6 @@ var staticRenderFns = [
       _c("link", { attrs: { rel: "stylesheet", href: "/css/show.css" } }),
       _vm._v(" "),
       _c("link")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "form",
-      { staticClass: "destroy-form", attrs: { action: "", method: "post" } },
-      [
-        _c("input", {
-          staticClass: "show-link-delete",
-          attrs: {
-            type: "submit",
-            value: "削除",
-            onclick: "return confirm('削除しますか？');"
-          }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "reply-sent-box" }, [
-      _c("input", { attrs: { type: "hidden", name: "user_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "comment_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "article_id", value: "" } }),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "reply-textarea",
-        attrs: { name: "body", placeholder: "コメントを記入してください" }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "reply-sent", attrs: { type: "submit" } }, [
-        _vm._v("\n            返信する")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-write-box" }, [
-      _c("input", { attrs: { type: "hidden", name: "user_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "article_id", value: "" } }),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "comment-textarea",
-        attrs: { name: "body", placeholder: "コメントを記入してください" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "comment-sent",
-          attrs: { type: "submit", id: "comment-sent" }
-        },
-        [_vm._v("\n          コメント投稿")]
-      )
     ])
   }
 ]
@@ -57893,15 +58040,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/page/Show.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Show_vue_vue_type_template_id_9a173b3c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=9a173b3c& */ "./resources/js/components/page/Show.vue?vue&type=template&id=9a173b3c&");
 /* harmony import */ var _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Show.vue?vue&type=script&lang=js& */ "./resources/js/components/page/Show.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -57931,7 +58077,7 @@ component.options.__file = "resources/js/components/page/Show.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/page/Show.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

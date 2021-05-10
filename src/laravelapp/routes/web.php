@@ -32,23 +32,21 @@ Route::group(['namespace' => 'Auth'],function(){
     ->name('register');
     Route::get('/logout','LogoutController@getLogout')
     ->name('logout');
-    Route::post('/logout','LogoutController@getLogout')
-    ->name('post.logout');
 });
 
-Route::prefix('article')
+Route::prefix('/article')
 ->middleware('auth')
 ->name('article.')
 ->group(function()
 {
-    Route::post('comment','ArticleController@comment')
-    ->name('comment');
-    Route::get('comment/delete/{id}','ArticleController@comment_delete')
+    Route::post('/comment','ArticleController@comment')
+    ->name('/comment');
+    Route::get('/comment/delete','ArticleController@commentDelete')
     ->name('comment.delete');
 
-    Route::get('reply','ArticleController@reply')
+    Route::get('/reply','ArticleController@reply')
     ->name('reply');
-    Route::get('reply/delete/{id}','ArticleController@reply_delete')
+    Route::get('/reply/delete','ArticleController@replyDelete')
     ->name('reply.delete');
 });
 
@@ -88,5 +86,7 @@ Route::prefix('login/google')
     Route::get('callback','LoginController@handleGoogleCallback')
     ->name('.callback');
 });
+
+Route::post('/destroy','ArticleController@destroy');
 
 Route::post('/api/profile','MyPage\ProfileController@getProfileImage');

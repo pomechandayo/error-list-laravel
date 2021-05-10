@@ -32,12 +32,11 @@
         <div class="show-like-box">
     
               <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
-              <article-like 
-              :user_id ="auth.id"
-              :article_id="article.id"
-              >
+              
+              <article-like>
               </article-like>
-       
+ 
+
            <!-- 記事を書いたユーザーであれば公開、非公開を切り替えるリンクを表示 -->
         
             <form 
@@ -68,22 +67,12 @@
           >編集</a>
 
           <form 
-            action="/destroy"
+            action=""
             method="post" 
             class="destroy-form"
             >
-            <input type="hidden" name="_token" :value="csrf" />
-            <input 
-            type="hidden" 
-            name="article_id"
-            :value="article.id"
-            >
-            <input 
-            type='submit' 
-            value="削除" 
-            class="show-link-delete"
-            onclick="return confirm('削除しますか？');"
-            >
+            
+            <input type='submit' value="削除" class="show-link-delete" onclick="return confirm('削除しますか？');">
           </form>
         </div>
       
@@ -131,27 +120,15 @@
         <div class="comment-created-at">
           {{ comment.created_at }}
         </div>
-
-        <form
-          action="/article/comment/delete"
-          method="get"
-          class="comment-delete"
-        >
-          <input type="hidden" name="_token" :value="csrf" />
-          <input
-            type="hidden"
-            name="comment_id"
-            :value="comment.id" 
-          >
-          <button
-            class="comment-delete" 
-            onclick="return 
-            confirm('削除しますか？');"
-            v-if="comment.user.id === auth.id "
+          <a 
+          href="" 
+          class="comment-delete" 
+          onclick="return 
+          confirm('削除しますか？');"
+          v-if="comment.user.id === auth.id "
           >
           削除
-          </button>
-        </form>
+          </a>
       
       </li>
       <li class="comment-body">
@@ -165,27 +142,14 @@
         <div class="reply-user-data">
         <a href=""><img :src="replies.user.profile_image" class="reply-img"></a>
           {{ replies.user.name }}
-         
-        <form
-          action="/article/reply/delete"
-          method="get"
-          class="reply-delete" 
-        >
-          <input type="hidden" name="_token" :value="csrf" />
-          <input
-            type="hidden"
-            name="reply_id"
-            :value="replies.id" 
-          >
-          <button
-            class="reply-delete"  
-            onclick="return 
-            confirm('削除しますか？');"
+            <a 
+            href="" 
+            class="reply-delete" 
+            onclick="return confirm('削除しますか？');"
             v-if="replies.user.id === auth.id "
-          >
-          削除
-          </button>
-        </form>
+            >
+            削除
+            </a>
       
         </div>
         
@@ -195,19 +159,16 @@
       </div>    
     </template>
       
-      <form 
-      action="/article/reply" 
-      class="reply-form"
-      method="get"
-      >
+      <form action="" class="reply-form"
+      method="get">
       <input type="hidden" name="_token" :value="csrf" />
         <div class="reply-sent-box">
           <input type="hidden" name="user_id"
-          v-bind:value="auth.id">
+          value="">
           <input type="hidden" name="comment_id"
-          v-bind:value="comment.id">
+          value="">
           <input type="hidden" name="article_id"
-          v-bind:value="article.id">
+          value="">
           <textarea name="body" class="reply-textarea"
           placeholder="コメントを記入してください">
          
@@ -240,16 +201,13 @@
 
   <ul id="error_message"></ul>
   <div class="show-border"></div>
-    <form 
-    action="/article/comment" 
-    method="post"
-    >
+    <form action="" method="post">
     <input type="hidden" name="_token" :value="csrf" />
       <div class="comment-write-box">
         <input type="hidden" name="user_id"
-         v-bind:value="auth.id">
+         value="">
          <input type="hidden" name="article_id"
-         v-bind:value="article.id">
+         value="">
          <textarea name="body" class="comment-textarea"
          placeholder="コメントを記入してください">
          
@@ -291,7 +249,7 @@ import ArticleLike from '../ArticleLike';
   methods: {
     getArticleList(){
       const Url = '/api/article/show/' + this.$route.query.articleId;
-
+      
       this.$http.get(Url)
       .then(response => {
 
@@ -304,10 +262,10 @@ import ArticleLike from '../ArticleLike';
      console.log(error)
       });
     },
-    a: function() {
-      console.log( this.likeCount);
-     
-    },
+      a: function() {
+      console.log(this.articleList);
+      console.log( this.comments);
+    }
   },
   mounted() {
     this.getArticleList();
