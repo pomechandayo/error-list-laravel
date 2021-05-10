@@ -36,19 +36,19 @@ Route::group(['namespace' => 'Auth'],function(){
     ->name('post.logout');
 });
 
-Route::prefix('article')
+Route::prefix('/article')
 ->middleware('auth')
 ->name('article.')
 ->group(function()
 {
-    Route::post('comment','ArticleController@comment')
-    ->name('comment');
-    Route::get('comment/delete/{id}','ArticleController@comment_delete')
+    Route::post('/comment','ArticleController@comment')
+    ->name('/comment');
+    Route::get('/comment/delete/{id}','ArticleController@comment_delete')
     ->name('comment.delete');
 
-    Route::get('reply','ArticleController@reply')
+    Route::get('/reply','ArticleController@reply')
     ->name('reply');
-    Route::get('reply/delete/{id}','ArticleController@reply_delete')
+    Route::get('/reply/delete/{id}','ArticleController@reply_delete')
     ->name('reply.delete');
 });
 

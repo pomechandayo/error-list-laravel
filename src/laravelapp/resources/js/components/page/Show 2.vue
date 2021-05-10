@@ -35,7 +35,8 @@
               
               <article-like>
               </article-like>
-       
+ 
+
            <!-- 記事を書いたユーザーであれば公開、非公開を切り替えるリンクを表示 -->
         
             <form 
@@ -66,7 +67,7 @@
           >編集</a>
 
           <form 
-            action="/comment/delete/{id}"
+            action=""
             method="post" 
             class="destroy-form"
             >
@@ -158,19 +159,16 @@
       </div>    
     </template>
       
-      <form 
-      action="/article/reply" 
-      class="reply-form"
-      method="get"
-      >
+      <form action="" class="reply-form"
+      method="get">
       <input type="hidden" name="_token" :value="csrf" />
         <div class="reply-sent-box">
           <input type="hidden" name="user_id"
-          v-bind:value="auth.id">
+          value="">
           <input type="hidden" name="comment_id"
-          v-bind:value="comment.id">
+          value="">
           <input type="hidden" name="article_id"
-          v-bind:value="article.id">
+          value="">
           <textarea name="body" class="reply-textarea"
           placeholder="コメントを記入してください">
          
@@ -203,16 +201,13 @@
 
   <ul id="error_message"></ul>
   <div class="show-border"></div>
-    <form 
-    action="/article/comment" 
-    method="post"
-    >
+    <form action="" method="post">
     <input type="hidden" name="_token" :value="csrf" />
       <div class="comment-write-box">
         <input type="hidden" name="user_id"
-         v-bind:value="auth.id">
+         value="">
          <input type="hidden" name="article_id"
-         v-bind:value="article.id">
+         value="">
          <textarea name="body" class="comment-textarea"
          placeholder="コメントを記入してください">
          
@@ -254,7 +249,7 @@ import ArticleLike from '../ArticleLike';
   methods: {
     getArticleList(){
       const Url = '/api/article/show/' + this.$route.query.articleId;
-
+      
       this.$http.get(Url)
       .then(response => {
 
@@ -267,10 +262,10 @@ import ArticleLike from '../ArticleLike';
      console.log(error)
       });
     },
-    a: function() {
-      console.log( this.likeCount);
-     
-    },
+      a: function() {
+      console.log(this.articleList);
+      console.log( this.comments);
+    }
   },
   mounted() {
     this.getArticleList();

@@ -1969,7 +1969,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       isLikedBy: this.initiallsLikedBy,
-      countLikes: this.initialCountLikes
+      countLikes: this.initialCountLikes,
+      likeCount: []
     };
   },
   methods: {
@@ -2030,7 +2031,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    getLikeCount: function getLikeCount() {
+      var likeCountUrl = '/api/likeCount/' + this.$route.query.articleId;
+      var self = this;
+      this.$http.get(likeCountUrl).then(function (response) {
+        self.likeCount = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
+  },
+  mounted: function mounted() {
+    this.getLikeCount();
   }
 });
 
@@ -2907,6 +2920,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2941,8 +2959,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     a: function a() {
-      console.log(this.articleList);
-      console.log(this.comments);
+      console.log(this.likeCount);
     }
   },
   mounted: function mounted() {
@@ -40398,7 +40415,7 @@ var render = function() {
       _c("span", { staticClass: "like-counter" }, [
         _vm._v(
           "\n                    " +
-            _vm._s(_vm.countLikes) +
+            _vm._s(_vm.likeCount) +
             "\n                  "
         )
       ])
@@ -41661,7 +41678,7 @@ var render = function() {
                   "form",
                   {
                     staticClass: "reply-form",
-                    attrs: { action: "", method: "get" }
+                    attrs: { action: "/article/reply", method: "get" }
                   },
                   [
                     _c("input", {
@@ -41669,7 +41686,39 @@ var render = function() {
                       domProps: { value: _vm.csrf }
                     }),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("div", { staticClass: "reply-sent-box" }, [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "user_id" },
+                        domProps: { value: _vm.auth.id }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "comment_id" },
+                        domProps: { value: comment.id }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "article_id" },
+                        domProps: { value: _vm.article.id }
+                      }),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        staticClass: "reply-textarea",
+                        attrs: {
+                          name: "body",
+                          placeholder: "コメントを記入してください"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "reply-sent",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("\n            返信する")]
+                      )
+                    ])
                   ]
                 )
               ],
@@ -41703,13 +41752,37 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "show-border" }),
     _vm._v(" "),
-    _c("form", { attrs: { action: "", method: "post" } }, [
+    _c("form", { attrs: { action: "/article/comment", method: "post" } }, [
       _c("input", {
         attrs: { type: "hidden", name: "_token" },
         domProps: { value: _vm.csrf }
       }),
       _vm._v(" "),
-      _vm._m(3)
+      _c("div", { staticClass: "comment-write-box" }, [
+        _c("input", {
+          attrs: { type: "hidden", name: "user_id" },
+          domProps: { value: _vm.auth.id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "article_id" },
+          domProps: { value: _vm.article.id }
+        }),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "comment-textarea",
+          attrs: { name: "body", placeholder: "コメントを記入してください" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "comment-sent",
+            attrs: { type: "submit", id: "comment-sent" }
+          },
+          [_vm._v("\n          コメント投稿")]
+        )
+      ])
     ])
   ])
 }
@@ -41730,7 +41803,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "form",
-      { staticClass: "destroy-form", attrs: { action: "", method: "post" } },
+      {
+        staticClass: "destroy-form",
+        attrs: { action: "/comment/delete/{id}", method: "post" }
+      },
       [
         _c("input", {
           staticClass: "show-link-delete",
@@ -41742,51 +41818,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "reply-sent-box" }, [
-      _c("input", { attrs: { type: "hidden", name: "user_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "comment_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "article_id", value: "" } }),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "reply-textarea",
-        attrs: { name: "body", placeholder: "コメントを記入してください" }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "reply-sent", attrs: { type: "submit" } }, [
-        _vm._v("\n            返信する")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-write-box" }, [
-      _c("input", { attrs: { type: "hidden", name: "user_id", value: "" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "article_id", value: "" } }),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "comment-textarea",
-        attrs: { name: "body", placeholder: "コメントを記入してください" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "comment-sent",
-          attrs: { type: "submit", id: "comment-sent" }
-        },
-        [_vm._v("\n          コメント投稿")]
-      )
-    ])
   }
 ]
 render._withStripped = true

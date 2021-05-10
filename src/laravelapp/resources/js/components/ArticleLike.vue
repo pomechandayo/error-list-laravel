@@ -10,7 +10,7 @@
                     </i>
 
                     <span class="like-counter">
-                      {{ countLikes }}
+                      {{ likeCount }}
                     </span>
         </span>
            
@@ -41,6 +41,8 @@
       return{
       isLikedBy: this.initiallsLikedBy,
       countLikes: this.initialCountLikes,
+
+      likeCount: [],
        }
     },
     methods: {
@@ -66,6 +68,23 @@
         this.isLikeBy = false
         this.countLikes = response.data.countLikes
       },
+       getLikeCount() {
+
+      const likeCountUrl = '/api/likeCount/' + this.$route.query.articleId;
+      let self = this;
+      
+      this.$http.get(likeCountUrl)
+      .then( response => {
+
+        self.likeCount = response.data;
+
+      }).catch(error => {
+     console.log(error)
+      }); 
     },
+    },
+    mounted() {
+      this.getLikeCount();
+  },
   }
 </script>

@@ -342,12 +342,15 @@ class ArticleController extends Controller
         } else { 
             Like::where('article_id', $article_id)->where('user_id', $user_id)->delete();
         }
-        //5.この投稿の最新の総いいね数を取得
-        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
-        $param = [
-            'review_likes_count' => $review_likes_count,
-        ];
-        return response()->json($param); //6.JSONデータをjQueryに返す
+     
+    }
+
+    public function likeCounter(int $article_id) 
+    {
+       //5.この投稿の最新の総いいね数を取得
+       $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
+     
+        return $review_likes_count;
     }
 
    
