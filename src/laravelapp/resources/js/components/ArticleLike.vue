@@ -69,7 +69,7 @@
           }else{
             console.log(res)
             this.status = res.data[0]
-            this.count  = res.data[1]
+            this.likeCount  = res.data[1]
           }
         }).catch(error => {
           console.log(error)
