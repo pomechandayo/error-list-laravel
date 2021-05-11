@@ -9,7 +9,7 @@ use App\Like;
 
 class LikeController extends Controller
 {
-    public function likeFirstCheck(int $article_id,int $user_id) 
+    public function likeFirstCheck(int $article_id, $user_id = null) 
     {
         
        

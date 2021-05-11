@@ -7,24 +7,25 @@ Auth::routes([
 
 // Route::get('index','ArticleController@index')->name('index')->middleware('keyword');
 
-Route::get('article/status','ArticleController@status')
+Route::get('/article/status','ArticleController@status')
 ->name('article.status');
-Route::post('/like','ArticleController@like')
-->name('like');
-
 
 Route::get('/register',function() {
     return view('auth.register');
-});
+})->name('register');
 Route::get('/login',function() {
     return view('auth.register');
-});
+})->name('login');
 Route::get('/index',function(){
     return view('/index');
-});
+})->name('index');
 Route::get('article/show',function() {
     return view('/article/show');
-});
+})->name('article.show');
+
+Route::get('mypage/show',function(){
+    return view('mypage/show');
+})->name('mypage.show');
 
 Route::group(['namespace' => 'Auth'],function(){
 
@@ -56,7 +57,7 @@ Route::prefix('mypage')
 ->middleware('auth')
 ->group(function() 
 {
-    Route::get('edit-profile','ProfileController@showProfileEditForm')
+    Route::get('/profile/edit','ProfileController@showProfileEditForm')
     ->name('mypage.edit-profile');
     Route::post('edit-profile','ProfileController@editProfile')
     ->name('mypage.edit-profile');

@@ -4,6 +4,7 @@ import Register from './components/page/Register'
 import Login from './components/page/Login'
 import Top from './components/page/Top'
 import Show from './components/page/Show'
+import MypageShow from './components/page/MypageShow'
 import ArticleLike from './components/ArticleLike'
 import axios from 'axios'
 
@@ -39,6 +40,11 @@ export default new Router({
       path: '/article/show/articleLike',
       name: 'article-like',
       component: ArticleLike
+    },
+    {
+      path:'/mypage/show',
+      name: 'mypage-show',
+      component: MypageShow,
     },
 
   ]

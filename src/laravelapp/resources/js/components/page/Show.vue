@@ -41,17 +41,39 @@
            <!-- 記事を書いたユーザーであれば公開、非公開を切り替えるリンクを表示 -->
         
             <form 
-            action="" 
+            action="/article/status" 
             class="show-form-status" method="get" 
             v-if=" postUser.id === auth.id "
             > 
              
                 <input type="hidden" name="_token" :value="csrf" />
-                <input type="hidden" value="" class="show-status" name="article_id">
-                <button type="submit" class="show-status-btn">公開する</button>
+                <input 
+                  :value="article.id" 
+                  type="hidden" 
+                  class="show-status" 
+                  name="article_id"
+                >
+                <button 
+                  type="submit" 
+                  class="show-status-btn"
+                  v-if="article.status === 0 "
+                >
+                  公開する
+                </button>
             
-                <input type="hidden" value="" class="show-status" name="article_id">
-                <button type="submit" class="show-status-btn">非公開にする</button>
+                <input 
+                :value="article.id" 
+                type="hidden" 
+                class="show-status" 
+                name="article_id"
+                >
+                <button 
+                type="submit" 
+                class="show-status-btn"
+                v-if="article.status === 1 "
+                >
+                  非公開にする
+                </button>
              
             </form>
      
@@ -304,14 +326,9 @@ import ArticleLike from '../ArticleLike';
      console.log(error)
       });
     },
-    a: function() {
-      console.log( this.likeCount);
-     
-    },
   },
   mounted() {
     this.getArticleList();
-    this.a();
   },
 
  }

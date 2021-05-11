@@ -82,7 +82,7 @@ v-show="show_contents.indexOf('1000') >= 0">
   <ul class="nav-ul">
       <li class="nav-list" >
         <a class="nav-link"
-        @click.stop.prevent="goUrlPage('/mypage/profile')">
+        @click.stop.prevent="goUrlPage('/mypage/show')">
           マイページ
         </a>
     </li>
