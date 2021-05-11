@@ -28,43 +28,62 @@ class ProfileController extends Controller
     /*
     マイページ表示
     */
-public function showProfile(Request $request)
+public function showProfile(int $user_id, string $keyword = null)
  {
-    $user = Auth::user();
-    dd($user);
-    $comment_id = [];
-    $article_list = [];
-    $article_count = Article::where('user_id',$user->id)->count();
-    $comment_count = Comment::where('user_id',Auth::id())->count();
+    $article_count = Article::where('user_id',$user_id)->count();
+    $comment_count = Comment::where('user_id',$user_id)->count();
+
+    
+    if($keyword == 'user_comments'){
+
+        $comment = Comment::where('user_id',$user_id)->get();
+        $comment_id = $comment->pluck('article_id');
+        
+        $article_list = Article::
+        with('user','tags','likes','comments')
+        ->ArticleOpen()
+        ->whereIn('id',$comment_id)
+        ->CreatedAtDescPagenate5();
+    
+        return  [
+            'article_count' => $article_count,
+            'comment_count' => $comment_count,
+            'article_list'  => $article_list,
+        ];
+    }
+    
+    $article_list = Article::with('user','tags','likes','comments')
+    ->where('user_id',$user_id)
+    ->CreatedAtDescPagenate5();
+
+    return  [
+        'article_count' => $article_count,
+        'comment_count' => $comment_count,
+        'article_list'  => $article_list,
+    ];
    
+   
+ }
+
+ public function clickShowArticle(int $user_id) 
+ {
+        $article_list = [];
 
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
-    if($request->menu_link === 'myarticle_all') {
-        $sort = $request->sort;
         $article_list = Article::with('user','tags','likes','comments')
-        ->WhereUserId($user)
-        ->CreatedAtDescPagenate5();
-        }
-    // 公開中の記事だけ表示
-    if($request->menu_link === 'myarticle_open') {
-        $sort = $request->sort;
-        $article_list = Article::with('user','tags','likes','comments')
-        ->ArticleOpen()
-        ->WhereUserId($user)
-        ->CreatedAtDescPagenate5();
-        }
-    // 非公開中の記事だけ表示
-    if($request->menu_link === 'myarticle_closed') {
-        $sort = $request->sort;
-        $article_list = Article::with('user','tags','likes','comments')
-        ->ArticleClosed()
-        ->WhereUserId($user)
-        ->CreatedAtDescPagenate5();
-        }
-    // ユーザーがコメントした記事だけ表示
-    if($request->menu_link === 'my_comment_article') {
-        $sort = $request->sort;
-        $comment = Comment::where('user_id',Auth::id())->get();
+        ->WhereUserId($user_id)
+        ->CreatedAtDescPagenate5();    
+    
+         return $article_list;
+        
+    }
+    
+    public function showCommentsArticle(int $user_id)
+    {
+        $article_count = Article::where('user_id',$user_id)->count();
+        $comment_count = Comment::where('user_id',$user_id)->count();
+            // ユーザーがコメントした記事だけ表示
+        $comment = Comment::where('user_id',$user_id)->get();
         $comment_id = $comment->pluck('article_id');
        
         $article_list = Article::
@@ -72,18 +91,16 @@ public function showProfile(Request $request)
         ->ArticleOpen()
         ->whereIn('id',$comment_id)
         ->CreatedAtDescPagenate5();
+
+        return [
+            'article_list' => $article_list,
+            'comment_count' => $comment_count,
+            'article_count' => $article_count,
+            'comments_page' => 'comments_page',
+        ];
     }
     
-         return [
-            'article_count' => $article_count,
-            'comment_count' => $comment_count,
-            'comment_id' => $comment_id,
-            'article_list' => $article_list,
-            'user_image' => $user_image,
-            's3_profile_image' => $s3_profile_image
-            ];
-        
-    }
+
 
     public function showProfileEditForm()
     {  

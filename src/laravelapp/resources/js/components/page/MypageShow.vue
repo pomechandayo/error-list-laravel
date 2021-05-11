@@ -12,83 +12,99 @@
 <div class="profile-container-lg">
   <div class="profile-container1">
     <div class="profile-box1">
-      <img  class="profile-icon">
+      <img :src="userImage" class="profile-icon">
       <div class="profile-user-name">
 
       </div>
       <div class="profile-linkbox">
-        <a href="" class="profile-link-menu">
-        <div class="profile-article-total">
-
+        <div
+        @click.prevent="clickGetUserArticles()"
+        class="profile-link-menu"
+        >
+          <div class="profile-article-total">
+            {{ article_count }}
+          </div>
+            投稿した記事
         </div>
-        投稿した記事</a>
-        <a href="" class="profile-link-menu">
-            <div class="profile-article-total">
-
-            </div>  
+        <div
+        @click.prevent="clickGetUserArticles('user_comments')"
+        class="profile-link-menu"
+        >
+          <div class="profile-article-total">
+            {{ comment_count }}
+          </div>  
             コメントした記事
-          </a>
-       
-        
-          
+         </div>          
         </div>
+
         <button class="profile-link-editprofile">
           <a href="" class="profile-link">プロフィール編集</a>
         </button>
       </div>
       </div>
       
+
       <!-- ここから記事一覧 -->
-      <div class="profile-container2">
-
-
-          <div class="profile-fillter-box">
-            <a href="" class="profile-fillter-link">全て</a>
-            <a href="" 
-            class="profile-fillter-link">公開</a>
-            <a href="" 
-            class="profile-fillter-link">非公開</a>
-          </div>
-
-
+      <div 
+      v-if="Object.keys(article_list) !== 0"
+      class="profile-container2"
+      >
+        <template v-for="(article,index) in article_list.data ">
             <div class="profile-article-box">
               <li class="profile-article-user">
-              <a href="">
-                <img src="" class="profile-myimage"> 
+              <a >
+                <img 
+                  :src="article.user.profile_image" 
+                  class="profile-myimage"
+                > 
               </a>
-
+              {{ article.user.name }}
+            <template v-for="(tags,index) in article.tags">
               <div class="mypage_article_tag">
-
-
-
+                {{ tags.name }}
               </div>
+            </template>
               </li>
               
-              <a href="" class="profile-link-article">
-              <li class="profile-article-title"></li>
-              </a>
+              <router-link :to="{name: 'article.show',
+                query: {articleId: article.id}}"
+                class="profile-link-article"
+              >
+                <li class="profile-article-title">
+                  {{ article.title }}
+                </li>
+              </router-link>
               <li class="profile-article-created_at">
                     
                     <div class="count_box">
-                      <span class="mypage-like-count" style="margin-left: auto;">高評価
+                      <span class="mypage-like-count" style="margin-left: auto;">
+                        高評価
+                        {{ Object.keys(article.likes).length}}
+                        件
                       </span>
-                      <span class="mypage-comment-count">コメント数
+                      <span class="mypage-comment-count">
+                        コメント数
+                        {{ Object.keys(article.comments).length}}
+                        件
                       </span>
                     </div>
               </li>
           </div>
-
+        </template>
         <div class="profile-paginate">
-
+          <Pagination 
+            :data=article_list
+            @move-page=movePage($event) 
+           />
         </div>
-
+  
         <!-- ここまで記事一覧 -->
         </div>
       </div>
     </div>
 
       
-      
+
 
 </div>
 </template>
@@ -103,30 +119,57 @@ export default {
       .getAttribute("content"),
 
       page: 1,
-      my_profile: []
+      my_profile:    [],
+      userImage:     [],
+      article_count: [],
+      comment_count: [],
+      article_list:  [],
+      comment_page:  [],
+      keyword:       '',
     };
   },
   props: {
     auth:{
      type: Object|Array
-    } ,
+    },
   },
  methods: {
-   getArticles() {
-   const url = '/api/mypage/show?page=' + this.page
-   this.$http.get(url).then((response) => {
-     this.myprofile = response.data.article_list;
-   }).catch(error => {
-     console.log(error.response)
-   });
+    getProfileImage() {
+      const data = {
+        userid: this.auth.id
+      }
+     const self = this;
+     const url ='/api/profile/' + this.auth.id;
+     this.$http.get(url)
+      .then(response => {
+        self.userImage = response.data.profile_image;
+      }).catch( error => {console.log(error)});
+    },
+    clickGetUserArticles(keyword) {
+
+      this.keyword = keyword;
+      const url = '/api/mypage/show/' + this.auth.id + '/' + keyword + '?page=' + this.page;
+      const self= this;
+      this.$http.get(url)
+      .then(response => {
+        self.article_count = response.data.article_count;
+        self.comment_count = response.data.comment_count;
+        self.article_list  = response.data.article_list;
+
+      })
+      .catch( error => {console.log(error)});
    },
    movePage(page) {
       this.page = page;
-      this.getArticles();
+      this.clickGetUserArticles(this.keyword);
   },
- },
+   goUrlPage(url) {
+      this.$router.push(url);
+  },
+  },
   mounted() {
-    this.getArticles();
+    this.getProfileImage();
+    this.clickGetUserArticles(this.keyword);
   },
   components: {
     Pagination

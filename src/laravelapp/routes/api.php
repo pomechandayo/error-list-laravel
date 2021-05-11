@@ -22,7 +22,7 @@ Route::group(['middleware' => ['api']],function() {
     Route::get('/article/show/{id}','ArticleController@show');
 
     Route::get('/profile/{id}','MyPage\ProfileController@getProfileImage');
-    Route::get('/mypage/show','Mypage\ProfileController@showProfile');
+    Route::get('/mypage/show/{user_id}/{keyword?}','Mypage\ProfileController@showProfile');
 
     Route::get('/like/{article_id}/{user_id}/likeFirstCheck','LikeController@likeFirstCheck');
     Route::get('/like/{article_id}/{user_id}/likeCheck','LikeController@likeCheck');

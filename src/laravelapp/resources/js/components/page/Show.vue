@@ -326,14 +326,9 @@ import ArticleLike from '../ArticleLike';
      console.log(error)
       });
     },
-    a: function() {
-      console.log( this.likeCount);
-     
-    },
   },
   mounted() {
     this.getArticleList();
-    this.a();
   },
 
  }

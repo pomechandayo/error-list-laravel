@@ -2589,13 +2589,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
       page: 1,
-      my_profile: []
+      my_profile: [],
+      userImage: [],
+      article_count: [],
+      comment_count: [],
+      article_list: [],
+      comment_page: [],
+      keyword: ''
     };
   },
   props: {
@@ -2604,23 +2626,41 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getArticles: function getArticles() {
-      var _this = this;
-
-      var url = '/api/mypage/show?page=' + this.page;
+    getProfileImage: function getProfileImage() {
+      var data = {
+        userid: this.auth.id
+      };
+      var self = this;
+      var url = '/api/profile/' + this.auth.id;
       this.$http.get(url).then(function (response) {
-        _this.myprofile = response.data.article_list;
+        self.userImage = response.data.profile_image;
       })["catch"](function (error) {
-        console.log(error.response);
+        console.log(error);
+      });
+    },
+    clickGetUserArticles: function clickGetUserArticles(keyword) {
+      this.keyword = keyword;
+      var url = '/api/mypage/show/' + this.auth.id + '/' + keyword + '?page=' + this.page;
+      var self = this;
+      this.$http.get(url).then(function (response) {
+        self.article_count = response.data.article_count;
+        self.comment_count = response.data.comment_count;
+        self.article_list = response.data.article_list;
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
     movePage: function movePage(page) {
       this.page = page;
-      this.getArticles();
+      this.clickGetUserArticles(this.keyword);
+    },
+    goUrlPage: function goUrlPage(url) {
+      this.$router.push(url);
     }
   },
   mounted: function mounted() {
-    this.getArticles();
+    this.getProfileImage();
+    this.clickGetUserArticles(this.keyword);
   },
   components: {
     Pagination: _Pagination__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3142,14 +3182,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
-    },
-    a: function a() {
-      console.log(this.likeCount);
     }
   },
   mounted: function mounted() {
     this.getArticleList();
-    this.a();
   }
 });
 
@@ -40979,7 +41015,7 @@ var render = function() {
                       click: function($event) {
                         $event.stopPropagation()
                         $event.preventDefault()
-                        return _vm.goUrlPage("/mypage/profile")
+                        return _vm.goUrlPage("/mypage/show")
                       }
                     }
                   },
@@ -41361,122 +41397,212 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "profile-container-lg" }, [
+      _c("div", { staticClass: "profile-container1" }, [
+        _c("div", { staticClass: "profile-box1" }, [
+          _c("img", {
+            staticClass: "profile-icon",
+            attrs: { src: _vm.userImage }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "profile-user-name" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "profile-linkbox" }, [
+            _c(
+              "div",
+              {
+                staticClass: "profile-link-menu",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.clickGetUserArticles()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "profile-article-total" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.article_count) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v("\n            投稿した記事\n        ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "profile-link-menu",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.clickGetUserArticles("user_comments")
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "profile-article-total" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.comment_count) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v("  \n            コメントした記事\n         ")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ]),
+      _vm._v(" "),
+      Object.keys(_vm.article_list) !== 0
+        ? _c(
+            "div",
+            { staticClass: "profile-container2" },
+            [
+              _vm._l(_vm.article_list.data, function(article, index) {
+                return [
+                  _c(
+                    "div",
+                    { staticClass: "profile-article-box" },
+                    [
+                      _c(
+                        "li",
+                        { staticClass: "profile-article-user" },
+                        [
+                          _c("a", [
+                            _c("img", {
+                              staticClass: "profile-myimage",
+                              attrs: { src: article.user.profile_image }
+                            })
+                          ]),
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(article.user.name) +
+                              "\n            "
+                          ),
+                          _vm._l(article.tags, function(tags, index) {
+                            return [
+                              _c("div", { staticClass: "mypage_article_tag" }, [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(tags.name) +
+                                    "\n              "
+                                )
+                              ])
+                            ]
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "profile-link-article",
+                          attrs: {
+                            to: {
+                              name: "article.show",
+                              query: { articleId: article.id }
+                            }
+                          }
+                        },
+                        [
+                          _c("li", { staticClass: "profile-article-title" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(article.title) +
+                                "\n                "
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "profile-article-created_at" }, [
+                        _c("div", { staticClass: "count_box" }, [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "mypage-like-count",
+                              staticStyle: { "margin-left": "auto" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        高評価\n                        " +
+                                  _vm._s(Object.keys(article.likes).length) +
+                                  "\n                        件\n                      "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "mypage-comment-count" }, [
+                            _vm._v(
+                              "\n                        コメント数\n                        " +
+                                _vm._s(Object.keys(article.comments).length) +
+                                "\n                        件\n                      "
+                            )
+                          ])
+                        ])
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "profile-paginate" },
+                [
+                  _c("Pagination", {
+                    attrs: { data: _vm.article_list },
+                    on: {
+                      "move-page": function($event) {
+                        return _vm.movePage($event)
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            2
+          )
+        : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("head", [
-        _c("link", {
-          attrs: { rel: "stylesheet", href: "'/css/profile.css'" }
-        }),
-        _vm._v(" "),
-        _c("link", {
-          attrs: {
-            rel: "stylesheet",
-            href:
-              "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          }
-        })
-      ]),
+    return _c("head", [
+      _c("link", { attrs: { rel: "stylesheet", href: "'/css/profile.css'" } }),
       _vm._v(" "),
-      _c("div", { staticClass: "profile-container-lg" }, [
-        _c("div", { staticClass: "profile-container1" }, [
-          _c("div", { staticClass: "profile-box1" }, [
-            _c("img", { staticClass: "profile-icon" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "profile-user-name" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "profile-linkbox" }, [
-              _c(
-                "a",
-                { staticClass: "profile-link-menu", attrs: { href: "" } },
-                [
-                  _c("div", { staticClass: "profile-article-total" }),
-                  _vm._v("\n        投稿した記事")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "profile-link-menu", attrs: { href: "" } },
-                [
-                  _c("div", { staticClass: "profile-article-total" }),
-                  _vm._v("  \n            コメントした記事\n          ")
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "profile-link-editprofile" }, [
-              _c("a", { staticClass: "profile-link", attrs: { href: "" } }, [
-                _vm._v("プロフィール編集")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "profile-container2" }, [
-          _c("div", { staticClass: "profile-fillter-box" }, [
-            _c(
-              "a",
-              { staticClass: "profile-fillter-link", attrs: { href: "" } },
-              [_vm._v("全て")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "profile-fillter-link", attrs: { href: "" } },
-              [_vm._v("公開")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "profile-fillter-link", attrs: { href: "" } },
-              [_vm._v("非公開")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "profile-article-box" }, [
-            _c("li", { staticClass: "profile-article-user" }, [
-              _c("a", { attrs: { href: "" } }, [
-                _c("img", {
-                  staticClass: "profile-myimage",
-                  attrs: { src: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mypage_article_tag" })
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "profile-link-article", attrs: { href: "" } },
-              [_c("li", { staticClass: "profile-article-title" })]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "profile-article-created_at" }, [
-              _c("div", { staticClass: "count_box" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "mypage-like-count",
-                    staticStyle: { "margin-left": "auto" }
-                  },
-                  [_vm._v("高評価\n                      ")]
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "mypage-comment-count" }, [
-                  _vm._v("コメント数\n                      ")
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "profile-paginate" })
-        ])
+      _c("link", {
+        attrs: {
+          rel: "stylesheet",
+          href:
+            "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "profile-link-editprofile" }, [
+      _c("a", { staticClass: "profile-link", attrs: { href: "" } }, [
+        _vm._v("プロフィール編集")
       ])
     ])
   }
@@ -58292,15 +58418,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************!*\
   !*** ./resources/js/components/page/MypageShow.vue ***!
   \*****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MypageShow_vue_vue_type_template_id_0e10b006___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MypageShow.vue?vue&type=template&id=0e10b006& */ "./resources/js/components/page/MypageShow.vue?vue&type=template&id=0e10b006&");
 /* harmony import */ var _MypageShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MypageShow.vue?vue&type=script&lang=js& */ "./resources/js/components/page/MypageShow.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _MypageShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _MypageShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -58330,7 +58455,7 @@ component.options.__file = "resources/js/components/page/MypageShow.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/page/MypageShow.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

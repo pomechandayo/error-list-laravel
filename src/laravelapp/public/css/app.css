@@ -158,6 +158,7 @@ span {
   box-sizing: border-box;
   border-bottom: 1px solid #343a40;
   text-align: center;
+  cursor: pointer;
 }
 
 .nav-list:hover {
@@ -1486,6 +1487,7 @@ footer {
 
   .profile-link-menu {
     font-size: 2rem;
+    cursor: pointer;
   }
 
   .profile-article-created_at {
