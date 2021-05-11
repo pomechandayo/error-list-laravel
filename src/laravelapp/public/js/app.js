@@ -1991,7 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           console.log(res);
           _this.status = res.data[0];
-          _this.count = res.data[1];
+          _this.likeCount = res.data[1];
         }
       })["catch"](function (error) {
         console.log(error);
