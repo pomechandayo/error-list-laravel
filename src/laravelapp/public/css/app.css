@@ -1212,3 +1212,292 @@ hr {
   }
 }
 
+.profile-container-lg {
+  background-color: #fff;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.6);
+  margin-top: 50px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.profile-box1 {
+  padding: 6vh 0 3vh 0;
+  width: 90%;
+  margin: auto;
+}
+
+.profile-icon {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.profile-user-name {
+  display: block;
+  width: 85%;
+  margin: 1.2rem auto;
+  text-align: center;
+  font-size: 2.0rem;
+  border-bottom: 2px solid  #6c757d;
+  padding-bottom: 2rem;
+  color: #444;
+}
+
+.profile-linkbox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  margin: 10px auto;
+}
+
+.profile-article-total {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.profile-likes-total {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.profile-link-menu {
+  display: inline-block;
+  color: #444;
+  height: 30px;
+  font-size: 1.3rem;
+}
+
+.profile-link-menu:hover {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.profile-link-editprofile {
+  display: block;
+  background-color: #117ec6;
+  opacity: 0.9;
+  max-width: 800px;
+  width: 80vw;
+  height: 40px;
+  margin: 20px auto 20px auto;
+  border-radius: 5px;
+}
+
+.profile-link-editprofile:hover {
+  opacity: 0.6;
+}
+
+.profile-link-myarticle {
+  display: block;
+  background-color: #6c757d;
+  opacity: 0.9;
+  width: 65%;
+  height: 4vh;
+  margin: 1.7rem auto;
+  border-radius: 5px;
+}
+
+.profile-link-myarticle:hover {
+  opacity: 0.6;
+}
+
+.profile-link {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.profile-link:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* ここから記事一覧 */
+
+.profile-fillter-box {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  text-align: center;
+}
+
+.profile-fillter-link {
+  width: 33%;
+  color: #444;
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.profile-fillter-link:hover {
+  opacity: 0.6;
+  color: #444;
+}
+
+.profile-article-box {
+  width: 100%;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  line-height: 1.6;
+  min-height: 130px;
+  box-sizing: border-box;
+  padding: 5px 0 5px 20px;
+}
+
+.profile-link-article {
+  text-decoration: none;
+}
+
+.profile-link-article:hover {
+  text-decoration: none;
+}
+
+.profile-myimage {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+.profile-article-user {
+  font-size: 1.6rem;
+  margin-top: 13px;
+  color: #444;
+  display: flex;
+  align-items: center;
+}
+
+.profile-article-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.profile-article-tag {
+  font-size: 1.5rem;
+}
+
+.mypage_article_tag {
+  font-size: 1.5rem;
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+.profile-article-created_at {
+  font-size: 1.0rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5;
+}
+
+.count_box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 5px;
+  padding-bottom: 2px;
+}
+
+.mypage-like-count {
+  font-size: 1.0rem;
+  margin-right: 0;
+}
+
+.mypage-comment-count {
+  font-size: 1.1rem;
+  margin-left: 2px;
+  margin-right: 0;
+}
+
+.pagination {
+  box-sizing: border-box;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  height: 120px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.profile-paginate {
+  width: 100%;
+  height: auto;
+}
+
+.page-item {
+  display: block;
+  height: auto;
+}
+
+.page-link {
+  font-size: 2rem;
+  display: inline-block;
+  height: auto;
+}
+
+footer {
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 600px) {
+  .profile-container-lg {
+    width: 80%;
+  }
+
+  .profile-container1 {
+    width: 100%;
+    height: 520px;
+    background-color: #fff;
+  }
+
+  .profile-container2 {
+    width: 100%;
+    background-color: #fff;
+  }
+
+  .profile-icon {
+    display: block;
+    width: 230px;
+    height: 230px;
+  }
+
+  .profile-link-editprofile {
+    width: 70vw;
+    margin-top: 40px;
+    height: 50px;
+  }
+
+  .profile-link-myarticle {
+    height: 5vh;
+  }
+
+  .profile-link {
+    font-size: 2.0rem;
+  }
+
+  .profile-link-menu {
+    font-size: 2rem;
+  }
+
+  .profile-article-created_at {
+    font-size: 1.5rem;
+  }
+
+  .mypage-like-count {
+    font-size: 1.5rem;
+  }
+
+  .mypage-comment-count {
+    font-size: 1.5rem;
+  }
+}
+

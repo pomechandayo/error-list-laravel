@@ -31,12 +31,12 @@ class ProfileController extends Controller
 public function showProfile(Request $request)
  {
     $user = Auth::user();
+    dd($user);
     $comment_id = [];
     $article_list = [];
-    $article_count = Article::where('user_id',$user->id)->get();
-    $comment_count = Comment::where('user_id',Auth::id())->get();
-    $user_image = User::GetS3Url();
-    $s3_profile_image = User::GetAuthUserImage();
+    $article_count = Article::where('user_id',$user->id)->count();
+    $comment_count = Comment::where('user_id',Auth::id())->count();
+   
 
     // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
     if($request->menu_link === 'myarticle_all') {
@@ -74,14 +74,14 @@ public function showProfile(Request $request)
         ->CreatedAtDescPagenate5();
     }
     
-         return view('mypage.profile',[
+         return [
             'article_count' => $article_count,
             'comment_count' => $comment_count,
             'comment_id' => $comment_id,
             'article_list' => $article_list,
             'user_image' => $user_image,
             's3_profile_image' => $s3_profile_image
-            ])->with('user',Auth::user());
+            ];
         
     }
 
