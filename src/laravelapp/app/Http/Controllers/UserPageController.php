@@ -9,14 +9,12 @@ use App\User;
 
 class UserPageController extends Controller
 {
-    public function showUserPage(int $id)
+    public function showUserPage(int $user_id)
     {
-        $user = Auth::user();
-        $user_image = User::GetS3Url();
-        $s3_profile_image = User::GetAuthUserImage();
+        $article_count = Article::where('user_id',$user_id)->count();
         
         $article_list = Article::with('user','tags','likes','comments')
-        ->where('user_id',$id)
+        ->where('user_id',$user_id)
         ->ArticleOpen()
         ->Created_atDescPaginate();
 
@@ -25,12 +23,10 @@ class UserPageController extends Controller
             $user_data = $article->user;
         }
        
-        return view('user_page',[
-            's3_profile_image' => $s3_profile_image,
-            'user_image' => $user_image,
+        return [
             'article_list' => $article_list,
+            'article_count'=> $article_count,
             'user_data' => $user_data,
-            'user' => $user,
-        ]);
+        ];
     }
 }

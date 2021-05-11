@@ -25,7 +25,7 @@ Route::get('article/show',function() {
 
 Route::get('mypage/show',function(){
     return view('mypage/show');
-})->name('mypage.show');
+})->name('mypage.show')->middleware('auth');
 
 Route::group(['namespace' => 'Auth'],function(){
 

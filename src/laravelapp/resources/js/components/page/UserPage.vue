@@ -12,58 +12,34 @@
 <div class="profile-container-lg">
   <div class="profile-container1">
     <div class="profile-box1">
-      <img :src="userImage" class="profile-icon">
+      <img :src="user_data.profile_image" class="profile-icon">
       <div class="profile-user-name">
-
+        {{ user_data.name }}
       </div>
       <div class="profile-linkbox">
-        <div
-        @click.prevent="clickGetUserArticles()"
-        class="profile-link-menu"
-        >
+        <div class="profile-link-menu">
           <div class="profile-article-total">
             {{ article_count }}
           </div>
             投稿した記事
+          </div>
+              
         </div>
-        <div
-        @click.prevent="clickGetUserArticles('user_comments')"
-        class="profile-link-menu"
-        >
-          <div class="profile-article-total">
-            {{ comment_count }}
-          </div>  
-            コメントした記事
-         </div>          
-        </div>
-
-        <button class="profile-link-editprofile">
-          <a  
-          @click.stop.prevent="goUrlPage('/profile/edit')"
-          class="profile-link"
-          >
-            プロフィール編集
-          </a>
-        </button>
       </div>
       </div>
       
 
       <!-- ここから記事一覧 -->
-      <div 
-      class="profile-container2"
-      >
+      <div class="profile-container2">
         <template v-for="(article,index) in article_list.data ">
             <div class="profile-article-box">
               <li class="profile-article-user">
-              <router-link :to="{name: 'userpage',
-                 query: {userId: article.user.id}}"
-                >
+              <a >
                 <img 
                   :src="article.user.profile_image" 
                   class="profile-myimage"
                 > 
-              </router-link>
+              </a>
               {{ article.user.name }}
             <template v-for="(tags,index) in article.tags">
               <div class="mypage_article_tag">
@@ -80,7 +56,6 @@
                   {{ article.title }}
                 </li>
               </router-link>
-              
               <li class="profile-article-created_at">
                     
                     <div class="count_box">
@@ -98,6 +73,7 @@
               </li>
           </div>
         </template>
+
         <div class="profile-paginate">
           <Pagination 
             :data=article_list
@@ -126,12 +102,9 @@ export default {
       .getAttribute("content"),
 
       page: 1,
-      my_profile:    [],
-      userImage:     [],
       article_count: [],
-      comment_count: [],
       article_list:  [],
-      keyword:       '',
+      user_data:     [],
     };
   },
   props: {
@@ -140,44 +113,29 @@ export default {
     },
   },
  methods: {
-    getProfileImage() {
-      const data = {
-        userid: this.auth.id
-      }
-     const self = this;
-     const url ='/api/profile/' + this.auth.id;
-     this.$http.get(url)
-      .then(response => {
-        self.userImage = response.data.profile_image;
-      }).catch( error => {console.log(error)});
-    },
-    clickGetUserArticles(keyword) {
 
-      this.keyword = keyword;
-      const url = '/api/mypage/show/' + this.auth.id + '/' + keyword + '?page=' + this.page;
+    getUserArticles() {
+
+      const url = '/api/userpage/' + this.$route.query.userId + '?page=' + this.page;
       const self= this;
       this.$http.get(url)
       .then(response => {
         self.article_count = response.data.article_count;
-        self.comment_count = response.data.comment_count;
         self.article_list  = response.data.article_list;
-
+        self.user_data     = response.data.user_data;
       })
       .catch( error => {console.log(error)});
-
-      this.page = 1;
    },
    movePage(page) {
       this.page = page;
-      this.clickGetUserArticles(this.keyword);
+      this.getUserArticles();
   },
    goUrlPage(url) {
       this.$router.push(url);
   },
   },
   mounted() {
-    this.getProfileImage();
-    this.clickGetUserArticles(this.keyword);
+    this.getUserArticles();
   },
   components: {
     Pagination

@@ -5,6 +5,7 @@ import Login from './components/page/Login'
 import Top from './components/page/Top'
 import Show from './components/page/Show'
 import MypageShow from './components/page/MypageShow'
+import UserPage from './components/page/UserPage'
 import ArticleLike from './components/ArticleLike'
 import axios from 'axios'
 
@@ -45,6 +46,11 @@ export default new Router({
       path:'/mypage/show',
       name: 'mypage-show',
       component: MypageShow,
+    },
+    {
+      path:'/userpage',
+      name: 'userpage',
+      component: UserPage,
     },
 
   ]
