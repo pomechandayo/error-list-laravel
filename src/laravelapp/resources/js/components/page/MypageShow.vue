@@ -38,7 +38,12 @@
         </div>
 
         <button class="profile-link-editprofile">
-          <a href="" class="profile-link">プロフィール編集</a>
+          <a  
+          @click.stop.prevent="goUrlPage('/profile/edit')"
+          class="profile-link"
+          >
+            プロフィール編集
+          </a>
         </button>
       </div>
       </div>
@@ -158,6 +163,8 @@ export default {
 
       })
       .catch( error => {console.log(error)});
+
+      this.page = 1;
    },
    movePage(page) {
       this.page = page;

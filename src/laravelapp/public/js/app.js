@@ -2605,6 +2605,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2649,6 +2654,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+      this.page = 1;
     },
     movePage: function movePage(page) {
       this.page = page;
@@ -41458,7 +41464,22 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("button", { staticClass: "profile-link-editprofile" }, [
+            _c(
+              "a",
+              {
+                staticClass: "profile-link",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    $event.preventDefault()
+                    return _vm.goUrlPage("/profile/edit")
+                  }
+                }
+              },
+              [_vm._v("\n            プロフィール編集\n          ")]
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -41594,16 +41615,6 @@ var staticRenderFns = [
             "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         }
       })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "profile-link-editprofile" }, [
-      _c("a", { staticClass: "profile-link", attrs: { href: "" } }, [
-        _vm._v("プロフィール編集")
-      ])
     ])
   }
 ]
