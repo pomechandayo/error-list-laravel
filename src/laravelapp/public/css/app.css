@@ -1503,3 +1503,287 @@ footer {
   }
 }
 
+.edit-profile-box {
+  width: 80%;
+  height: auto;
+  min-height: 350px;
+  background-color: #fff;
+  margin: auto;
+  height: 50vh;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.edit-profile-message {
+  width: 100%;
+  background-color: aquamarine;
+  margin: 5% auto 5% auto;
+  font-size: 1.2rem;
+  height: 5vh;
+  opacity: 0.9;
+  text-align: center;
+  padding-top: 3%;
+}
+
+.edit-profile-h2 {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  font-size: 1.6rem;
+  margin: 20px auto 10px auto;
+  text-align: center;
+}
+
+.edit-profile-border {
+  width: 100%;
+  border: 1px solid  #6c757d;
+  opacity: 0.3;
+  margin: 0 auto 5% auto;
+}
+
+.edit-profile-label1 {
+  width: 93%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* アイコンの画像 */
+
+.profile_img {
+  display: block;
+  background-color: #000;
+  height: 150px;
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.profile_img:hover {
+  cursor: pointer;
+}
+
+.edit-profile-label2 {
+  font-size: 1.3rem;
+  width: 35%;
+  margin-top: 5px;
+  margin-left: 15%;
+}
+
+.edit-profile-name {
+  display: block;
+  width: 70%;
+  height: 4vh;
+  margin: 2% auto 3% auto;
+  font-size: 1.5rem;
+}
+
+.edit-profile-save {
+  display: block;
+  width: 71%;
+  margin: 0 auto 5vh auto;
+  background-color: #007bff;
+  height: 5vh;
+  opacity: 0.9;
+  border: 1px solid #007bff;
+  border-radius: 3px;
+  margin-bottom: 10%;
+  font-size: 1.3rem;
+}
+
+.edit-profile-save:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 600px) {
+  .edit-profile-box {
+    height: 70vh;
+    padding-bottom: 5vh;
+  }
+
+  .profile_img {
+    display: block;
+    background-color: #000;
+    height: 240px;
+    width: 240px;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+
+  .edit-profile-label2 {
+    font-size: 1.3rem;
+    width: 30%;
+    margin-top: 5px;
+    margin-left: 20%;
+  }
+
+  .edit-profile-name {
+    display: block;
+    width: 60%;
+    height: 4vh;
+    margin: 2% auto 3% auto;
+    font-size: 1.3rem;
+  }
+
+  .edit-profile-save {
+    width: 61%;
+    height: 5vh;
+  }
+}
+
+.article-form {
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article-title {
+  display: block;
+  width: 100%;
+  height: 45px;
+  font-size: 2.3rem;
+  padding: 10px 0 0 5px;
+}
+
+.article-tag {
+  width: 100%;
+  height: 32px;
+  font-size: 1.5rem;
+}
+
+.tab-bar {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.tab-bar-text {
+  font-size: 1.7rem;
+  color: #444;
+  width: 49%;
+  margin-left: 2%;
+}
+
+.tab-bar-preview {
+  font-size: 1.7rem;
+  width: 49%;
+  color: #444;
+}
+
+#markdown-editor-textarea {
+  width: 50%;
+  height: 72vh;
+  font-size: 1.7rem;
+  padding-left: 1%;
+  padding-right: 1%;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+#markdown-preview {
+  padding-top: 10px;
+  display: inline-block;
+  width: 50%;
+  background-color: #fff;
+  border-top: 2px solid rgba(42, 46, 49, 0.4);
+  padding-left: 1%;
+  padding-right: 1%;
+  box-sizing: border-box;
+}
+
+.create-error {
+  color: red;
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  color: #111;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+h4 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #fff;
+  color: #111;
+}
+
+p {
+  color: #111;
+  text-align: left;
+  font-size: 1.7rem;
+}
+
+pre {
+  color: #111;
+  text-align: left;
+  font-size: 1.7rem;
+}
+
+code {
+  font-size: 1.7rem;
+  background-color: #eee;
+}
+
+li {
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-color: #111;
+}
+
+.btn-bar {
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 1%;
+}
+
+.article-post-btn {
+  display: block;
+  height: 4vh;
+  width: 20rem;
+  font-size: 1.5rem;
+  background-color: #6c757d;
+  opacity: 0.9;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.article-post-btn:hover {
+  opacity: 0.6;
+}
+
+footer {
+  display: none;
+}
+

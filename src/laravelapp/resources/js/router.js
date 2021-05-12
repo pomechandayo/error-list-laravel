@@ -6,6 +6,8 @@ import Top from './components/page/Top'
 import Show from './components/page/Show'
 import MypageShow from './components/page/MypageShow'
 import UserPage from './components/page/UserPage'
+import ProfileEdit from './components/page/ProfileEdit'
+import Create from './components/page/Create'
 import ArticleLike from './components/ArticleLike'
 import axios from 'axios'
 
@@ -38,6 +40,12 @@ export default new Router({
       
     },
     {
+      path: '/article/create',
+      name: 'article.create',
+      component: Create,
+      
+    },
+    {
       path: '/article/show/articleLike',
       name: 'article-like',
       component: ArticleLike
@@ -46,6 +54,11 @@ export default new Router({
       path:'/mypage/show',
       name: 'mypage-show',
       component: MypageShow,
+    },
+    {
+      path:'/mypage/edit',
+      name: 'mypage-edit',
+      component: ProfileEdit,
     },
     {
       path:'/userpage',
