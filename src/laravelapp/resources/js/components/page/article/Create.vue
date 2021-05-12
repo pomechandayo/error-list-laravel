@@ -3,6 +3,8 @@
 
 <form action="/article" method="post" class="article-form">
      
+       <input type="hidden" name="_token" :value="csrf" />
+       
       <input type="text" name="title" class="article-title" placeholder="タイトル" value="">
 
 
@@ -35,3 +37,25 @@
 
 </div>
 </template>
+<script>
+
+export default {
+ data(){
+    return{
+      csrf: document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content"),
+    }
+ },
+ mounted() {
+  $(function () {
+  $('#markdown-editor-textarea').keyup(function () {
+    let html = marked($(this).val());
+    $('#markdown-preview').html(html);
+  });
+  });
+
+ }
+
+ }
+</script>
