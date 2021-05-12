@@ -12,9 +12,9 @@
 <div class="profile-container-lg">
   <div class="profile-container1">
     <div class="profile-box1">
-      <img :src="userImage" class="profile-icon">
+      <img  :src="profile_image" class="profile-icon">
       <div class="profile-user-name">
-
+        {{ user_name }}
       </div>
       <div class="profile-linkbox">
         <div
@@ -127,7 +127,8 @@ export default {
 
       page: 1,
       my_profile:    [],
-      userImage:     [],
+      user_name:     [],
+      profile_image:  [],
       article_count: [],
       comment_count: [],
       article_list:  [],
@@ -148,7 +149,8 @@ export default {
      const url ='/api/profile/' + this.auth.id;
      this.$http.get(url)
       .then(response => {
-        self.userImage = response.data.profile_image;
+        self.user_name = response.data.name;
+        self.profile_image = response.data.profile_image;
       }).catch( error => {console.log(error)});
     },
     clickGetUserArticles(keyword) {

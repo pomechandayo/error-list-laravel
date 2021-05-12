@@ -2619,7 +2619,8 @@ __webpack_require__.r(__webpack_exports__);
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
       page: 1,
       my_profile: [],
-      userImage: [],
+      user_name: [],
+      profile_image: [],
       article_count: [],
       comment_count: [],
       article_list: [],
@@ -2639,7 +2640,8 @@ __webpack_require__.r(__webpack_exports__);
       var self = this;
       var url = '/api/profile/' + this.auth.id;
       this.$http.get(url).then(function (response) {
-        self.userImage = response.data.profile_image;
+        self.user_name = response.data.name;
+        self.profile_image = response.data.profile_image;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2695,12 +2697,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2796,18 +2792,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("required", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["required"]), {}, {
-  message: "{_field_}は必須です"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("email", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["email"]), {}, {
-  message: "{_field_}はメールアドレスの形式で入力してください"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("min", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["min"]), {}, {
-  message: "{_field_}は最低{length}文字入力してください"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("max", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["max"]), {}, {
-  message: "{_field_}は最大{length}文字までです"
-}));
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
@@ -3320,6 +3304,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3350,6 +3345,9 @@ __webpack_require__.r(__webpack_exports__);
     movePage: function movePage(page) {
       this.page = page;
       this.getArticles();
+    },
+    goUrlPage: function goUrlPage(url) {
+      this.$router.push(url);
     }
   },
   mounted: function mounted() {
@@ -41561,10 +41559,12 @@ var render = function() {
         _c("div", { staticClass: "profile-box1" }, [
           _c("img", {
             staticClass: "profile-icon",
-            attrs: { src: _vm.userImage }
+            attrs: { src: _vm.profile_image }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "profile-user-name" }),
+          _c("div", { staticClass: "profile-user-name" }, [
+            _vm._v("\n        " + _vm._s(_vm.user_name) + "\n      ")
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "profile-linkbox" }, [
             _c(
@@ -42634,12 +42634,50 @@ var render = function() {
                         "li",
                         { staticClass: "top-article-user" },
                         [
-                          _c("a", { attrs: { href: "/userpage/show" } }, [
-                            _c("img", {
-                              staticClass: "top-article-myimage",
-                              attrs: { src: article_list.user.profile_image }
-                            })
-                          ]),
+                          article_list.user.id !== _vm.auth.id
+                            ? _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "userpage",
+                                      query: { userId: article_list.user.id }
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    staticClass: "top-article-myimage",
+                                    attrs: {
+                                      src: article_list.user.profile_image
+                                    }
+                                  })
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          article_list.user.id === _vm.auth.id
+                            ? _c(
+                                "a",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.stopPropagation()
+                                      $event.preventDefault()
+                                      return _vm.goUrlPage("/mypage/show")
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    staticClass: "top-article-myimage",
+                                    attrs: {
+                                      src: article_list.user.profile_image
+                                    }
+                                  })
+                                ]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("span", [_vm._v(_vm._s(article_list.user.name))]),
                           _vm._v(" "),

@@ -19,10 +19,10 @@ class ProfileController extends Controller
 {   
     public function getProfileImage(int $id): string
     {
-        $user_image = User::where('id',$id)->first('profile_image')->toJson();
+        $user_data = User::where('id',$id)->first()->toJson();
        
         
-        return $user_image;
+        return $user_data;
         
     }
     /*

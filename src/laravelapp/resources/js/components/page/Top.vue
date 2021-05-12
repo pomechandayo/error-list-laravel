@@ -51,11 +51,22 @@
       
           <li class="top-article-user">
         
-            <a href="/userpage/show">
+              <router-link :to="{name: 'userpage',
+                 query: {userId: article_list.user.id}}"
+                 v-if="article_list.user.id !== auth.id"
+                >
               <img class="top-article-myimage"
               :src="article_list.user.profile_image">
              
+            </router-link>
+            <a 
+             @click.stop.prevent="goUrlPage('/mypage/show')"
+                 v-if="article_list.user.id === auth.id"
+              >
+              <img class="top-article-myimage"
+              :src="article_list.user.profile_image">
             </a>
+
           <span>{{ article_list.user.name }}</span>
           
             <template v-for="(tags,index) in article_list.tags">
@@ -143,6 +154,9 @@ export default {
    movePage(page) {
       this.page = page;
       this.getArticles();
+  },
+   goUrlPage(url) {
+      this.$router.push(url);
   },
  },
   mounted() {
