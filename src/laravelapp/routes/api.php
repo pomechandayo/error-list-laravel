@@ -29,6 +29,8 @@ Route::group(['middleware' => ['api']],function() {
     Route::get('/like/{article_id}/{user_id}/likeFirstCheck','LikeController@likeFirstCheck');
     Route::get('/like/{article_id}/{user_id}/likeCheck','LikeController@likeCheck');
 
+    Route::get('/article/{article_id}/edit','ArticleController@edit');
+
 
 });
 

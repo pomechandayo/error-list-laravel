@@ -3,11 +3,12 @@ import Router from 'vue-router'
 import Register from './components/page/Register'
 import Login from './components/page/Login'
 import Top from './components/page/Top'
-import Show from './components/page/Show'
+import Show from './components/page/article/Show'
 import MypageShow from './components/page/MypageShow'
 import UserPage from './components/page/UserPage'
 import ProfileEdit from './components/page/ProfileEdit'
-import Create from './components/page/Create'
+import Create from './components/page/article/Create'
+import Edit from './components/page/article/Edit'
 import ArticleLike from './components/ArticleLike'
 import axios from 'axios'
 
@@ -41,9 +42,13 @@ export default new Router({
     },
     {
       path: '/article/create',
-      name: 'article.create',
+      name: 'article-create',
       component: Create,
-      
+    },
+    {
+      path: '/article/:articleId/edit',
+      name: 'article-edit',
+      component: Edit,
     },
     {
       path: '/article/show/articleLike',

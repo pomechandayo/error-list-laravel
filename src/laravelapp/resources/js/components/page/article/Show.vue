@@ -84,10 +84,15 @@
         class="show-linkbox"
         v-if=" postUser.id === auth.id "
         >
-          <a 
-          href="" class="show-link-edit"
-          v-if="auth.length !== 0"
-          >編集</a>
+
+           <router-link 
+           class="show-link-edit"
+           :to="{name: 'article-edit',
+            query: {articleId: article.id}}"
+            v-if="auth.length !== 0"
+           >
+            編集
+            </router-link>
 
           <form 
             action="/destroy"
@@ -287,7 +292,7 @@
 </template>
 
 <script>
-import ArticleLike from '../ArticleLike';
+import ArticleLike from '../../ArticleLike';
 
   export default {
  components: {

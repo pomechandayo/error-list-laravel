@@ -22,6 +22,9 @@ Route::get('/index',function(){
 Route::get('/article/show',function() {
     return view('/article/show');
 })->name('article.show');
+Route::get('/article/{article_id}/edit',function() {
+    return view('/article/edit');
+})->name('article.edit');
 
 Route::get('/mypage/show',function(){
     return view('/mypage/show');
@@ -76,7 +79,7 @@ Route::prefix('/mypage')
 Route::group(['middleware' => ['auth']],function() 
  {
     Route::resource('article','ArticleController',
-    ['only' => ['create','store','edit','update','destroy']]);  
+    ['only' => ['create','store','update','destroy']]); 
 });
 
 

@@ -319,24 +319,22 @@ class ArticleController extends Controller
     }
 
    
-    public function edit(int $id)
+    public function edit(int $article_id)
     {   
-        $s3_profile_image = User::GetAuthUserImage();
-        $tag_list = Article::find($id)->tags->pluck('name');
+        $tag_list = Article::find($article_id)->tags->pluck('name');
         $tags = $tag_list->toArray();
         $tags_string = implode(" #",$tags);
 
-        $article_data = Article::find($id);
+        $article_data = Article::find($article_id);
       
         $article_parse = new Article;
         $article_parse_body = $article_data->parse($article_parse);
 
-        return view('article.edit',[
-            's3_profile_image' => $s3_profile_image,
-            'article_parse_body' => $article_parse_body,
-            'article_data' => $article_data,
-            'tag' => $tags_string,
-        ])->with('user',Auth::user());
+        return [
+           $article_parse_body,
+           $article_data,
+           $tags_string,
+        ];
     }
     public function update(ArticleRequest $request, int $id)
     {
