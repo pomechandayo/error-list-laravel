@@ -112,10 +112,10 @@
     
       
       </ul>
-      <div class="top-paginate">
+ 
           
     <Pagination :data=top @move-page="movePage($event)"/>
-      </div>
+
     </div>
   </div> 
   </div>

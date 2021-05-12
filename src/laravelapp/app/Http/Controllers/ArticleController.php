@@ -250,29 +250,20 @@ class ArticleController extends Controller
    
     public function show(Request $request, int $id)
     {   
-        // dd($id);
-        // $user_image = User::GetS3Url();
-        // $s3_profile_image = User::GetAuthUserImage();
-
         $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
 
         $article = Article::with('User','tags')
         ->find($id);
         $article_parse = new Article;
         $article_parse_body = $article->parse($article_parse);
-
-    
-        if($article->status === Article::CLOSED &&
-        Auth::id() !== $article->user->id) {
-            return redirect()->route('index');
-        }else{
+      
             return [
                  'article' => $article,
                  'comments' => $comments,
                  'user_id' => Auth::id(),
                  'article_parse_body' => $article_parse_body,
             ];
-        }
+        
     }
 
     /**記事の公開、非公開を切り替える */
@@ -288,8 +279,7 @@ class ArticleController extends Controller
             $article->save();
         }
         
-        return redirect()->action('ArticleController@show',
-         $request->article_id); 
+        return redirect()->back();
     }
 
     public function comment(CommentRequest $request)

@@ -48,7 +48,9 @@
         @click="toggle('1000')"
         :src="userImage" 
           class="icon-img" style="margin: 0 10px;"
-          v-if="auth.length !== 0">
+          v-if="auth.length !== 0"
+        >
+       
      
         <!-- ログインしていない場合、ログインと新規会員登録のリンクが表示される -->
    

@@ -34,7 +34,7 @@ public function showProfile(int $user_id, string $keyword = null)
     $comment_count = Comment::where('user_id',$user_id)->count();
 
     
-    if($keyword == 'user_comments'){
+    if($keyword === 'user_comments'){
 
         $comment = Comment::where('user_id',$user_id)->get();
         $comment_id = $comment->pluck('article_id');
@@ -64,43 +64,6 @@ public function showProfile(int $user_id, string $keyword = null)
    
    
  }
-
- public function clickShowArticle(int $user_id) 
- {
-        $article_list = [];
-
-    // myarticleの値が入っていれば自分が投稿した記事一覧をviewに送る
-        $article_list = Article::with('user','tags','likes','comments')
-        ->WhereUserId($user_id)
-        ->CreatedAtDescPagenate5();    
-    
-         return $article_list;
-        
-    }
-    
-    public function showCommentsArticle(int $user_id)
-    {
-        $article_count = Article::where('user_id',$user_id)->count();
-        $comment_count = Comment::where('user_id',$user_id)->count();
-            // ユーザーがコメントした記事だけ表示
-        $comment = Comment::where('user_id',$user_id)->get();
-        $comment_id = $comment->pluck('article_id');
-       
-        $article_list = Article::
-        with('user','tags','likes','comments')
-        ->ArticleOpen()
-        ->whereIn('id',$comment_id)
-        ->CreatedAtDescPagenate5();
-
-        return [
-            'article_list' => $article_list,
-            'comment_count' => $comment_count,
-            'article_count' => $article_count,
-            'comments_page' => 'comments_page',
-        ];
-    }
-    
-
 
     public function showProfileEditForm()
     {  

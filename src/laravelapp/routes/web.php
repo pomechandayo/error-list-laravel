@@ -19,13 +19,21 @@ Route::get('/login',function() {
 Route::get('/index',function(){
     return view('/index');
 })->name('index');
-Route::get('article/show',function() {
+Route::get('/article/show',function() {
     return view('/article/show');
 })->name('article.show');
 
-Route::get('mypage/show',function(){
-    return view('mypage/show');
+Route::get('/mypage/show',function(){
+    return view('/mypage/show');
 })->name('mypage.show')->middleware('auth');
+
+Route::get('/mypage/edit',function(){
+    return view('/mypage/edit');
+})->name('mypage.edit')->middleware('auth');
+Route::post('/mypage/edit','Mypage\ProfileController@editProfile')
+->name('mypage.edit.post')->middleware('auth');
+
+
 
 Route::group(['namespace' => 'Auth'],function(){
 
@@ -52,15 +60,14 @@ Route::prefix('/article')
 });
 
 
-Route::prefix('mypage')
+Route::prefix('/mypage')
 ->namespace('MyPage')
 ->middleware('auth')
-->group(function() 
+->group(function()
 {
     Route::get('/profile/edit','ProfileController@showProfileEditForm')
     ->name('mypage.edit-profile');
-    Route::post('edit-profile','ProfileController@editProfile')
-    ->name('mypage.edit-profile');
+ 
     Route::get('/profile','ProfileController@showProfile')
     ->name('mypage.profile');
     Route::get('/profile/{menu_link}','ProfileController@showProfile');
