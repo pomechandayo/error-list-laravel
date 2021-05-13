@@ -3071,7 +3071,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3080,7 +3079,8 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       top: [],
       keywords: [],
-      showUrl: []
+      showUrl: [],
+      search_keyword: ''
     };
   },
   props: {
@@ -3093,8 +3093,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var url = '/api/index?page=' + this.page;
-      this.$http.get(url).then(function (response) {
+      var keyword = {
+        keyword: this.keyword
+      };
+      this.$http.post(url, keyword).then(function (response) {
         _this.top = response.data.article_list;
+        _this.search_keyword = response.data.search_keyword;
+        _this.page = 1;
       })["catch"](function (error) {
         console.log(error.response);
       });
@@ -3107,7 +3112,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push(url);
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getArticles();
   },
   components: {
@@ -42490,44 +42495,58 @@ var render = function() {
         { staticClass: "top-article-container" },
         [
           _c("div", { staticClass: "search-result" }, [
-            _c("h2", { staticClass: "search-article" }),
+            _c("h2", { staticClass: "search-article" }, [
+              _vm._v("\n        " + _vm._s(_vm.search_keyword) + "\n  　  ")
+            ]),
             _vm._v(" "),
             _c("h2", { staticClass: "search-article" }),
             _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "tag-form",
-                attrs: { action: "/index", method: "get" }
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.keyword,
+                  expression: "keyword"
+                }
+              ],
+              staticClass: "tag-search",
+              attrs: {
+                type: "text",
+                placeholder: "tag:タグ名  キーワード",
+                value: ""
               },
-              [
-                _c("input", {
-                  attrs: { type: "hidden", name: "_token" },
-                  domProps: { value: _vm.csrf }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "tag-search",
-                  attrs: {
-                    type: "text",
-                    name: "keyword",
-                    placeholder: "tag:タグ名  キーワード",
-                    value: ""
+              domProps: { value: _vm.keyword },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "tag-search-btn",
-                  attrs: {
-                    type: "image",
-                    onfocus: "this.blur(); ",
-                    src:
-                      "https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png",
-                    value: "検索"
-                  }
-                })
-              ]
-            )
+                  _vm.keyword = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "tag-search-btn",
+              attrs: {
+                type: "image",
+                onfocus: "this.blur(); ",
+                src:
+                  "https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png",
+                value: "検索"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.getArticles()
+                }
+              }
+            })
           ]),
           _vm._v(" "),
           _c(
