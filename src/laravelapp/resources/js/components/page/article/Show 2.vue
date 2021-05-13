@@ -84,15 +84,10 @@
         class="show-linkbox"
         v-if=" postUser.id === auth.id "
         >
-
-           <router-link 
-           class="show-link-edit"
-           :to="{name: 'article-edit',
-            query: {articleId: article.id}}"
-            v-if="auth.length !== 0"
-           >
-            編集
-            </router-link>
+          <a 
+          href="" class="show-link-edit"
+          v-if="auth.length !== 0"
+          >編集</a>
 
           <form 
             action="/destroy"
@@ -120,7 +115,7 @@
       <!-- ここまでshowーbox -->
 
       <div class="show-body-box">
-        <li class="show-body" v-html="article_parse_body"></li>
+        <li class="show-body">{{ article.body }}</li>
       </div>
 
   </div>
@@ -308,7 +303,6 @@ import ArticleLike from '../../ArticleLike';
       postUser: [],
       tag:      [],
       comments: [],
-      article_parse_body: [],
     };
  },
    props: {
@@ -327,7 +321,6 @@ import ArticleLike from '../../ArticleLike';
         this.tag      = response.data.article.tags;
         this.postUser = response.data.article.user;
         this.comments = response.data.comments;
-        this.article_parse_body = response.data.article_parse_body
 
       }).catch(error => {
      console.log(error)

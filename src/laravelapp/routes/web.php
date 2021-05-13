@@ -79,7 +79,7 @@ Route::prefix('/mypage')
 Route::group(['middleware' => ['auth']],function() 
  {
     Route::resource('article','ArticleController',
-    ['only' => ['create','store','update','destroy']]); 
+    ['only' => ['create','store','destroy']]); 
 });
 
 
@@ -101,3 +101,6 @@ Route::prefix('login/google')
 Route::post('/destroy','ArticleController@destroy');
 
 Route::post('/api/profile','MyPage\ProfileController@getProfileImage');
+
+Route::post('/article/update','ArticleController@update')
+->name('article.updata')->middleware('auth');

@@ -3,19 +3,18 @@
 
 <form action="/article" method="post" class="article-form">
      
-       <input type="hidden" name="_token" :value="csrf" />
+      <input type="hidden" name="_token" :value="csrf" />
        
       <input type="text" name="title" class="article-title" placeholder="タイトル" value="">
 
-      <template v-for="(error,index) in errors ">
-        <div
-        v-if="Object.keys(error).legth !== 0" 
-        class="create-error"
-        >
-        ※{{ error }}
-        
-        </div>
-      </template>
+
+        <div class="create-error">※ </div>
+
+
+        <div class="create-error">※</div>
+
+
+        <div class="create-error">※</div>
 
       <input type="text" name="tags" class="article-tag" placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
       value="">
@@ -46,13 +45,22 @@ export default {
       csrf: document
       .querySelector('meta[name="csrf-token"]')
       .getAttribute("content"),
+
+
+
     }
  },
-  props: {
-    errors: {
-      type: Array|Object
-    }
-  },
+ methods: {
+   getEditData() {
+
+     const url = '/article/' + this.$route.query.articleId + '/edit';
+
+     this.$http.get(url)
+     .then( response => {
+       this.
+     })
+   }
+ },
  mounted() {
   $(function () {
   $('#markdown-editor-textarea').keyup(function () {

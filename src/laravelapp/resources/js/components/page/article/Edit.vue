@@ -1,33 +1,49 @@
 <template>
 <div>
 
-<form action="/article/updata" method="post" class="article-form">
+<form action="/article/update" method="post" class="article-form">
      
       <input type="hidden" name="_token" :value="csrf" />
+
+      <input 
+      type="hidden" name="article_id" 
+      :value="article_data.id" 
+      >
        
-      <input type="text" name="title" class="article-title" placeholder="タイトル" :value="article_data.title">
+      <input 
+      type="text" 
+      name="title" 
+      class="article-title" 
+      placeholder="タイトル" 
+      :value="article_data.title"
+      >
 
 
-        <div class="create-error">※ </div>
+    <template v-for="(error,index) in errors ">
+        <div class="create-error">※{{  error }}</div>
+    </template>
 
 
-        <div class="create-error">※</div>
+       
 
+      <input 
+      type="text" 
+      name="tags" 
+      class="article-tag" 
+      placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
+      :value="tag"
+      >
 
-        <div class="create-error">※</div>
-
-      <input type="text" name="tags" class="article-tag" placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-      :value="tag">
       <div class="tab-bar">
         <div class="tab-bar-text">本文</div>
         <div class="tab-bar-preview">プレビュー</div>
       </div>
-      <textarea id="markdown-editor-textarea" name="body" placeholder="本文を書いてください"></textarea>
+      <textarea id="markdown-editor-textarea" name="body" placeholder="">{{ article_data.body }}</textarea>
 
 
 
-    <div id="markdown-preview">
-    {{ article_data.body }}
+    <div id="markdown-preview" v-html="article_parse_body">
+
     </div>
   
   <div class="btn-bar">
@@ -52,6 +68,11 @@ export default {
       tag:                [],
     }
  },
+  props: {
+    errors: {
+      type: Array|Object
+    }
+  },
  methods: {
    getEditData() {
 

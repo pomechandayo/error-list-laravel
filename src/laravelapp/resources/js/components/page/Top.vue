@@ -67,7 +67,7 @@
               :src="article_list.user.profile_image">
             </a>
 
-          <span>{{ article_list.user.name }}</span>
+          <div class="top-user-name">{{ article_list.user.name }}</div>
           
             <template v-for="(tags,index) in article_list.tags">
             <div class="top-tag">

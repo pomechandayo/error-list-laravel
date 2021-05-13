@@ -7,15 +7,14 @@
        
       <input type="text" name="title" class="article-title" placeholder="タイトル" value="">
 
-      <template v-for="(error,index) in errors ">
-        <div
-        v-if="Object.keys(error).legth !== 0" 
-        class="create-error"
-        >
-        ※{{ error }}
-        
-        </div>
-      </template>
+
+        <div class="create-error">※ </div>
+
+
+        <div class="create-error">※</div>
+
+
+        <div class="create-error">※</div>
 
       <input type="text" name="tags" class="article-tag" placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
       value="">
@@ -48,11 +47,6 @@ export default {
       .getAttribute("content"),
     }
  },
-  props: {
-    errors: {
-      type: Array|Object
-    }
-  },
  mounted() {
   $(function () {
   $('#markdown-editor-textarea').keyup(function () {

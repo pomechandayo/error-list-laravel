@@ -2738,21 +2738,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
       user_name: [],
-      profile_image: [],
-      success: ''
+      profile_image: []
     };
   },
   props: {
@@ -2777,6 +2768,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getProfileImage();
+    console.log(this.status);
   }
 });
 
@@ -3322,11 +3314,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
+  },
+  props: {
+    errors: {
+      type: Array | Object
+    }
   },
   mounted: function mounted() {
     $(function () {
@@ -3389,6 +3387,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3397,6 +3411,11 @@ __webpack_require__.r(__webpack_exports__);
       article_parse_body: [],
       tag: []
     };
+  },
+  props: {
+    errors: {
+      type: Array | Object
+    }
   },
   methods: {
     getEditData: function getEditData() {
@@ -3738,7 +3757,8 @@ __webpack_require__.r(__webpack_exports__);
       article: [],
       postUser: [],
       tag: [],
-      comments: []
+      comments: [],
+      article_parse_body: []
     };
   },
   props: {
@@ -3756,6 +3776,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.tag = response.data.article.tags;
         _this.postUser = response.data.article.user;
         _this.comments = response.data.comments;
+        _this.article_parse_body = response.data.article_parse_body;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -41882,7 +41903,7 @@ var render = function() {
                   click: function($event) {
                     $event.stopPropagation()
                     $event.preventDefault()
-                    return _vm.goUrlPage("/profile/edit")
+                    return _vm.goUrlPage("/mypage/edit")
                   }
                 }
               },
@@ -42057,91 +42078,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "edit-profile-box" }, [
+    _c("h2", { staticClass: "edit-profile-h2" }, [_vm._v("プロフィール編集")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "edit-profile-border" }),
+    _vm._v(" "),
     _c(
-      "div",
+      "form",
       {
-        staticClass: "edit-profile-message",
-        model: {
-          value: _vm.success,
-          callback: function($$v) {
-            _vm.success = $$v
-          },
-          expression: "success"
+        attrs: {
+          action: "/mypage/edit",
+          method: "post",
+          enctype: "multipart/form-data"
         }
       },
-      [_vm._v("\n    " + _vm._s(_vm.success) + "\n  ")]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "edit-profile-box" }, [
-      _c("h2", { staticClass: "edit-profile-h2" }, [
-        _vm._v("プロフィール編集")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "edit-profile-border" }),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          attrs: {
-            action: "/mypage/edit",
-            method: "post",
-            enctype: "multipart/form-data"
-          }
-        },
-        [
-          _c("input", {
-            attrs: { type: "hidden", name: "_token" },
-            domProps: { value: _vm.csrf }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            {
-              staticClass: "edit-profile-label1",
-              attrs: { for: "profile_image" }
-            },
-            [
-              _c("input", {
-                staticClass: "edit-profile-input",
-                staticStyle: { display: "none" },
-                attrs: {
-                  type: "file",
-                  name: "profile_image",
-                  accept: "image/png,image/jpeg,image/gif",
-                  id: "profile_image"
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "profile_img",
-                attrs: { src: _vm.profile_image }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "edit-profile-label2", attrs: { for: "name" } },
-            [_vm._v("ニックネーム")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "edit-profile-name",
-            attrs: { type: "text", name: "name" },
-            domProps: { value: _vm.user_name }
-          }),
-          _vm._v(" "),
-          _c("li", { staticClass: "error-message" }),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "edit-profile-save", attrs: { type: "submit" } },
-            [_vm._v("\n      変更\n    ")]
-          )
-        ]
-      )
-    ])
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "edit-profile-label1",
+            attrs: { for: "profile_image" }
+          },
+          [
+            _c("input", {
+              staticClass: "edit-profile-input",
+              staticStyle: { display: "none" },
+              attrs: {
+                type: "file",
+                name: "profile_image",
+                accept: "image/png,image/jpeg,image/gif",
+                id: "profile_image"
+              }
+            }),
+            _vm._v(" "),
+            _c("img", {
+              staticClass: "profile_img",
+              attrs: { src: _vm.profile_image }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "label",
+          { staticClass: "edit-profile-label2", attrs: { for: "name" } },
+          [_vm._v("ニックネーム")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "edit-profile-name",
+          attrs: { type: "text", name: "name" },
+          domProps: { value: _vm.user_name }
+        }),
+        _vm._v(" "),
+        _c("li", { staticClass: "error-message" }),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "edit-profile-save", attrs: { type: "submit" } },
+          [_vm._v("\n      変更\n    ")]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -42587,7 +42589,7 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            _c("span", [
+                            _c("div", { staticClass: "top-user-name" }, [
                               _vm._v(_vm._s(article_list.user.name))
                             ]),
                             _vm._v(" "),
@@ -42964,11 +42966,15 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※ ")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※")]),
+        _vm._l(_vm.errors, function(error, index) {
+          return [
+            Object.keys(error).legth !== 0
+              ? _c("div", { staticClass: "create-error" }, [
+                  _vm._v("\n        ※" + _vm._s(error) + "\n        \n        ")
+                ])
+              : _vm._e()
+          ]
+        }),
         _vm._v(" "),
         _c("input", {
           staticClass: "article-tag",
@@ -42994,7 +43000,8 @@ var render = function() {
         _c("div", { attrs: { id: "markdown-preview" } }),
         _vm._v(" "),
         _vm._m(1)
-      ]
+      ],
+      2
     )
   ])
 }
@@ -43048,7 +43055,7 @@ var render = function() {
       "form",
       {
         staticClass: "article-form",
-        attrs: { action: "/article/updata", method: "post" }
+        attrs: { action: "/article/update", method: "post" }
       },
       [
         _c("input", {
@@ -43057,16 +43064,23 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("input", {
+          attrs: { type: "hidden", name: "article_id" },
+          domProps: { value: _vm.article_data.id }
+        }),
+        _vm._v(" "),
+        _c("input", {
           staticClass: "article-title",
           attrs: { type: "text", name: "title", placeholder: "タイトル" },
           domProps: { value: _vm.article_data.title }
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※ ")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "create-error" }, [_vm._v("※")]),
+        _vm._l(_vm.errors, function(error, index) {
+          return [
+            _c("div", { staticClass: "create-error" }, [
+              _vm._v("※" + _vm._s(error))
+            ])
+          ]
+        }),
         _vm._v(" "),
         _c("input", {
           staticClass: "article-tag",
@@ -43081,20 +43095,26 @@ var render = function() {
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _c("textarea", {
-          attrs: {
-            id: "markdown-editor-textarea",
-            name: "body",
-            placeholder: "本文を書いてください"
-          }
+        _c(
+          "textarea",
+          {
+            attrs: {
+              id: "markdown-editor-textarea",
+              name: "body",
+              placeholder: ""
+            }
+          },
+          [_vm._v(_vm._s(_vm.article_data.body))]
+        ),
+        _vm._v(" "),
+        _c("div", {
+          attrs: { id: "markdown-preview" },
+          domProps: { innerHTML: _vm._s(_vm.article_parse_body) }
         }),
         _vm._v(" "),
-        _c("div", { attrs: { id: "markdown-preview" } }, [
-          _vm._v("\n    " + _vm._s(_vm.article_data.body) + "\n    ")
-        ]),
-        _vm._v(" "),
         _vm._m(1)
-      ]
+      ],
+      2
     )
   ])
 }
@@ -43312,9 +43332,10 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "show-body-box" }, [
-        _c("li", { staticClass: "show-body" }, [
-          _vm._v(_vm._s(_vm.article.body))
-        ])
+        _c("li", {
+          staticClass: "show-body",
+          domProps: { innerHTML: _vm._s(_vm.article_parse_body) }
+        })
       ])
     ]),
     _vm._v(" "),
