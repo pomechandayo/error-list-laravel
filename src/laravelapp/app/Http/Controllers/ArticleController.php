@@ -336,8 +336,9 @@ class ArticleController extends Controller
            $tags_string,
         ];
     }
-    public function update(ArticleRequest $request, int $id)
+    public function update(ArticleRequest $request)
     {
+        $article_id = $request->article_id;
         /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
         */
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
@@ -361,7 +362,7 @@ class ArticleController extends Controller
 
         /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
 
-        $article = Article::find($id);
+        $article = Article::find($article_id);
         $article->title = request('title');
         $article->body = request('body');
     DB::transaction(function () use ($article,$tags_id)
@@ -370,9 +371,9 @@ class ArticleController extends Controller
         $article->tags()->attach($tags_id);
     });
 
-        return redirect()
-        ->action('ArticleController@show', $article->id)
-        ->with('user',Auth::user());
+        return redirect(route('article.show',[
+            'articleId' => $article->id,
+        ]));
     }
 
     public function destroy(Request $request)

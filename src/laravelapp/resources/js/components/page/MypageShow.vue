@@ -39,7 +39,7 @@
 
         <button class="profile-link-editprofile">
           <a  
-          @click.stop.prevent="goUrlPage('/profile/edit')"
+          @click.stop.prevent="goUrlPage('/mypage/edit')"
           class="profile-link"
           >
             プロフィール編集

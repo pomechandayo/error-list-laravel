@@ -1,13 +1,5 @@
 <template>
-<div>
 
-
-  <div 
-  v-model="success"
-  class="edit-profile-message"
-  >
-    {{ success }}
-  </div>
 
   <div class="edit-profile-box">
     
@@ -66,7 +58,6 @@ export default{
       
       user_name:    [],
       profile_image:[],
-      success:      '',
     };
   },
    props: {
@@ -91,6 +82,7 @@ export default{
    },
     mounted() {
       this.getProfileImage();
+      console.log(this.status)
     },
 }
 
