@@ -13,17 +13,17 @@
 <div class="top-article-container">
     <div class="search-result">
       <h2 class="search-article">
- 
+        {{ search_keyword }}
   　  </h2>
       <h2 class="search-article">
      
   　  </h2>
-       <form action="/index" method="get" class="tag-form">
+      
        <input type="hidden" name="_token" :value="csrf" />
          <input 
           class="tag-search" 
           type="text" 
-          name="keyword"
+          v-model="keyword"
           placeholder="tag:タグ名  キーワード"
           value=""
          >
@@ -32,9 +32,8 @@
             type="image" onfocus="this.blur(); " 
             src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png" 
             value="検索"
-           
+            @click="getArticles()"
           >
-       </form>
      </div>
        
       <ul>
@@ -132,9 +131,10 @@ export default {
       .getAttribute("content"),
 
       page: 1,
-      top: [],
+      top:      [],
       keywords: [],
-      showUrl: [],
+      showUrl:  [],
+      search_keyword:  '',
     };
   },
   props: {
@@ -144,9 +144,15 @@ export default {
   },
  methods: {
    getArticles() {
-   const url = '/api/index?page=' + this.page
-   this.$http.get(url).then((response) => {
+   const url = '/api/index?page=' + this.page;
+   let keyword = {keyword: this.keyword};
+
+   this.$http.post(url,keyword).then((response) => {
+
      this.top = response.data.article_list;
+     this.search_keyword = response.data.search_keyword
+
+     this.page = 1;
    }).catch(error => {
      console.log(error.response)
    });
@@ -159,7 +165,7 @@ export default {
       this.$router.push(url);
   },
  },
-  mounted() {
+  created() {
     this.getArticles();
   },
   components: {

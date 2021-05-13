@@ -15,6 +15,7 @@ class KeywordExploder
      */
     public function handle($request, Closure $next)
     {
+        // dd($request);
         $keyword = $request->input('keyword');
         $ret = [];
     

@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    public function index(User $user,Request $request)
-    {   
+    public function index(Request $request)
+    { 
         $keywords_array = $request->input('keyword');
         if($keywords_array === null){
             
@@ -27,8 +27,6 @@ class ArticleController extends Controller
         }
         $keywords = implode(" ",$keywords_array);
         $article_list = [];
-        $user_image = User::GetS3Url();
-        $s3_profile_image = User::GetAuthUserImage();
 
         /*検索フォームからタグのリクエストがあるか判定,
         無ければ新着記事を表示する*/
@@ -37,13 +35,11 @@ class ArticleController extends Controller
            ->ArticleOpen()
            ->Created_atDescPaginate();
            $keyword = '新着記事一覧';
-           
+          
            return [
                 'article_list' => $article_list,
-                'keyword' => $keyword,
+                'search_keyword' => $keyword,
                 'keywords' => $keywords,
-                'user_image' => $user_image,
-                's3_profile_image' => $s3_profile_image,
            ];
         }
          
@@ -123,11 +119,10 @@ class ArticleController extends Controller
                     $search_keyword = $keywords.
                     'に一致する記事はありませんでした';
                 
-                    return view('index',[
+                    return [
                         'article_list' => $article_list,
-                        'keyword' => $search_keyword,
-                        's3_profile_image' => $s3_profile_image,
-                     ])->with('user',Auth::user());
+                        'search_keyword' => $search_keyword,
+                     ];
              }
         }else{
             $tag_extract[] = 0; 
@@ -183,11 +178,10 @@ class ArticleController extends Controller
                     $search_keyword = $keywords.
                     'に一致する記事はありませんでした';
         
-                    return view('index',[
+                    return [
                         'article_list' => $article_list,
-                        'keyword' => $search_keyword,
-                        's3_profile_image' => $s3_profile_image,
-                     ])->with('user',Auth::user());
+                        'search_keyword' => $search_keyword,   
+                     ];
                 }
         } 
                  
@@ -197,8 +191,6 @@ class ArticleController extends Controller
                  'search_keyword' => $search_keyword, 
                  'article_list' => $article_list,
                  'keywords' => $keywords,
-                 'user_image' => $user_image,
-                 's3_profile_image' => $s3_profile_image,
              ];
     }
                 
