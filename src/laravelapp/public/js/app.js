@@ -43464,7 +43464,7 @@ var render = function() {
                         "form",
                         {
                           staticClass: "destroy-form",
-                          attrs: { action: "/destroy", method: "post" }
+                          attrs: { action: "/article/destroy", method: "post" }
                         },
                         [
                           _c("input", {

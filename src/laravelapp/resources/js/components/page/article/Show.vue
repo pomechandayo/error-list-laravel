@@ -113,7 +113,7 @@
             </router-link>
 
           <form 
-            action="/destroy"
+            action="/article/destroy"
             method="post" 
             class="destroy-form"
             >
