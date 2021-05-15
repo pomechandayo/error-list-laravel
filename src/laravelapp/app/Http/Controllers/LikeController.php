@@ -11,8 +11,6 @@ class LikeController extends Controller
 {
     public function likeFirstCheck(int $article_id, $user_id = null) 
     {
-        
-       
         $likes = new Like();
         $like = Like::where('article_id',$article_id)
         ->where('user_id',$user_id)->first();
