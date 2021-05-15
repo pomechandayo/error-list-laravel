@@ -1,17 +1,28 @@
 <template>
 <div>
-<head>
-  <link 
-    rel="stylesheet" 
-    href="/css/show.css">
-  <link> 
-</head>
+
    <div class="comment-error"> </div>
 <div class="show-main">
 
   <div class="show-box">
     <div class="show-user-data">
-    <a href=""><img :src="postUser.profile_image" class="show-user-image"></a>
+
+    <router-link 
+    :to="{name: 'userpage',
+    query: {userId: postUser.id}}"
+    v-if="postUser.id !== auth.id"
+    >
+       <img :src="postUser.profile_image"          class="show-user-image">
+
+    </router-link>
+
+    <a @click.stop.prevent="goUrlPage('/mypage/show')"
+      v-if="postUser.id === auth.id"
+    >
+       <img class="top-article-myimage"
+       :src="postUser.profile_image">
+    </a>
+
       <li class="show-article-user">
           {{ postUser.name }}
        </li>
@@ -149,7 +160,23 @@
 
  
       <li class=comment-user>
-      <a href=""><img :src="comment.user.profile_image" class="comment-user-img"></a>
+
+         <router-link 
+          :to="{name: 'userpage',
+          query: {userId: comment.user.id}}"
+          v-if="comment.user.id !== auth.id"
+         >
+            <img :src="comment.user.profile_image"          class="show-user-image">
+
+      </router-link>
+
+    <a @click.stop.prevent="goUrlPage('/mypage/show')"
+      v-if="comment.user.id === auth.id">
+
+       <img class="top-article-myimage"
+       :src="comment.user.profile_image">
+
+    </a>
         
         <div class="comment-user-name">
           {{ comment.user.name }}
@@ -190,8 +217,23 @@
     <template v-for="(replies,index) in comment.replies ">
       <div class="reply-box">
         <div class="reply-user-data">
-        <a href=""><img :src="replies.user.profile_image" class="reply-img"></a>
-          {{ replies.user.name }}
+
+         <router-link 
+           :to="{name: 'userpage',
+           query: {userId: replies.user.id}}"
+           v-if="replies.user.id !== auth.id"
+         >
+             <img :src="replies.user.profile_image" class="show-user-image">
+
+        </router-link>
+
+    <a @click.stop.prevent="goUrlPage('/mypage/show')"
+      v-if="replies.user.id === auth.id"
+    >
+       <img class="top-article-myimage"
+       :src="replies.user.profile_image">
+    </a>
+        
          
         <form
           action="/article/reply/delete"

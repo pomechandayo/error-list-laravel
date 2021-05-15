@@ -1967,6 +1967,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['article_id', 'user_id'],
   data: function data() {
@@ -2024,12 +2027,11 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    a: function a() {
-      console.log(this.article_id);
+    likeAlert: function likeAlert() {
+      alert('ログインすると記事に高評価がつけられます');
     }
   },
   mounted: function mounted() {
-    this.a();
     this.firstCheck();
   }
 });
@@ -2234,6 +2236,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2241,7 +2251,8 @@ __webpack_require__.r(__webpack_exports__);
       show_contents: [],
       show_menu: [],
       userid: "",
-      userImage: ""
+      userImage: "",
+      header_search_keyword: ""
     };
   },
   props: {
@@ -2277,6 +2288,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getProfileImage();
+    console.log(this.header_search_keyword);
   }
 });
 
@@ -2301,12 +2313,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2385,18 +2391,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("required", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["required"]), {}, {
-  message: "{_field_}は必須です"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("email", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["email"]), {}, {
-  message: "{_field_}はメールアドレスの形式で入力してください"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("min", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["min"]), {}, {
-  message: "{_field_}は最低{length}文字入力してください"
-}));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])("max", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__["max"]), {}, {
-  message: "{_field_}は最大{length}文字までです"
-}));
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
@@ -2743,7 +2737,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
       user_name: [],
-      profile_image: []
+      profile_image: [],
+      status: ""
     };
   },
   props: {
@@ -2768,7 +2763,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getProfileImage();
-    console.log(this.status);
   }
 });
 
@@ -3069,8 +3063,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3080,17 +3072,25 @@ __webpack_require__.r(__webpack_exports__);
       top: [],
       keywords: [],
       showUrl: [],
-      search_keyword: ''
+      keyword: "",
+      search_keyword: ""
     };
   },
   props: {
     auth: {
       type: Object | Array
+    },
+    header_search_keyword: {
+      type: String
     }
   },
   methods: {
     getArticles: function getArticles() {
       var _this = this;
+
+      if (this.header_search_keyword != null) {
+        this.keyword = this.header_search_keyword;
+      }
 
       var url = '/api/index?page=' + this.page;
       var keyword = {
@@ -3112,7 +3112,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push(url);
     }
   },
-  created: function created() {
+  mounted: function mounted() {
+    console.log(this.header_search_keyword);
     this.getArticles();
   },
   components: {
@@ -3458,6 +3459,48 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ArticleLike__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../ArticleLike */ "./resources/js/components/ArticleLike.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41067,7 +41110,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.user_id !== null
+      _vm.user_id != null
         ? [
             _vm.status === false
               ? _c("span", { staticClass: "likes" }, [
@@ -41091,7 +41134,10 @@ var render = function() {
                     )
                   ])
                 ])
-              : _c("span", { staticClass: "likes" }, [
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.status === true
+              ? _c("span", { staticClass: "likes" }, [
                   _c(
                     "i",
                     {
@@ -41112,15 +41158,25 @@ var render = function() {
                     )
                   ])
                 ])
+              : _vm._e()
           ]
         : _vm._e(),
       _vm._v(" "),
-      _vm.user_id === null
+      _vm.user_id == null
         ? [
             _c("span", { staticClass: "likes" }, [
-              _c("span", { staticClass: "like-toggle-guest" }, [
-                _vm._v("高評価")
-              ]),
+              _c(
+                "i",
+                {
+                  staticClass: "like-toggle-guest",
+                  on: {
+                    click: function($event) {
+                      return _vm.likeAlert()
+                    }
+                  }
+                },
+                [_vm._v("高評価")]
+              ),
               _vm._v(" "),
               _c("span", { staticClass: "like-counter" }, [
                 _vm._v("\n        " + _vm._s(_vm.likeCount) + "\n      ")
@@ -41244,12 +41300,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("footer", [
-        _c("div", { staticClass: "footer-logo" }, [_vm._v("ErrorList")]),
-        _vm._v(" "),
-        _c("small", [_vm._v("\n    ©Eroors incremnts Inc. 2021\n    ")])
-      ])
+    return _c("footer", [
+      _c("div", { staticClass: "footer-logo" }, [_vm._v("ErrorList")]),
+      _vm._v(" "),
+      _c("small", [_vm._v("\n  ©Eroors incremnts Inc. 2021\n  ")])
     ])
   }
 ]
@@ -41296,7 +41350,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "header-right" }, [
         _c(
-          "form",
+          "div",
           { staticClass: "search", attrs: { method: "get", action: "index" } },
           [
             _c("input", {
@@ -41305,11 +41359,24 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.header_search_keyword,
+                  expression: "header_search_keyword"
+                }
+              ],
               staticClass: "search-input-pc",
-              attrs: {
-                type: "text",
-                placeholder: "tag:タグ名 キーワード",
-                name: "keyword"
+              attrs: { type: "text", placeholder: "tag:タグ名 キーワード" },
+              domProps: { value: _vm.header_search_keyword },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.header_search_keyword = $event.target.value
+                }
               }
             }),
             _vm._v(" "),
@@ -41324,7 +41391,10 @@ var render = function() {
               },
               on: {
                 click: function($event) {
-                  return _vm.toggle("1001")
+                  return _vm.goUrlPage({
+                    name: "index",
+                    params: { header_search_keyword: _vm.header_search_keyword }
+                  })
                 }
               }
             })
@@ -41487,7 +41557,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c(
-      "form",
+      "div",
       {
         directives: [
           {
@@ -41497,20 +41567,28 @@ var render = function() {
             expression: "show_contents.indexOf('1001') >= 0"
           }
         ],
-        attrs: { id: "search1", action: "index", method: "get" }
+        attrs: { id: "search1" }
       },
       [
         _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrf }
-        }),
-        _vm._v(" "),
-        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.header_search_keyword,
+              expression: "header_search_keyword"
+            }
+          ],
           staticClass: "search-input",
-          attrs: {
-            type: "text",
-            placeholder: "検索キーワード",
-            name: "keyword"
+          attrs: { type: "text", placeholder: "検索キーワード" },
+          domProps: { value: _vm.header_search_keyword },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.header_search_keyword = $event.target.value
+            }
           }
         }),
         _vm._v(" "),
@@ -41528,6 +41606,14 @@ var render = function() {
             onfocus: "this.blur(); ",
             src:
               "https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png"
+          },
+          on: {
+            click: function($event) {
+              return _vm.goUrlPage({
+                name: "index",
+                params: { header_search_keyword: _vm.header_search_keyword }
+              })
+            }
           }
         })
       ]
@@ -42499,8 +42585,6 @@ var render = function() {
               _vm._v("\n        " + _vm._s(_vm.search_keyword) + "\n  　  ")
             ]),
             _vm._v(" "),
-            _c("h2", { staticClass: "search-article" }),
-            _vm._v(" "),
             _c("input", {
               attrs: { type: "hidden", name: "_token" },
               domProps: { value: _vm.csrf }
@@ -42516,11 +42600,7 @@ var render = function() {
                 }
               ],
               staticClass: "tag-search",
-              attrs: {
-                type: "text",
-                placeholder: "tag:タグ名  キーワード",
-                value: ""
-              },
+              attrs: { type: "text", placeholder: "tag:タグ名  キーワード" },
               domProps: { value: _vm.keyword },
               on: {
                 input: function($event) {
@@ -42644,7 +42724,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", [
+                        _c("div", { staticClass: "top-count-created" }, [
                           _c("div", { staticClass: "top-article-created_at" }, [
                             _vm._v(
                               "\n                  " +
@@ -43183,8 +43263,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", { staticClass: "comment-error" }),
     _vm._v(" "),
     _c("div", { staticClass: "show-main" }, [
@@ -43192,24 +43270,63 @@ var render = function() {
         "div",
         { staticClass: "show-box" },
         [
-          _c("div", { staticClass: "show-user-data" }, [
-            _c("a", { attrs: { href: "" } }, [
-              _c("img", {
-                staticClass: "show-user-image",
-                attrs: { src: _vm.postUser.profile_image }
-              })
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "show-article-user" }, [
-              _vm._v("\n          " + _vm._s(_vm.postUser.name) + "\n       ")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "show-created-at" }, [
-              _vm._v(
-                "\n          " + _vm._s(_vm.article.created_at) + "\n        "
-              )
-            ])
-          ]),
+          _c(
+            "div",
+            { staticClass: "show-user-data" },
+            [
+              _vm.postUser.id !== _vm.auth.id
+                ? _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "userpage",
+                          query: { userId: _vm.postUser.id }
+                        }
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "show-user-image",
+                        attrs: { src: _vm.postUser.profile_image }
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.postUser.id === _vm.auth.id
+                ? _c(
+                    "a",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                          $event.preventDefault()
+                          return _vm.goUrlPage("/mypage/show")
+                        }
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "top-article-myimage",
+                        attrs: { src: _vm.postUser.profile_image }
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("li", { staticClass: "show-article-user" }, [
+                _vm._v("\n          " + _vm._s(_vm.postUser.name) + "\n       ")
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "show-created-at" }, [
+                _vm._v(
+                  "\n          " + _vm._s(_vm.article.created_at) + "\n        "
+                )
+              ])
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "show-title-box" }, [
             _c("li", { staticClass: "show-title" }, [
@@ -43387,62 +43504,105 @@ var render = function() {
               "div",
               { staticClass: "show-comment-box" },
               [
-                _c("li", { staticClass: "comment-user" }, [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("img", {
-                      staticClass: "comment-user-img",
-                      attrs: { src: comment.user.profile_image }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "comment-user-name" }, [
-                    _vm._v(
-                      "\n          " + _vm._s(comment.user.name) + "\n        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "comment-created-at" }, [
-                    _vm._v(
-                      "\n          " + _vm._s(comment.created_at) + "\n        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      staticClass: "comment-delete",
-                      attrs: {
-                        action: "/article/comment/delete",
-                        method: "get"
-                      }
-                    },
-                    [
-                      _c("input", {
-                        attrs: { type: "hidden", name: "_token" },
-                        domProps: { value: _vm.csrf }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        attrs: { type: "hidden", name: "comment_id" },
-                        domProps: { value: comment.id }
-                      }),
-                      _vm._v(" "),
-                      comment.user.id === _vm.auth.id
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "comment-delete",
-                              attrs: {
-                                onclick:
-                                  "return \n            confirm('削除しますか？');"
+                _c(
+                  "li",
+                  { staticClass: "comment-user" },
+                  [
+                    comment.user.id !== _vm.auth.id
+                      ? _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "userpage",
+                                query: { userId: comment.user.id }
                               }
-                            },
-                            [_vm._v("\n          削除\n          ")]
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                ]),
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "show-user-image",
+                              attrs: { src: comment.user.profile_image }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    comment.user.id === _vm.auth.id
+                      ? _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                $event.preventDefault()
+                                return _vm.goUrlPage("/mypage/show")
+                              }
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "top-article-myimage",
+                              attrs: { src: comment.user.profile_image }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "comment-user-name" }, [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(comment.user.name) +
+                          "\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "comment-created-at" }, [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(comment.created_at) +
+                          "\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        staticClass: "comment-delete",
+                        attrs: {
+                          action: "/article/comment/delete",
+                          method: "get"
+                        }
+                      },
+                      [
+                        _c("input", {
+                          attrs: { type: "hidden", name: "_token" },
+                          domProps: { value: _vm.csrf }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: { type: "hidden", name: "comment_id" },
+                          domProps: { value: comment.id }
+                        }),
+                        _vm._v(" "),
+                        comment.user.id === _vm.auth.id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "comment-delete",
+                                attrs: {
+                                  onclick:
+                                    "return \n            confirm('削除しますか？');"
+                                }
+                              },
+                              [_vm._v("\n          削除\n          ")]
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("li", { staticClass: "comment-body" }, [
                   _vm._v("\n        " + _vm._s(comment.body) + "\n      ")
@@ -43451,54 +43611,89 @@ var render = function() {
                 _vm._l(comment.replies, function(replies, index) {
                   return [
                     _c("div", { staticClass: "reply-box" }, [
-                      _c("div", { staticClass: "reply-user-data" }, [
-                        _c("a", { attrs: { href: "" } }, [
-                          _c("img", {
-                            staticClass: "reply-img",
-                            attrs: { src: replies.user.profile_image }
-                          })
-                        ]),
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(replies.user.name) +
-                            "\n         \n        "
-                        ),
-                        _c(
-                          "form",
-                          {
-                            staticClass: "reply-delete",
-                            attrs: {
-                              action: "/article/reply/delete",
-                              method: "get"
-                            }
-                          },
-                          [
-                            _c("input", {
-                              attrs: { type: "hidden", name: "_token" },
-                              domProps: { value: _vm.csrf }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: { type: "hidden", name: "reply_id" },
-                              domProps: { value: replies.id }
-                            }),
-                            _vm._v(" "),
-                            replies.user.id === _vm.auth.id
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "reply-delete",
-                                    attrs: {
-                                      onclick:
-                                        "return \n            confirm('削除しますか？');"
+                      _c(
+                        "div",
+                        { staticClass: "reply-user-data" },
+                        [
+                          replies.user.id !== _vm.auth.id
+                            ? _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "userpage",
+                                      query: { userId: replies.user.id }
                                     }
-                                  },
-                                  [_vm._v("\n          削除\n          ")]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      ]),
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    staticClass: "show-user-image",
+                                    attrs: { src: replies.user.profile_image }
+                                  })
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          replies.user.id === _vm.auth.id
+                            ? _c(
+                                "a",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.stopPropagation()
+                                      $event.preventDefault()
+                                      return _vm.goUrlPage("/mypage/show")
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    staticClass: "top-article-myimage",
+                                    attrs: { src: replies.user.profile_image }
+                                  })
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "form",
+                            {
+                              staticClass: "reply-delete",
+                              attrs: {
+                                action: "/article/reply/delete",
+                                method: "get"
+                              }
+                            },
+                            [
+                              _c("input", {
+                                attrs: { type: "hidden", name: "_token" },
+                                domProps: { value: _vm.csrf }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: { type: "hidden", name: "reply_id" },
+                                domProps: { value: replies.id }
+                              }),
+                              _vm._v(" "),
+                              replies.user.id === _vm.auth.id
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "reply-delete",
+                                      attrs: {
+                                        onclick:
+                                          "return \n            confirm('削除しますか？');"
+                                      }
+                                    },
+                                    [_vm._v("\n          削除\n          ")]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
                       _c("li", { staticClass: "replies" }, [
                         _vm._v(
@@ -43623,18 +43818,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("head", [
-      _c("link", { attrs: { rel: "stylesheet", href: "/css/show.css" } }),
-      _vm._v(" "),
-      _c("link")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60036,7 +60220,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$http = axios__WEBPACK_IMPO
   }, {
     path: '/index',
     name: 'index',
-    component: _components_page_Top__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_page_Top__WEBPACK_IMPORTED_MODULE_4__["default"],
+    props: true
   }, {
     path: '/article/show',
     name: 'article.show',

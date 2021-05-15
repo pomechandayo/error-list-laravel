@@ -59,7 +59,7 @@ li {
   line-height: 1.6;
   min-height: 130px;
   height: auto !important;
-  padding: 5px 0 5px 20px;
+  padding: 5px 40px 5px 20px;
 }
 
 .top-article-myimage {
@@ -76,10 +76,10 @@ li {
 }
 .top-user-name {
   font-size: 1.6rem;
+  margin-right: auto;
 }
 .top-tag{
   font-size: 1.2rem;
-  margin-left: auto;
   margin-right: 10px;
 }
 
@@ -105,12 +105,16 @@ li {
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
-  width: 45%;
+  width: 40%;
+}
+.top-count-created {
+  display: flex;
+  justify-content: space-between;
 }
 .top-like-count{
   font-size: 1.0rem;
   margin-left: 0;
-  margin-right: 0;
+  margin-right: 5px;
   letter-spacing: 0.5;
 }
 

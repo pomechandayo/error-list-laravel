@@ -64,16 +64,6 @@ public function showProfile(int $user_id, string $keyword = null)
    
    
  }
-
-    public function showProfileEditForm()
-    {  
-        $s3_profile_image = User::GetAuthUserImage();
-
-        return view('mypage.profile_edit_form',[
-            's3_profile_image' => $s3_profile_image
-        ])
-        ->with('user',Auth::user());
-    }
     
     
     public function editProfile(EditRequest $request) 
