@@ -15,6 +15,13 @@
        <img :src="postUser.profile_image"          class="show-user-image">
 
     </router-link>
+    <router-link 
+     @click.stop.prevent="goUrlPage('/mypage/show')"
+     v-if="postUser.id == auth.id"
+    >
+       <img :src="postUser.profile_image"          class="show-user-image">
+
+    </router-link>
 
     <a @click.stop.prevent="goUrlPage('/mypage/show')"
       v-if="postUser.id === auth.id"
@@ -375,6 +382,9 @@ import ArticleLike from '../../ArticleLike';
      console.log(error)
       });
     },
+     goUrlPage(url) {
+      this.$router.push(url);
+  },
   },
   mounted() {
     this.getArticleList();

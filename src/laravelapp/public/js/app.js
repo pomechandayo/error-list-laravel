@@ -3794,6 +3794,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3828,6 +3835,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    goUrlPage: function goUrlPage(url) {
+      this.$router.push(url);
     }
   },
   mounted: function mounted() {
@@ -43282,6 +43292,27 @@ var render = function() {
                         to: {
                           name: "userpage",
                           query: { userId: _vm.postUser.id }
+                        }
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "show-user-image",
+                        attrs: { src: _vm.postUser.profile_image }
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.postUser.id == _vm.auth.id
+                ? _c(
+                    "router-link",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                          $event.preventDefault()
+                          return _vm.goUrlPage("/mypage/show")
                         }
                       }
                     },

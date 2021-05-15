@@ -203,6 +203,9 @@
 .comment-delete{
   font-size: 1.5rem;
   margin-left: auto;
+  background-color: #fff;
+  border: 1px solid #fff;
+  margin-right: 7px;
 }
 
 .comment-body{
@@ -232,8 +235,8 @@
   border-top: 1px solid rgba(42, 46, 49, 0.4);
 }
 .reply-img{
-  height: 20px !important;
-  width: 20px;
+  height: 34px !important;
+  width: 34px;
 }
 .replies{
   width: 100%;
@@ -243,6 +246,8 @@
   margin-left: auto;
   margin-right: 10px;
   font-size: 1.6rem;
+  background-color: #fff;
+  border: 1px solid #fff;
 }
 .reply-form{
   margin-top: 20px;
