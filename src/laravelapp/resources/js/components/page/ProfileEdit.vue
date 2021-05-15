@@ -1,6 +1,6 @@
 <template>
 
-
+ 
   <div class="edit-profile-box">
     
     <h2 class="edit-profile-h2">プロフィール編集</h2>
@@ -58,6 +58,7 @@ export default{
       
       user_name:    [],
       profile_image:[],
+      status:       "",
     };
   },
    props: {
@@ -77,12 +78,12 @@ export default{
       .then(response => {
         self.user_name = response.data.name;
         self.profile_image = response.data.profile_image;
+        
       }).catch( error => {console.log(error)});
     },
    },
     mounted() {
       this.getProfileImage();
-      console.log(this.status)
     },
 }
 

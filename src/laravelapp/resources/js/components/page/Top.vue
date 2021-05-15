@@ -12,11 +12,10 @@
 >
 <div class="top-article-container">
     <div class="search-result">
-      <h2 class="search-article">
+      <h2 
+      class="search-article"
+      >
         {{ search_keyword }}
-  　  </h2>
-      <h2 class="search-article">
-     
   　  </h2>
       
        <input type="hidden" name="_token" :value="csrf" />
@@ -25,7 +24,6 @@
           type="text" 
           v-model="keyword"
           placeholder="tag:タグ名  キーワード"
-          value=""
          >
          <input 
             class="tag-search-btn" 
@@ -81,7 +79,7 @@
                   >{{article_list.title}}</li>
                  </router-link>
 
-                <div>
+                <div class="top-count-created">
                 <div class="top-article-created_at">
                   {{ article_list.created_at}}
                 </div>
@@ -134,16 +132,24 @@ export default {
       top:      [],
       keywords: [],
       showUrl:  [],
-      search_keyword:  '',
+      keyword:  "",
+      search_keyword:  "",
     };
   },
   props: {
     auth:{
      type: Object|Array
-    } ,
+    },
+    header_search_keyword: {
+      type: String
+    }
   },
  methods: {
    getArticles() {
+
+  if(this.header_search_keyword != null){
+    this.keyword = this.header_search_keyword;
+  }
    const url = '/api/index?page=' + this.page;
    let keyword = {keyword: this.keyword};
 
@@ -165,7 +171,8 @@ export default {
       this.$router.push(url);
   },
  },
-  created() {
+  mounted() {
+    console.log(this.header_search_keyword);
     this.getArticles();
   },
   components: {

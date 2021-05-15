@@ -8,22 +8,22 @@
   </div>
   <div class="header-right">
    
-    <form  class="search" method="get" action="index">
+    <div  class="search" method="get" action="index">
       <input type="hidden" name="_token" :value="csrf" />
       <input 
         class="search-input-pc" 
         type="text" 
         placeholder="tag:タグ名 キーワード"
-        name="keyword"
+        v-model="header_search_keyword"
       >
       <input 
-      @click="toggle('1001')"
         class="search-btn-pc" 
         type="image" onfocus="this.blur(); " 
         src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch1.png" 
         value="検索"
+        @click="goUrlPage({name:'index' ,params:{header_search_keyword: header_search_keyword }})"
       >
-  </form>
+    </div>
       <button 
         @click="toggle('1001')"
         class="search-btn" 
@@ -46,7 +46,7 @@
     
         <img 
         @click="toggle('1000')"
-        :src="userImage" 
+          :src="userImage" 
           class="icon-img" style="margin: 0 10px;"
           v-if="auth.length !== 0"
         >
@@ -103,11 +103,19 @@ v-show="show_contents.indexOf('1000') >= 0">
   </ul>
 </nav>
 
-<form  id="search1" action="index" method="get" v-show="show_contents.indexOf('1001') >= 0">
-     <input type="hidden" name="_token" :value="csrf" />
-    <input class="search-input" type="text" placeholder="検索キーワード" name="keyword">
+<div  id="search1" 
+v-show="show_contents.indexOf('1001') >= 0"
+>
+
+    <input 
+    class="search-input" 
+    type="text" 
+    placeholder="検索キーワード" 
+    v-model="header_search_keyword"
+    >
     <input class="search-btn1" type="image" onfocus="this.blur(); " 
     src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png" 
+    @click="goUrlPage({name:'index' ,params:{header_search_keyword: header_search_keyword }})"
     style="
     height: 25px;
     width: 25px;
@@ -115,7 +123,7 @@ v-show="show_contents.indexOf('1000') >= 0">
     border: 0 none;
     margin-left: 5px;
     ">
-</form>
+</div>
 </header>
 
 </template>
@@ -131,6 +139,7 @@ v-show="show_contents.indexOf('1000') >= 0">
       show_menu: [],
       userid: "",
       userImage: "",
+      header_search_keyword: "",
       };
       
     },
@@ -163,7 +172,8 @@ v-show="show_contents.indexOf('1000') >= 0">
     }
     },
     created() {
-      this.getProfileImage()
+      this.getProfileImage();
+      console.log(this.header_search_keyword);
     },
 }
 </script>

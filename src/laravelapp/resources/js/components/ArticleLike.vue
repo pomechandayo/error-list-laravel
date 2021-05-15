@@ -1,7 +1,7 @@
 <template>
   <div>
        
-      <template v-if="user_id !== null">
+      <template v-if="user_id != null">
 
         <span 
         class="likes"
@@ -19,7 +19,7 @@
           </span>
 
         </span>
-        <span class="likes" v-else>
+        <span class="likes" v-if=" status === true">
 
           <i
           class="like-toggle liked"
@@ -33,9 +33,12 @@
 
       </template>
       
-    <template v-if="user_id === null">
+    <template v-if="user_id == null">
       <span class="likes">
-        <span class="like-toggle-guest">高評価</span>
+        <i
+        @click="likeAlert()"
+        class="like-toggle-guest"
+        >高評価</i>
         <span class="like-counter">
           {{ likeCount }}
         </span>
@@ -107,13 +110,14 @@
         console.log(error)
       }); 
     },
-    a() {
-      console.log(this.article_id);
-    }
+    likeAlert() {
+      alert('ログインすると記事に高評価がつけられます');
+    },
+ 
     },
     mounted() {
-      this.a();
       this.firstCheck();
+      
   },
   }
 </script>
