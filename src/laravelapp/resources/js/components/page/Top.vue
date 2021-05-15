@@ -12,11 +12,8 @@
 >
 <div class="top-article-container">
     <div class="search-result">
-      <h2 
-      class="search-article"
-      >
-        {{ search_keyword }}
-  　  </h2>
+
+      <h2 class="search-article">{{ search_keyword }}</h2>
       
        <input type="hidden" name="_token" :value="csrf" />
          <input 
@@ -30,7 +27,7 @@
             type="image" onfocus="this.blur(); " 
             src="https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/serch2.png" 
             value="検索"
-            @click="getArticles()"
+            @click.prevent="getArticles()"
           >
      </div>
        
@@ -41,10 +38,7 @@
          <li id="li-none">
 
         
-        <div class="top-article_box">
-         
-
-        
+        <div class="top-article_box">        
       
           <li class="top-article-user">
         
@@ -52,6 +46,7 @@
                  query: {userId: article_list.user.id}}"
                  v-if="article_list.user.id !== auth.id"
                 >
+                
               <img class="top-article-myimage"
               :src="article_list.user.profile_image">
              
@@ -172,7 +167,6 @@ export default {
   },
  },
   mounted() {
-    console.log(this.header_search_keyword);
     this.getArticles();
   },
   components: {

@@ -15,13 +15,6 @@
        <img :src="postUser.profile_image"          class="show-user-image">
 
     </router-link>
-    <router-link 
-     @click.stop.prevent="goUrlPage('/mypage/show')"
-     v-if="postUser.id == auth.id"
-    >
-       <img :src="postUser.profile_image"          class="show-user-image">
-
-    </router-link>
 
     <a @click.stop.prevent="goUrlPage('/mypage/show')"
       v-if="postUser.id === auth.id"
@@ -104,10 +97,10 @@
         >
 
            <router-link 
-           class="show-link-edit"
            :to="{name: 'article-edit',
             query: {articleId: article.id}}"
             v-if="auth.length !== 0"
+            class="show-link-edit"
            >
             編集
             </router-link>
@@ -366,10 +359,11 @@ import ArticleLike from '../../ArticleLike';
     },
   },
   methods: {
+    
     getArticleList(){
-      const Url = '/api/article/show/' + this.$route.query.articleId;
+      const url = '/api/article/show/' + this.$route.query.articleId;
 
-      this.$http.get(Url)
+      this.$http.get(url)
       .then(response => {
 
         this.article  = response.data.article;

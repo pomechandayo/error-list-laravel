@@ -58,22 +58,24 @@
        }
     },
     methods: {
+
       firstCheck() {
+
         const article_id = this.article_id;
         const user_id    = this.user_id;
         const Url = "/api/like/" + article_id + "/" + user_id +"/likeFirstCheck";
-        console.log(Url);
-        axios.get(Url)
+
+        this.$http.get(Url)
         .then(res => {
+
           if(res.data[0] === true){
-            console.log(res)
             this.status = res.data[0];
             this.likeCount  = res.data[1]
           }else{
-            console.log(res)
             this.status = res.data[0]
             this.likeCount  = res.data[1]
           }
+          
         }).catch(error => {
           console.log(error)
         });
@@ -83,7 +85,7 @@
         const user_id = this.user_id
          const Url = "/api/like/" + article_id + "/" + user_id +"/likeCheck";
 
-         axios.get(Url)
+         this.$http.get(Url)
          .then(res => {
            if(res.data[0] === true){
              this.status = res.data[0]
@@ -105,6 +107,7 @@
       .then( response => {
         
         self.likeCount = response.data;
+
       })
       .catch(error => {
         console.log(error)
@@ -113,11 +116,9 @@
     likeAlert() {
       alert('ログインすると記事に高評価がつけられます');
     },
- 
     },
     mounted() {
       this.firstCheck();
-      
   },
   }
 </script>

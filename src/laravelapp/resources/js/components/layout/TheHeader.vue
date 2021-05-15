@@ -173,7 +173,6 @@ v-show="show_contents.indexOf('1001') >= 0"
     },
     created() {
       this.getProfileImage();
-      console.log(this.header_search_keyword);
     },
 }
 </script>

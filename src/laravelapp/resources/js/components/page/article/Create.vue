@@ -54,6 +54,7 @@ export default {
     }
   },
  mounted() {
+   
   $(function () {
   $('#markdown-editor-textarea').keyup(function () {
     let html = marked($(this).val());

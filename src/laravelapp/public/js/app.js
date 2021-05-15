@@ -1985,14 +1985,11 @@ __webpack_require__.r(__webpack_exports__);
       var article_id = this.article_id;
       var user_id = this.user_id;
       var Url = "/api/like/" + article_id + "/" + user_id + "/likeFirstCheck";
-      console.log(Url);
-      axios.get(Url).then(function (res) {
+      this.$http.get(Url).then(function (res) {
         if (res.data[0] === true) {
-          console.log(res);
           _this.status = res.data[0];
           _this.likeCount = res.data[1];
         } else {
-          console.log(res);
           _this.status = res.data[0];
           _this.likeCount = res.data[1];
         }
@@ -2006,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
       var article_id = this.article_id;
       var user_id = this.user_id;
       var Url = "/api/like/" + article_id + "/" + user_id + "/likeCheck";
-      axios.get(Url).then(function (res) {
+      this.$http.get(Url).then(function (res) {
         if (res.data[0] === true) {
           _this2.status = res.data[0];
           _this2.likeCount = res.data[1];
@@ -2288,7 +2285,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getProfileImage();
-    console.log(this.header_search_keyword);
   }
 });
 
@@ -3058,11 +3054,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3113,7 +3104,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log(this.header_search_keyword);
     this.getArticles();
   },
   components: {
@@ -3794,13 +3784,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3825,8 +3808,8 @@ __webpack_require__.r(__webpack_exports__);
     getArticleList: function getArticleList() {
       var _this = this;
 
-      var Url = '/api/article/show/' + this.$route.query.articleId;
-      this.$http.get(Url).then(function (response) {
+      var url = '/api/article/show/' + this.$route.query.articleId;
+      this.$http.get(url).then(function (response) {
         _this.article = response.data.article;
         _this.tag = response.data.article.tags;
         _this.postUser = response.data.article.user;
@@ -42592,7 +42575,7 @@ var render = function() {
         [
           _c("div", { staticClass: "search-result" }, [
             _c("h2", { staticClass: "search-article" }, [
-              _vm._v("\n        " + _vm._s(_vm.search_keyword) + "\n  　  ")
+              _vm._v(_vm._s(_vm.search_keyword))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -42633,6 +42616,7 @@ var render = function() {
               },
               on: {
                 click: function($event) {
+                  $event.preventDefault()
                   return _vm.getArticles()
                 }
               }
@@ -43292,27 +43276,6 @@ var render = function() {
                         to: {
                           name: "userpage",
                           query: { userId: _vm.postUser.id }
-                        }
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "show-user-image",
-                        attrs: { src: _vm.postUser.profile_image }
-                      })
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.postUser.id == _vm.auth.id
-                ? _c(
-                    "router-link",
-                    {
-                      on: {
-                        click: function($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          return _vm.goUrlPage("/mypage/show")
                         }
                       }
                     },

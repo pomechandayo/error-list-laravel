@@ -118,11 +118,13 @@ export default {
 
       const url = '/api/userpage/' + this.$route.query.userId + '?page=' + this.page;
       const self= this;
+      
       this.$http.get(url)
       .then(response => {
         self.article_count = response.data.article_count;
         self.article_list  = response.data.article_list;
         self.user_data     = response.data.user_data;
+        
       })
       .catch( error => {console.log(error)});
    },
