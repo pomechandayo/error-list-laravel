@@ -311,7 +311,6 @@ a:hover {
   .form-box{
     display: flex;
     flex-direction: column;
-
     height: auto;
     background-color:  #fff;
   }
@@ -375,7 +374,7 @@ a:hover {
 
   .register{
     display: block;
-    margin: 30px auto 15px auto;
+    margin: 40px auto 50px auto;
     width: 80%;
     height: 40px;
     border-radius: 5px;
@@ -388,6 +387,7 @@ a:hover {
     cursor: pointer;
   }
  
+
   footer {
     background-color: #343a40;
     height: 120px;
@@ -395,12 +395,12 @@ a:hover {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding: 30px;
   }
   .footer-logo {
     font-size: 3rem;
     color: #ee0000;
     text-align: center;
-    margin-top: 10px;
     font-weight: bold;
   }
   small{

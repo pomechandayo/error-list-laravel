@@ -32,7 +32,8 @@ export default new Router({
     {
       path: '/index',
       name: 'index',
-      component: Top
+      component: Top,
+      props: true,
     },
     {
       path: '/article/show',

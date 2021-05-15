@@ -79,23 +79,6 @@ style="margin: 0; width: 100%;"
 import {ValidationProvider,ValidationObserver,extend} from "vee-validate";
 import { required,max,min,email,confirmed} from "vee-validate/dist/rules";
 
-extend("required", {
-  ...required,
-  message: "{_field_}は必須です"
-});
-extend("email", {
-  ...email,
-  message: "{_field_}はメールアドレスの形式で入力してください"
-});
-extend("min", {
-  ...min,
-  message: "{_field_}は最低{length}文字入力してください"
-});
-extend("max", {
-  ...max,
-  message: "{_field_}は最大{length}文字までです"
-});
-
 export default {
   components: {
     ValidationProvider,
