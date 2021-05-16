@@ -3079,7 +3079,7 @@ __webpack_require__.r(__webpack_exports__);
     getArticles: function getArticles() {
       var _this = this;
 
-      if (this.header_search_keyword != null) {
+      if (this.header_search_keyword != null && this.keyword === "") {
         this.keyword = this.header_search_keyword;
       }
 

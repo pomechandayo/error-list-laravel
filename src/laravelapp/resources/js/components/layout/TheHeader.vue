@@ -1,4 +1,4 @@
-<template>
+<template >
   <header>
 <div class="header-box">
   <div class="header-left">
@@ -174,5 +174,6 @@ v-show="show_contents.indexOf('1001') >= 0"
     created() {
       this.getProfileImage();
     },
+ 
 }
 </script>

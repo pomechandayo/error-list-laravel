@@ -46,7 +46,7 @@
                  query: {userId: article_list.user.id}}"
                  v-if="article_list.user.id !== auth.id"
                 >
-                
+
               <img class="top-article-myimage"
               :src="article_list.user.profile_image">
              
@@ -142,7 +142,7 @@ export default {
  methods: {
    getArticles() {
 
-  if(this.header_search_keyword != null){
+  if(this.header_search_keyword != null &&this.keyword === ""){
     this.keyword = this.header_search_keyword;
   }
    const url = '/api/index?page=' + this.page;
