@@ -36,7 +36,8 @@ Route::group(['middleware' => ['api']],function() {
     });
 
     Route::get('/profile/{id}','MyPage\ProfileController@getProfileImage');
-    Route::get('/mypage/show/{user_id}/{keyword?}','Mypage\ProfileController@showProfile');
+
+    Route::get('/mypage/show/{user_id}/{keyword?}','MyPage\ProfileController@showProfile');
 
     Route::get('/userpage/{user_id}','UserPageController@showUserPage');
 });

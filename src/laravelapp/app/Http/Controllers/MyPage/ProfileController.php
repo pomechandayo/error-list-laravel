@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mypage;
+namespace App\Http\Controllers\MyPage;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mypage\Profile\EditRequest;
