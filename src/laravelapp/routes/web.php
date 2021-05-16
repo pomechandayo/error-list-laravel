@@ -62,7 +62,7 @@ Route::prefix('/mypage')
         return view('/mypage/edit');
     })->name('edit');
     Route::post('/edit','Mypage\ProfileController@editProfile')
-    ->name('edit.post');
+    ->name('post');
     
 });
 
