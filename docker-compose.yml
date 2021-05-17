@@ -2,7 +2,7 @@ version: '3'
 services:
  app:
    ports:
-     - "8000:80"
+     - "10080:80"
    build: ./docker/app
    container_name: laravel_app
    volumes:

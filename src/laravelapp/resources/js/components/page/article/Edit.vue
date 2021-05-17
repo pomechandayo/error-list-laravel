@@ -31,7 +31,6 @@
       name="tags" 
       class="article-tag" 
       placeholder="先頭に#をつけてタグ5つまでつけられます(#PHP,#Ruby,#Javaなど)"
-      :value="tag"
       >
 
       <div class="tab-bar">
