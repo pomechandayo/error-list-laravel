@@ -64,7 +64,9 @@
                   class="profile-myimage"
                 > 
               </router-link>
+              <div class="article-user-name">
               {{ article.user.name }}
+              </div>
             <template v-for="(tags,index) in article.tags">
               <div class="mypage_article_tag">
                 {{ tags.name }}

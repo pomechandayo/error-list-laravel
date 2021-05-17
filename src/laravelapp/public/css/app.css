@@ -833,6 +833,7 @@ li {
 
 .show-tag {
   font-size: 1.2rem;
+  display: inline;
 }
 
 .show-like-box {
@@ -1392,6 +1393,11 @@ a:hover {
   align-items: center;
 }
 
+.article-user-name {
+  margin-right: auto;
+  font-size: 1.6rem;
+}
+
 .profile-article-title {
   font-size: 2.2rem;
   font-weight: bold;
@@ -1404,7 +1410,6 @@ a:hover {
 
 .mypage_article_tag {
   font-size: 1.5rem;
-  margin-left: auto;
   margin-right: 15px;
 }
 

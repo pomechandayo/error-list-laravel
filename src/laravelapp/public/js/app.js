@@ -2604,6 +2604,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3123,6 +3125,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Pagination */ "./resources/js/components/Pagination.vue");
+//
+//
+//
 //
 //
 //
@@ -42027,11 +42032,15 @@ var render = function() {
                           })
                         ]
                       ),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(article.user.name) +
-                          "\n            "
-                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "article-user-name" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(article.user.name) +
+                            "\n              "
+                        )
+                      ]),
+                      _vm._v(" "),
                       _vm._l(article.tags, function(tags, index) {
                         return [
                           _c("div", { staticClass: "mypage_article_tag" }, [
@@ -42901,11 +42910,15 @@ var render = function() {
                           attrs: { src: article.user.profile_image }
                         })
                       ]),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(article.user.name) +
-                          "\n            "
-                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "article-user-name" }, [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(article.user.name) +
+                            "\n              "
+                        )
+                      ]),
+                      _vm._v(" "),
                       _vm._l(article.tags, function(tags, index) {
                         return [
                           _c("div", { staticClass: "mypage_article_tag" }, [

@@ -40,7 +40,10 @@
                   class="profile-myimage"
                 > 
               </a>
-              {{ article.user.name }}
+
+              <div class="article-user-name">
+                {{ article.user.name }}
+              </div>
             <template v-for="(tags,index) in article.tags">
               <div class="mypage_article_tag">
                 {{ tags.name }}
@@ -118,7 +121,7 @@ export default {
 
       const url = '/api/userpage/' + this.$route.query.userId + '?page=' + this.page;
       const self= this;
-      
+
       this.$http.get(url)
       .then(response => {
         self.article_count = response.data.article_count;
