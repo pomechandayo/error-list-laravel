@@ -2,7 +2,7 @@ version: '3'
 services:
  app:
    ports:
-     - "10080:80"
+     - "10081:80"
    build: ./docker/app
    container_name: laravel_app
    volumes:
@@ -47,7 +47,7 @@ services:
    links:
      - db-test
    ports:
-      - 8080:80
+      - 8081:80
    volumes:
       - /sessions
 
