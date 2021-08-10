@@ -22,6 +22,7 @@ services:
      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
    ports:
      - 3306:3306
+     
  db-test:
    image: mysql:5.7
    container_name: db-test

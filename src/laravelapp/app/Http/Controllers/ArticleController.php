@@ -14,184 +14,72 @@ use App\Comment;
 use App\Reply;
 use App\User;
 use App\Tag;
+use App\Article\NewArticleShowUseCase;
+use App\Article\TagKeywordSearch;
+use App\Article\TagAndFreeKeywordSearch;
+use App\Article\FreeKeywordSearch;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, NewArticleShowUseCase $newArticleShowUseCase,TagKeywordSearch $tagKeywordSearch,TagAndFreeKeywordSearch $tagAndFreeKeywordSearch,
+    FreeKeywordSearch $freeKeywordSearch)
     { 
-        $keywords_array = $request->input('keyword');
-        if($keywords_array === null){
-            
-            $keywords_array = [];
-        }
-        $keywords = implode(" ",$keywords_array);
+        //検索ワードを変数に格納
+        $tag_keyword = implode($request->input('tag_keyword'));
+        $free_keyword = implode($request->input('free_keyword'));
         $article_list = [];
-
-        /*検索フォームからタグのリクエストがあるか判定,
-        無ければ新着記事を表示する*/
-        if($keywords === "") {  
-           $article_list = Article::with('user','tags','likes','comments')
-           ->ArticleOpen()
-           ->Created_atDescPaginate();
-           $keyword = '新着記事一覧';
-          
-           return [
-                'article_list' => $article_list,
-                'search_keyword' => $keyword,
-                'keywords' => $keywords,
-           ];
-        }
-         
-        // 検索ワードからtag:の後に続く情報を抽出
-        $tag_extract = preg_grep('/^tag:/',$keywords_array);
-
-        /**
-         * 
-         * タグキーワードが入力されたか判定
-         * 無ければ$tag_numberにnullを代入
-         * 
-         * タグキーワードに該当する記事があればarticle_listに代入
-         * 無ければ$article_listに[]を代入
-         */
-        if(!empty($tag_extract)) {  
-            
-            $tag_keyword = 
-            str_replace('tag:',"",$tag_extract[0]);
-            $tag_number = 
-            Tag::where('name',$tag_keyword)
-            ->first('id');
-            
-            if($tag_number !== null){
-
-                $article_list = Tag::find($tag_number->id)
-                ->articles->sortByDesc('created_at');
-           
-            }else{
-                $article_list = [];
-            }
-            
-        }else{ 
-            $tag_number = null; 
+   
+        /** 
+         * 新着記事を表示する
+        */
+        if(empty($tag_keyword) && empty($free_keyword)) {  
+              
+            return $newArticleShowUseCase->newArticle10();
         }
         
         /**
-         * tag検索ワードとフリーキーワードがどちらもあるか判定
-         * 
-         * どちらもあった場合タグ検索から取り出したレコードを
-         * フリーキーワードで絞り込む
-         * 
-         * article_listに絞り込んだ結果を代入する
+         * タグ検索する
          */
-       
-        if($tag_number !== null && $keywords !== $tag_extract[0] ) {   
-            // 検索ワードからタグの情報を取り除く
-            $keyword = str_replace('tag:',"",$keywords);
-            $keyword = str_replace($tag_keyword." ","",$keyword); 
-           
-            $articles = $article_list->filter(
-            function($article) use ($keyword)
-                {
-                    return strpos($article->title,$keyword) !==false;
-                });
-                
-            $articles = $article_list->filter(
-            function($article) use ($keyword)
-                {
-                 return strpos($article->body,$keyword) !== false;
-                });
+        if(!empty($tag_keyword)) {  
+         
+            $article_list = $tagKeywordSearch->getArticleList($tag_keyword);
 
-                /*キーワードに該当する記事があったか判定*/
-           if( $articles->isEmpty() == false ) {
-                   foreach($articles as $article )
-                   {
-                      $get_article_list[] = $article->id;
-                   }
-                   /*記事情報と紐付けられたユーザー情報取得*/
-                   $article_list = Article::with('user','tags','likes','comments')
-                   ->ArticleOpen()
-                   ->whereIn  ('id',$get_article_list)
-                   ->Created_atDescPaginate();
-                   
-                   $search_keyword = $keywords.'の検索結果';
-             }else{
-                    $article_list = [];
-                    $search_keyword = $keywords.
-                    'に一致する記事はありませんでした';
-                
-                    return [
-                        'article_list' => $article_list,
-                        'search_keyword' => $search_keyword,
-                     ];
-             }
-        }else{
-            $tag_extract[] = 0; 
+            $search_keyword = $tag_keyword .'の検索結果';
         }
 
-        /**タグ検索のみの時*/
-        if($keywords === $tag_extract[0] &&
-           $tag_number !== null) {
-            foreach($article_list as $article )
-              {
-                $get_article_list[] = $article->id;
-              }
+        /**
+         * タグとフリ-ワードで検索 
+         */ 
 
-           /*記事情報と紐付けられたユーザー情報取得*/
-           $article_list = Article::with('user','tags','likes','comments')
-           ->ArticleOpen()
-           ->whereIn('id',$get_article_list)               
-           ->Created_atDescPaginate();
+        if( !empty($tag_keyword ) && !empty($free_keyword)) {   
+            $article_list = $tagAndFreeKeywordSearch->getArticleList($free_keyword,$article_list);
+
+            $search_keyword = $tag_keyword ." ". $free_keyword . 'の検索結果';
         }
-
 
         /**
          * フリーキーワードのみの検索の場合
          */
-        if($article_list === [] && $keywords !== "") {   
+    if( empty($tag_keyword) && !empty($free_keyword)) {   
+            $article_list = $freeKeywordSearch->getArticleList($free_keyword);
             
-            $articles = Article::get()->filter(
-            function($article) use ($keywords) {
-                    return strpos($article->title,$keywords) !== false;
-                });
-                
-            $articles = Article::get()->filter(
-            function($article) use ($keywords){
-                 return strpos($article->body,$keywords)
-                  !== false;
-                });
+            $search_keyword = $free_keyword.'の検索結果';
+        }
 
-                /**該当する記事があるか判定*/
-                if( $articles->isEmpty() === false ) {
-                   foreach($articles as $article )
-                   {
-                      $get_article_list[] = $article->id;
-                   }
-                   /*記事情報と紐付けられたユーザー情報取得*/
-                   $article_list = Article::with('user','tags','likes','comments')
-                    ->ArticleOpen()
-                    ->whereIn('id',$get_article_list)
-                    ->Created_atDescPaginate();
-                   
-                   $search_keyword = $keywords.'の検索結果';
-                }else{
-                    $article_list = [];
-                    $search_keyword = $keywords.
-                    'に一致する記事はありませんでした';
-        
-                    return [
-                        'article_list' => $article_list,
-                        'search_keyword' => $search_keyword,   
-                     ];
-                }
-        } 
-                 
-            $search_keyword = $keywords . 'の検索結果';
+        // コレクションを配列に変換
+        if( !is_array($article_list)) {
+            $article_list = $article_list->toArray();
+        }
 
-             return [
-                 'search_keyword' => $search_keyword, 
-                 'article_list' => $article_list,
-                 'keywords' => $keywords,
-             ];
+        if( empty($article_list)){
+            $search_keyword = $tag_keyword." ". $free_keyword .'に一致する検索結果はありませんでした';
+        }
+
+        return [
+            'search_keyword' => $search_keyword, 
+            'article_list' => $article_list,
+        ];
     }
                 
 

@@ -44,11 +44,18 @@ class KeywordExploder
             $keyword = mb_convert_kana($keyword,'KV');
             // 半角スペースで配列にし、重複は削除する
             $ret['keyword'] = array_unique(explode(' ',$keyword));
-            
 
+            $tag_extract = preg_grep('/^tag:/',$ret['keyword']);
+            $freeKeyword_extract = preg_grep('/^tag:/',$ret['keyword'],PREG_GREP_INVERT);
+
+            $tag_extract = str_replace('tag:',"",$tag_extract);
+            $keywords = array(
+                 'tag_keyword' => $tag_extract,
+                 'free_keyword' => $freeKeyword_extract
+            );
         }
        
-        $request->merge($ret);
+        $request->merge($keywords);
         return $next($request);
     }
 }
