@@ -52,3 +52,18 @@ services:
    volumes:
       - /sessions
 
+ phpmyadmin:
+   image: phpmyadmin/phpmyadmin
+   environment:
+     - PMA_ARBITRARY=1
+     - PMA_HOST=laravel_db
+     - PMA_USER=laravel_user
+     - PMA_PASSWORD=laravel_pass
+   links:
+     - db-test
+   ports:
+      - 8081:80
+   volumes:
+      - /sessions
+
+

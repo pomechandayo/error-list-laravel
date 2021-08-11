@@ -4,10 +4,10 @@ namespace Tests\Feature\Article;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Article\NewArticleShowUseCase;
-use App\Article\SearchArticleUseCase;
 use App\User;
 use Tests\TestCase;
+
+use function PHPUnit\Framework\assertEquals;
 
 class TopPageTest extends TestCase
 {
@@ -25,18 +25,19 @@ class TopPageTest extends TestCase
 
     /**
      * 記事が表示されるか
-     * 
-     * 
      * @return void
      */
     public function testNewArticle10()
     {
-        $newArticleShowUseCase = new NewArticleShowUseCase;
-        $article_list = $newArticleShowUseCase->newArticle10();
+        $response = $this->post('/api/index',['']);
 
-        $this->assertCount(10,$article_list['article_list']);
+        $this->assertGreaterThan(3,$response['article_list']);
     }
 
+    public function keywordData()
+    {
+        return ['tag:php'];
+    }
     /**
      * 検索結果が表示されるか
      *
@@ -44,20 +45,22 @@ class TopPageTest extends TestCase
      */
     public function testSearchArticle()
     {
-        $searchArticleUseCase = new testSearchArticleUseCase;
-        
+        $keyword = $this->keywordData();
+        $response = $this->post('/api/index',$keyword);
+
+        $response->assertOk();
     }
 
     /**
-     * 検索キーワードが検索欄の上に表示されるか
+     * 検索したとき検索キーワードが検索欄の上に表示されるか
      *
      * @return void
      */
     public function testShowSearchWord()
     {
-        $response = $this->get('/index');
+        $response = $this->post('/api/index',['']);;
 
-        $response->assertStatus(200);
+        assertEquals($response['search_keyword'],'新着記事一覧');
     }
 
     /**
@@ -67,8 +70,8 @@ class TopPageTest extends TestCase
      */
     public function testTopPagetoShowPage()
     {
-        $response = $this->get('/index');
-
+        $response = $this->get('/show'/1);
+dd($response);
         $response->assertStatus(200);
     }
 

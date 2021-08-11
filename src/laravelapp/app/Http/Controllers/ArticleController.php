@@ -35,7 +35,9 @@ class ArticleController extends Controller
         */
         if(empty($tag_keyword) && empty($free_keyword)) {  
               
-            return $newArticleShowUseCase->newArticle10();
+            $article_list = $newArticleShowUseCase->newArticle10();
+
+            $search_keyword = '新着記事一覧';
         }
         
         /**
@@ -77,8 +79,8 @@ class ArticleController extends Controller
         }
 
         return [
-            'search_keyword' => $search_keyword, 
             'article_list' => $article_list,
+            'search_keyword' => $search_keyword, 
         ];
     }
                 
