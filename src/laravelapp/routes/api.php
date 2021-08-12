@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['api']],function() {
 
+    
     Route::post('/index','ArticleController@index')
     ->name('api.index')
     ->middleware('keyword');

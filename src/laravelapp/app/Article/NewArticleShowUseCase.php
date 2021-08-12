@@ -4,7 +4,7 @@ namespace App\Article;
 
 use App\Article;
 
-class newArticleShowUseCase
+final class NewArticleShowUseCase
 {
   public function newArticle10()
   {

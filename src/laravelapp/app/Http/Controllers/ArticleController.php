@@ -18,6 +18,9 @@ use App\Article\NewArticleShowUseCase;
 use App\Article\TagKeywordSearch;
 use App\Article\TagAndFreeKeywordSearch;
 use App\Article\FreeKeywordSearch;
+use App\Article\ShowArticleUseCase;
+use App\Article\CreateUseCase;
+use App\Article\TagArticleSaveUseCase;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -84,68 +87,22 @@ class ArticleController extends Controller
         ];
     }
                 
-
-    public function create()
+    public function create(CreateUseCase $createUseCase)
     {   
-        $s3_profile_image = User::GetAuthUserImage();
-
-        return view('article.create',[
-            's3_profile_image' => $s3_profile_image,
-        ])->with('user',Auth::user());;
+        return $createUseCase->showCreatePage();
     }
 
-    public function store(ArticleRequest $request)
+    public function store(ArticleRequest $request,TagArticleSaveUseCase $tagArticleSaveUseCase)
     {  
-        /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
-        */
-        preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+        
+        $tagArticleSaveUseCase->articleSave($request);
 
-        /* $match[0]に#(ハッシュタグ)あり、$match[1]に#(ハッシュタグ)なしの結果が入ってくるので、$match[1]で#(ハッシュタグ)なしの結果のみを使います。
-        */
-        $tags = [];
-        foreach ($match[1] as $tag) {
-            $record = Tag::firstOrCreate(['name' => $tag]);
-            array_push($tags,$record);
-            /* firstOrCreateメソッドで、tags_tableのnameカラムに該当のない$tagは新規登録される。
-            */
-        };
-        /*投稿に紐付けされるタグのidを配列化 */
-        $tags_id = [];
-        foreach ($tags as $tag) {
-            array_push($tags_id,$tag['id']);
-        };
-               
-        /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
-      
-        $article = new Article;
-        $article->title = $request->title;
-        $article->body = $request->body;
-        $article->user_id = Auth::user()->id;
-        $article->status = Article::OPEN;
-
-    DB::transaction(function() use ($article,$tags_id) {
-        $article->save();
-        $article->tags()->attach($tags_id);
-    });
         return redirect()->route('index');
     }
    
-    public function show(Request $request, int $id)
+    public function show(ShowArticleUseCase $showArticleUseCase,int $id)
     {   
-        $comments = Comment::with(['user','replies','replies.user'])->where('article_id',$id)->get();       
-
-        $article = Article::with('User','tags')
-        ->find($id);
-        $article_parse = new Article;
-        $article_parse_body = $article->parse($article_parse);
-      
-            return [
-                 'article' => $article,
-                 'comments' => $comments,
-                 'user_id' => Auth::id(),
-                 'article_parse_body' => $article_parse_body,
-            ];
-        
+       return $showArticleUseCase->showArticle($id,Auth::id());
     }
 
     /**記事の公開、非公開を切り替える */

@@ -4,7 +4,7 @@ namespace App\Article;
 
 use App\Article;
 
-class TagAndFreeKeywordSearch
+final class TagAndFreeKeywordSearch
 {
     protected $free_keyword = "";
 
