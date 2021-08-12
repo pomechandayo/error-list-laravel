@@ -25,8 +25,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request, NewArticleShowUseCase $newArticleShowUseCase,TagKeywordSearch $tagKeywordSearch,TagAndFreeKeywordSearch $tagAndFreeKeywordSearch,
-    FreeKeywordSearch $freeKeywordSearch)
+    public function index(
+        Request $request, 
+        NewArticleShowUseCase $newArticleShowUseCase,
+        TagAndFreeKeywordSearch $tagAndFreeKeywordSearch,
+        TagKeywordSearch $tagKeywordSearch,
+        FreeKeywordSearch $freeKeywordSearch
+        )
     { 
         //検索ワードを変数に格納
         $tag_keyword = implode($request->input('tag_keyword'));
@@ -58,6 +63,7 @@ class ArticleController extends Controller
          */ 
 
         if( !empty($tag_keyword ) && !empty($free_keyword)) {   
+            
             $article_list = $tagAndFreeKeywordSearch->getArticleList($free_keyword,$article_list);
 
             $search_keyword = $tag_keyword ." ". $free_keyword . 'の検索結果';
