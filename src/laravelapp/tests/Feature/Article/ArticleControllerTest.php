@@ -3,6 +3,7 @@
 namespace Tests\Feature\Article;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ArticleRequest;
@@ -12,6 +13,18 @@ use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
 {
+    private static $isSetUp = false;
+
+    protected function setUp():void
+    {
+        parent::setUp();
+        if(self::$isSetUp === false) {
+
+            Artisan::call('migrate:refresh --seed --env=testing');
+            self::$isSetUp = true;
+        }
+    }
+
     //バリデーション必須チェック用データ
     public function dataCreatePageValidatorRequired()
     {
@@ -37,7 +50,7 @@ class ArticleControllerTest extends TestCase
         return [
             'title' => substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 8),
             'tags' => '#php',
-            'body' => str_repeat('body',100)
+            'body' => substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 8)
         ];
     }
 
@@ -52,6 +65,29 @@ class ArticleControllerTest extends TestCase
     public function createArticleData($articleData,$response)
     {
         $response = $response->post('/article',$articleData);
+
+        $response->assertRedirect();
+
+        $createArticleData = Article::with('tags')->where('title',$articleData['title'])
+        ->first()
+        ->toArray();
+
+        return $createArticleData;
+    }
+    //記事を編集する
+    public function updateArticleData($articleData,$response)
+    {
+        $update = 'update';
+
+        //記事のデータを編集
+        $articleData = [
+        'article_id' => $articleData['id'],
+        'title' => $update.$articleData['title'],
+        'tags' => '#java'.'#'.$articleData['tags'][0]['name'],
+        'body' => $update.$articleData['body']
+        ];
+
+        $response = $response->post('/article/update',$articleData);
 
         $response->assertRedirect();
 
@@ -237,7 +273,7 @@ class ArticleControllerTest extends TestCase
     {
         $response = $this->get('/api/article/show/2');
 
-        $response->assertStatus(200);
+        $response->assertOk(200);
     }
     //ここまでshowメソッド
 
@@ -266,17 +302,17 @@ class ArticleControllerTest extends TestCase
      */
     public function testArticleUpdate()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+
+        $updateData = $this->updateArticleData($createArticleData,$response);
+
+        $this->assertEquals($createArticleData['id'],$updateData['id']);
+        $this->assertNotEquals($createArticleData['title'],$updateData['title']);
+        $this->assertNotEquals($createArticleData['body'],$updateData['body']);
     }
-    /**
-     * タグをつけて記事が編集できるか
-     */
-    public function testArticleUpdateTag()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }    
     //ここまでupdateメソッド
 
     //ここからdestoryメソッド
@@ -285,16 +321,22 @@ class ArticleControllerTest extends TestCase
      */
     public function testDeleteArticle()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    /**
-     * トップページにリダイレクトされるか
-     */
-    public function testDeleteRedirectTop()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+        $article_id = [
+            'article_id' => $createArticleData['id']
+        ];
+        $article = Article::find($createArticleData['id']);
+
+        $this->assertNotNull($article);
+        
+        $response = $response->post('/article/destroy',$article_id);
+        $article = Article::find($createArticleData['id']);
+
+        $this->assertNull($article);
+        $response->assertRedirect('/index');
     }
     //ここまでdestoryメソッド
 

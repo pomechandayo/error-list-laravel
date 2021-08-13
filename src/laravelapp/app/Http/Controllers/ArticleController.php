@@ -21,6 +21,7 @@ use App\Article\FreeKeywordSearch;
 use App\Article\ShowArticleUseCase;
 use App\Article\CreateUseCase;
 use App\Article\TagArticleSaveUseCase;
+use App\Article\EditUseCase;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -164,23 +165,11 @@ class ArticleController extends Controller
     }
 
    
-    public function edit(int $article_id)
+    public function edit(int $article_id, EditUseCase $editUseCase)
     {   
-        $tag_list = Article::find($article_id)->tags->pluck('name');
-        $tags = $tag_list->toArray();
-        $tags_string = implode(" #",$tags);
-
-        $article_data = Article::find($article_id);
-      
-        $article_parse = new Article;
-        $article_parse_body = $article_data->parse($article_parse);
-
-        return [
-           $article_parse_body,
-           $article_data,
-           $tags_string,
-        ];
+        return $editUseCase->showEditPage($article_id);
     }
+
     public function update(ArticleRequest $request)
     {
         $article_id = $request->article_id;
@@ -208,8 +197,8 @@ class ArticleController extends Controller
         /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
 
         $article = Article::find($article_id);
-        $article->title = request('title');
-        $article->body = request('body');
+        $article->title = $request->title;
+        $article->body = $request->body;
     DB::transaction(function () use ($article,$tags_id)
     {
         $article->save();

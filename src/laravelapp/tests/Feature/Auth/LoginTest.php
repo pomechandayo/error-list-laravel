@@ -11,6 +11,7 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      *
      * ページを表示できるか  
