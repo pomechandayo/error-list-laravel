@@ -43576,7 +43576,7 @@ var render = function() {
                         staticClass: "comment-delete",
                         attrs: {
                           action: "/article/comment/delete",
-                          method: "get"
+                          method: "post"
                         }
                       },
                       [

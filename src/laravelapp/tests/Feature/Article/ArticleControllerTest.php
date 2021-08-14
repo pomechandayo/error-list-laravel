@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ArticleRequest;
 use App\User;
 use App\Article;
+use App\Comment;
 use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
@@ -18,9 +19,10 @@ class ArticleControllerTest extends TestCase
     protected function setUp():void
     {
         parent::setUp();
+
         if(self::$isSetUp === false) {
 
-            Artisan::call('migrate:refresh --seed --env=testing');
+            Artisan::call('migrate:fresh --seed --env=testing');
             self::$isSetUp = true;
         }
     }
@@ -68,7 +70,7 @@ class ArticleControllerTest extends TestCase
 
         $response->assertRedirect();
 
-        $createArticleData = Article::with('tags')->where('title',$articleData['title'])
+        $createArticleData = Article::with('tags','user')->where('title',$articleData['title'])
         ->first()
         ->toArray();
 
@@ -239,9 +241,11 @@ class ArticleControllerTest extends TestCase
         $createArticleData = $this->createArticleData($articleData,$response);
         //$articleDataのtag情報から#を抜き出す
         $tag = str_replace('#','',$articleData['tags']);
+        //タグを小文字にする
+        $createArticleDataTag = mb_strtolower($createArticleData['tags'][0]['name']);
 
         $this->assertEquals($articleData['title'],$createArticleData['title']);
-        $this->assertEquals($tag,$createArticleData['tags'][0]['name']);
+        $this->assertEquals($tag,$createArticleDataTag );
         $this->assertEquals($articleData['body'],$createArticleData['body']);
     }
 
@@ -271,7 +275,15 @@ class ArticleControllerTest extends TestCase
      */
     public function testTopPagetoShowPage()
     {
-        $response = $this->get('/api/article/show/2');
+        $response = $this->dataAuthenticate();   
+        $articleData = $this->dataCreateArticle();
+        
+        unset($articleData['tags']);
+        
+        $createArticleData = $this->createArticleData($articleData,$response);
+        $id = $createArticleData['id'];
+
+        $response = $this->get("/api/article/show/$id");
 
         $response->assertOk(200);
     }
@@ -341,21 +353,40 @@ class ArticleControllerTest extends TestCase
     //ここまでdestoryメソッド
 
     //ここからstatusメソッド
+
+    //statusメソッドと全く同じコード
+    public function status($id)
+    {
+       $article = Article::find($id);
+
+       if($article->status === Article::OPEN ) {
+            $article->status = Article::CLOSED;
+            $article->save();
+        }else {
+            $article->status = Article::OPEN;
+            $article->save();
+        }
+    }
     /**
      * 記事を公開状態に変更できるか
+     * 記事を非公開状態にできるか
      */
     public function testArticleOpen()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    /**
-     * 記事を非公開状態に変更できるか
-     */
-    public function testArticleClose()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+        $id = $createArticleData['id'];
+
+        $article = Article::find($id);
+        $articleStatus = $article['status'];
+        $this->assertEquals(1,$articleStatus); 
+
+       $this->status($id);
+
+        $articleStatus = Article::find($id);
+        $this->assertNotEquals(0,$articleStatus);
     }
     //ここまでstatusメソッド
 
@@ -365,29 +396,30 @@ class ArticleControllerTest extends TestCase
      */
     public function testArticleComment()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }    
-    /**
-     * 記事詳細ページにリダイレクトされるか
-     */
-    public function testRedirectArticleShowPageComment()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+
+        $requestData = [
+            'body' => 'コメントです',
+            'user_id' => $createArticleData['user']['id'],
+            'article_id' => $createArticleData['id']
+        ];
+
+        $response = $this->post('/article/comment',$requestData);
+
+        $response->assertRedirect();
+
+        $response = Comment::where('body',$requestData['body'])->first();
+
+        $this->assertNotNull($response);
     }
+
     /**
      * バリデーションが機能するか
      */
     public function testCommentValidation()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    /**
-     * バリデーションの文言が表示されるか
-     */
-    public function testCommentValidationWord()
     {
         $response = $this->get('/index');
         $response->assertOk();
@@ -400,17 +432,38 @@ class ArticleControllerTest extends TestCase
      */
     public function testArticleCommentDelete()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+
+        $requestData = [
+            'body' => 'コメントです',
+            'user_id' => $createArticleData['user']['id'],
+            'article_id' => $createArticleData['id']
+        ];
+
+        $response = $this->post('/article/comment',$requestData);
+        
+        $response->assertRedirect();
+
+        $response = Comment::where('body',$requestData['body'])->first();
+
+        $this->assertNotNull($response);
+        
+        $comment_id = [
+            'comment_id' => $response->id
+        ];
+
+        $response = $this->post('/article/comment/delete',$comment_id);
+        
+        $response->assertRedirect();
+
+        $response = Comment::where('body',$requestData['body'])->first();
+
+        $this->assertNull($response);
+
     }
-     /**
-     * 記事詳細ページにリダイレクトされるか
-     */
-    public function testRedirectArticleShowPageCommentdelete()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }    
     //ここまでcommentdeleteメソッド
 
     //ここからreplyメソッド

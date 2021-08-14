@@ -36,12 +36,13 @@ Route::get('/index',function(){
         
         Route::get('/status','ArticleController@status')
         ->name('status');
+     
         Route::post('/destroy','ArticleController@destroy')
         ->name('destroy');
 
         Route::post('/comment','ArticleController@comment')
         ->name('/comment');
-        Route::get('/comment/delete','ArticleController@commentDelete')
+        Route::post('/comment/delete','ArticleController@commentDelete')
         ->name('comment.delete');
 
         Route::get('/reply','ArticleController@reply')

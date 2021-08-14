@@ -14,14 +14,16 @@ use App\Comment;
 use App\Reply;
 use App\User;
 use App\Tag;
-use App\Article\NewArticleShowUseCase;
-use App\Article\TagKeywordSearch;
-use App\Article\TagAndFreeKeywordSearch;
-use App\Article\FreeKeywordSearch;
-use App\Article\ShowArticleUseCase;
-use App\Article\CreateUseCase;
-use App\Article\TagArticleSaveUseCase;
-use App\Article\EditUseCase;
+use App\UseCase\Article\NewArticleShowUseCase;
+use App\UseCase\Article\TagKeywordSearch;
+use App\UseCase\Article\TagAndFreeKeywordSearch;
+use App\UseCase\Article\FreeKeywordSearch;
+use App\UseCase\Article\ShowArticleUseCase;
+use App\UseCase\Article\CreateUseCase;
+use App\UseCase\Article\TagArticleSaveUseCase;
+use App\UseCase\Article\EditUseCase;
+use App\UseCase\Article\StatusUseCase;
+use App\UseCase\Article\CommentUseCase;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -112,37 +114,37 @@ class ArticleController extends Controller
        return $showArticleUseCase->showArticle($id,Auth::id());
     }
 
-    /**記事の公開、非公開を切り替える */
-    public function status(Request $request)
-    {
-       $article = Article::find($request->article_id);
-     
-       if($article->status === Article::OPEN ) {
-            $article->status = Article::CLOSED;
-            $article->save();
-        }else {
-            $article->status = Article::OPEN;
-            $article->save();
-        }
-        
-        return redirect()->back();
-    }
-
-    public function comment(CommentRequest $request)
+    public function edit(int $article_id, EditUseCase $editUseCase)
     {   
-        Comment::create([
-            'body' => $request->body,
-            'user_id' => $request->user_id,
-            'article_id' => $request->article_id,
-        ]);
+        return $editUseCase->showEditPage($article_id);
+    }
+
+    public function update(ArticleRequest $request,TagArticleSaveUseCase $tagArticleSaveUseCase)
+    {
+        $article_id = $tagArticleSaveUseCase->articleUpdate($request);
+
+        return redirect(route('article.show',[
+            'articleId' => $article_id,
+        ]));
+    }
+
+    /**記事の公開、非公開を切り替える */
+    public function status(Request $request,StatusUseCase $statusUseCase)
+    {
+        $statusUseCase->switchStatus($request);
+        
+        return redirect()->back();
+    }
+
+    public function comment(CommentRequest $request,CommentUseCase $commentUseCase)
+    {   
+        $commentUseCase->createComment($request);
 
         return redirect()->back();
     }
-    public function commentDelete(Request $request)
+    public function commentDelete(Request $request,CommentUseCase $commentUseCase)
     {
-        $comment = Comment::where('id',$request->comment_id)->first();
-        
-        $comment->delete();
+        $commentUseCase->deleteComment($request);
 
         return redirect()->back();
     }
@@ -162,52 +164,6 @@ class ArticleController extends Controller
         $reply->delete();
 
         return redirect()->back();
-    }
-
-   
-    public function edit(int $article_id, EditUseCase $editUseCase)
-    {   
-        return $editUseCase->showEditPage($article_id);
-    }
-
-    public function update(ArticleRequest $request)
-    {
-        $article_id = $request->article_id;
-        /* #(ハッシュタグ)で始まる単語を取得。結果は、$matchに多次元配列で代入される。
-        */
-        preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
-
-        /* $match[0]に#(ハッシュタグ)あり、$match[1]に#(ハッシュタグ)なしの結果が入ってくるので、$match[1]で#(ハッシュタグ)なしの結果のみを使います。
-        */
-        $tags = [];
-        foreach ($match[1] as $tag) {
-            $record = Tag::firstOrCreate(['name' => $tag]);
-            array_push($tags,$record);
-            
-            /* firstOrCreateメソッドで、tags_tableのnameカラムに該当のない$tagは新規登録される。
-            */
-        };
-
-        /*投稿に紐付けされるタグのidを配列化 */
-        $tags_id = [];
-        foreach ($tags as $tag) {
-            array_push($tags_id,$tag['id']);
-        };
-
-        /** 投稿にタグ付するために、attachメソッドをつかい、モデルを結びつけている中間テーブルにレコードを挿入します。 */
-
-        $article = Article::find($article_id);
-        $article->title = $request->title;
-        $article->body = $request->body;
-    DB::transaction(function () use ($article,$tags_id)
-    {
-        $article->save();
-        $article->tags()->attach($tags_id);
-    });
-
-        return redirect(route('article.show',[
-            'articleId' => $article->id,
-        ]));
     }
 
     public function destroy(Request $request)
