@@ -18,12 +18,13 @@ use App\UseCase\Article\NewArticleShowUseCase;
 use App\UseCase\Article\TagKeywordSearch;
 use App\UseCase\Article\TagAndFreeKeywordSearch;
 use App\UseCase\Article\FreeKeywordSearch;
-use App\UseCase\Article\ShowArticleUseCase;
+use App\UseCase\Article\ArticleCrudUseCase;
 use App\UseCase\Article\CreateUseCase;
 use App\UseCase\Article\TagArticleSaveUseCase;
 use App\UseCase\Article\EditUseCase;
 use App\UseCase\Article\StatusUseCase;
 use App\UseCase\Article\CommentUseCase;
+use App\UseCase\Article\ReplyUseCase;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -101,17 +102,17 @@ class ArticleController extends Controller
         return $createUseCase->showCreatePage();
     }
 
-    public function store(ArticleRequest $request,TagArticleSaveUseCase $tagArticleSaveUseCase)
+    public function store(ArticleRequest $request,ArticleCrudUseCase $articleCrudUseCase)
     {  
         
-        $tagArticleSaveUseCase->articleSave($request);
+        $articleCrudUseCase->articleCreate($request);
 
         return redirect()->route('index');
     }
    
-    public function show(ShowArticleUseCase $showArticleUseCase,int $id)
+    public function show(ArticleCrudUseCase $articleCrudUseCase,int $id)
     {   
-       return $showArticleUseCase->showArticle($id,Auth::id());
+       return $articleCrudUseCase->showArticle($id,Auth::id());
     }
 
     public function edit(int $article_id, EditUseCase $editUseCase)
@@ -119,20 +120,24 @@ class ArticleController extends Controller
         return $editUseCase->showEditPage($article_id);
     }
 
-    public function update(ArticleRequest $request,TagArticleSaveUseCase $tagArticleSaveUseCase)
+    public function update(ArticleRequest $request,ArticleCrudUseCase $articleCrudUseCase)
     {
-        $article_id = $tagArticleSaveUseCase->articleUpdate($request);
+        $article_id = $articleCrudUseCase->articleUpdate($request);
 
         return redirect(route('article.show',[
             'articleId' => $article_id,
         ]));
     }
 
+    public function destroy(Request $request,ArticleCrudUseCase $articleCrudUseCase)
+    {  
+        return $articleCrudUseCase->deleteArticle($request);
+    }
+
     /**記事の公開、非公開を切り替える */
     public function status(Request $request,StatusUseCase $statusUseCase)
     {
         $statusUseCase->switchStatus($request);
-        
         return redirect()->back();
     }
 
@@ -149,29 +154,16 @@ class ArticleController extends Controller
         return redirect()->back();
     }
 
-    public function reply(CommentRequest $request)
+    public function reply(CommentRequest $request,ReplyUseCase $replyUseCase)
     { 
-        Reply::create([
-            'body' => $request->body, 
-            'user_id' => Auth::id(),
-            'comment_id' => $request->comment_id,
-        ]);
+        $replyUseCase->createReply($request,Auth::id());
+        
         return redirect()->back();
     }
-    public function replyDelete(Request $request)
+    public function replyDelete(Request $request,ReplyUseCase $replyUseCase)
     {
-        $reply = Reply::where('id',$request->reply_id)->first();
-        $reply->delete();
-
+        $replyUseCase->deleteReply($request);
+        
         return redirect()->back();
-    }
-
-    public function destroy(Request $request)
-    {  
-        $article = Article::find($request->article_id);
-        $article->delete();
-
-        return redirect(route('index'))
-        ->with('success','記事を削除しました');
     }
 }

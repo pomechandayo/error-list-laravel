@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\CommentRequest;
 use App\User;
 use App\Article;
 use App\Comment;
+use App\Reply;
 use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
@@ -389,45 +391,10 @@ class ArticleControllerTest extends TestCase
         $this->assertNotEquals(0,$articleStatus);
     }
     //ここまでstatusメソッド
-
-    //ここからcommentメソッド
+    
+    //ここからcomment・commentdeleteメソッド
     /**
-     * コメントできるか
-     */
-    public function testArticleComment()
-    {
-        $articleData = $this->dataCreateArticle();
-        $response = $this->dataAuthenticate();
-
-        $createArticleData = $this->createArticleData($articleData,$response);
-
-        $requestData = [
-            'body' => 'コメントです',
-            'user_id' => $createArticleData['user']['id'],
-            'article_id' => $createArticleData['id']
-        ];
-
-        $response = $this->post('/article/comment',$requestData);
-
-        $response->assertRedirect();
-
-        $response = Comment::where('body',$requestData['body'])->first();
-
-        $this->assertNotNull($response);
-    }
-
-    /**
-     * バリデーションが機能するか
-     */
-    public function testCommentValidation()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    //ここまでcommentメソッド
-
-    //ここからcommentdeleteメソッド
-    /**
+     * コメント作成
      * コメント削除できるか
      */
     public function testArticleCommentDelete()
@@ -464,59 +431,86 @@ class ArticleControllerTest extends TestCase
         $this->assertNull($response);
 
     }
-    //ここまでcommentdeleteメソッド
 
-    //ここからreplyメソッド
-    /**
-     * リプライできるか
-     */
-    public function testArticleReply()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    /**
-     * 記事詳細ページにリダイレクトされるか
-     */
-    public function testRedirectArticleShowPageReply()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
     /**
      * バリデーションが機能するか
      */
-    public function testReplyValidation()
+    public function testCommentValidation()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    /**
-     * バリデーションの文言が表示されるか
-     */
-    public function testReplyValidationWord()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    //ここまでreplyメソッド
+        $dataList = ['body' => ''];
+        $request = new CommentRequest();
 
-    //ここからreplydeleteメソッド
+        $rules = $request->rules();
+        $validator = Validator::make($dataList,$rules);
+
+        $validation_result = $validator->passes();
+
+        $this->assertFalse($validation_result);
+    }
+    //ここまでcomment・commentdeleteメソッド
+
+    //ここからreplu・replydeleteメソッド
+
+    //リプライ作成メソッド
+    public function reply($request)
+    { 
+        Reply::create([
+            'body' => $request['body'], 
+            'user_id' => $request['user_id'],
+            'comment_id' => $request['comment_id'],
+        ]);
+
+    }
+    
+    //リプライ削除メソッド
+    public function replyDelete($reply_id) :void
+    {
+        $reply = Reply::where('id',$reply_id)->first();
+        $reply->delete();
+
+    }
+
     /**
-     * リプライが削除できるか
+     * リプライできるか
+     * リプライ削除できるか
      */
-    public function testReplyDelete()
+    public function testCommentReplyCreateDelete()
     {
-        $response = $this->get('/index');
-        $response->assertOk();
+        $articleData = $this->dataCreateArticle();
+        $response = $this->dataAuthenticate();
+
+        $createArticleData = $this->createArticleData($articleData,$response);
+
+        $commentData = [
+            'body' => 'コメントです',
+            'user_id' => $createArticleData['user']['id'],
+            'article_id' => $createArticleData['id']
+        ];
+
+        $response = $this->post('/article/comment',$commentData);
+
+        $response->assertRedirect();
+
+        $getCommentData = Comment::with('user')->where('body',$commentData['body'])->first();
+
+        $replyData = [
+            'body' => 'リプライです',
+            'user_id' => $getCommentData['user']['id'],
+            'comment_id' => $getCommentData['id']
+        ];
+
+        $this->reply($replyData);
+    
+        $response = Reply::where('body',$replyData['body'])->first();
+
+        $this->assertNotNull($response);
+        
+        $this->replyDelete($response->id);
+
+        $response = Reply::where('body',$replyData['body'])->first();
+
+        $this->assertNull($response);
+        
     }
-     /**
-     * 記事詳細ページにリダイレクトされるか
-     */
-    public function testRedirectArticleShowPageReplyDelete()
-    {
-        $response = $this->get('/index');
-        $response->assertOk();
-    }
-    //ここまでreplydeleteメソッド
+    //ここまでreply・replydeleteメソッド
 }
