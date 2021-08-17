@@ -26,61 +26,20 @@ use App\UseCase\Article\StatusUseCase;
 use App\UseCase\Article\CommentUseCase;
 use App\UseCase\Article\ReplyUseCase;
 use Illuminate\Support\Facades\Storage;
+use App\GetClass;
 
 class ArticleController extends Controller
 {
-    public function index(
-        Request $request, 
-        NewArticleShowUseCase $newArticleShowUseCase,
-        TagAndFreeKeywordSearch $tagAndFreeKeywordSearch,
-        TagKeywordSearch $tagKeywordSearch,
-        FreeKeywordSearch $freeKeywordSearch
-        )
+    public function index(Request $request)
     { 
         //検索ワードを変数に格納
         $tag_keyword = implode($request->input('tag_keyword'));
         $free_keyword = implode($request->input('free_keyword'));
         $article_list = [];
-   
-        /** 
-         * 新着記事を表示する
-        */
-        if(empty($tag_keyword) && empty($free_keyword)) {  
               
-            $article_list = $newArticleShowUseCase->newArticle10();
+            $interface = new Getclass($tag_keyword,$free_keyword);
 
-            $search_keyword = '新着記事一覧';
-        }
-        
-        /**
-         * タグ検索する
-         */
-        if(!empty($tag_keyword)) {  
-         
-            $article_list = $tagKeywordSearch->getArticleList($tag_keyword);
-
-            $search_keyword = $tag_keyword .'の検索結果';
-        }
-
-        /**
-         * タグとフリ-ワードで検索 
-         */ 
-
-        if( !empty($tag_keyword ) && !empty($free_keyword)) {   
-            
-            $article_list = $tagAndFreeKeywordSearch->getArticleList($free_keyword,$article_list);
-
-            $search_keyword = $tag_keyword ." ". $free_keyword . 'の検索結果';
-        }
-
-        /**
-         * フリーキーワードのみの検索の場合
-         */
-    if( empty($tag_keyword) && !empty($free_keyword)) {   
-            $article_list = $freeKeywordSearch->getArticleList($free_keyword);
-            
-            $search_keyword = $free_keyword.'の検索結果';
-        }
+            $article_list = $interface->searchClass();
 
         // コレクションを配列に変換
         if( !is_array($article_list)) {
@@ -89,6 +48,13 @@ class ArticleController extends Controller
 
         if( empty($article_list)){
             $search_keyword = $tag_keyword." ". $free_keyword .'に一致する検索結果はありませんでした';
+        }else {
+            $search_keyword = $tag_keyword." ". $free_keyword .'の検索結果';
+        }
+
+        if( empty($tag_keyword) && empty($free_keyword)){
+
+            $search_keyword = '新着記事';
         }
 
         return [

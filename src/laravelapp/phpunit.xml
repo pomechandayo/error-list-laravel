@@ -11,7 +11,10 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
+
+        
     </testsuites>
+    
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
@@ -22,9 +25,8 @@
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
 
-        <server name="DB_CONNECTION" value="testing"/>
-        <server name="DB_DATABASE" value="db-test"/>
-
+        <server name="DB_CONNECTION" value="mysql"/>
+        <server name="DB_DATABASE" value="laravel_db"/>
 
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>

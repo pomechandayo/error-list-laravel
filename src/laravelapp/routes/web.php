@@ -4,6 +4,9 @@ Auth::routes([
     'register' => false
 ]);
 
+Route::get('/env', function () {
+    return view('env');
+});
 
 Route::get('/register',function() {
     return view('auth.register');
@@ -42,7 +45,7 @@ Route::get('/index',function(){
 
         Route::post('/comment','ArticleController@comment')
         ->name('/comment');
-        Route::post('/comment/delete','ArticleController@commentDelete')
+        Route::get('/comment/delete','ArticleController@commentDelete')
         ->name('comment.delete');
 
         Route::get('/reply','ArticleController@reply')

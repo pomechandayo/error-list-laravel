@@ -188,7 +188,7 @@
 
         <form
           action="/article/comment/delete"
-          method="post"
+          method="get"
           class="comment-delete"
         >
           <input type="hidden" name="_token" :value="csrf" />

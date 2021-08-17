@@ -24,7 +24,7 @@ class ArticleControllerTest extends TestCase
 
         if(self::$isSetUp === false) {
 
-            Artisan::call('migrate:fresh --seed --env=testing');
+            $this->artisan('migrate:fresh --seed');
             self::$isSetUp = true;
         }
     }
@@ -165,7 +165,7 @@ class ArticleControllerTest extends TestCase
     {
         $response = $this->post('/api/index',['']);;
 
-        $this->assertEquals($response['search_keyword'],'新着記事一覧');
+        $this->assertEquals($response['search_keyword'],'新着記事');
     }
 
 
@@ -393,6 +393,13 @@ class ArticleControllerTest extends TestCase
     //ここまでstatusメソッド
     
     //ここからcomment・commentdeleteメソッド
+
+    public function deleteComment($request)
+    {
+        $comment = Comment::where('id', $request['comment_id'])->first();
+        
+        $comment->delete();
+    }
     /**
      * コメント作成
      * コメント削除できるか
@@ -422,9 +429,7 @@ class ArticleControllerTest extends TestCase
             'comment_id' => $response->id
         ];
 
-        $response = $this->post('/article/comment/delete',$comment_id);
-        
-        $response->assertRedirect();
+        $this->deleteComment($comment_id);
 
         $response = Comment::where('body',$requestData['body'])->first();
 
@@ -461,7 +466,7 @@ class ArticleControllerTest extends TestCase
         ]);
 
     }
-    
+
     //リプライ削除メソッド
     public function replyDelete($reply_id) :void
     {
