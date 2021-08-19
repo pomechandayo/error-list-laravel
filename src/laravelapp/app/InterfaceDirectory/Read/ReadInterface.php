@@ -4,5 +4,5 @@ namespace App\InterfaceDirectory\Read;
 
 interface ReadInterface
 {
-    public function read();
+    public function read(int $id);
 }

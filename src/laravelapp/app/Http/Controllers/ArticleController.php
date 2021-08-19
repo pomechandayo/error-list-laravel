@@ -14,58 +14,51 @@ use App\Comment;
 use App\Reply;
 use App\User;
 use App\Tag;
-use App\UseCase\Article\NewArticleShowUseCase;
-use App\UseCase\Article\TagKeywordSearch;
-use App\UseCase\Article\TagAndFreeKeywordSearch;
-use App\UseCase\Article\FreeKeywordSearch;
 use App\UseCase\Article\ArticleCrudUseCase;
+use App\UseCase\Article\SearchWordUseCase;
 use App\UseCase\Article\CreateUseCase;
-use App\UseCase\Article\TagArticleSaveUseCase;
 use App\UseCase\Article\EditUseCase;
 use App\UseCase\Article\StatusUseCase;
 use App\UseCase\Article\CommentUseCase;
 use App\UseCase\Article\ReplyUseCase;
 use Illuminate\Support\Facades\Storage;
-use App\GetClass;
+use App\GetClass\Search;
+use App\GetClass\ShowArticle;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,SearchWordUseCase $searchWordUseCase)
     { 
         //検索ワードを変数に格納
         $tag_keyword = implode($request->input('tag_keyword'));
         $free_keyword = implode($request->input('free_keyword'));
         $article_list = [];
               
-            $interface = new Getclass($tag_keyword,$free_keyword);
+        $interface = new Search($tag_keyword,$free_keyword);
 
-            $article_list = $interface->searchClass();
+        $article_list = $interface->searchClass();
 
         // コレクションを配列に変換
         if( !is_array($article_list)) {
             $article_list = $article_list->toArray();
         }
 
-        if( empty($article_list)){
-            $search_keyword = $tag_keyword." ". $free_keyword .'に一致する検索結果はありませんでした';
-        }else {
-            $search_keyword = $tag_keyword." ". $free_keyword .'の検索結果';
-        }
-
-        if( empty($tag_keyword) && empty($free_keyword)){
-
-            $search_keyword = '新着記事';
-        }
+        $search_keyword = $searchWordUseCase->SearchKeywordSelect($tag_keyword,$free_keyword,$article_list);
 
         return [
             'article_list' => $article_list,
             'search_keyword' => $search_keyword, 
         ];
+
     }
                 
-    public function create(CreateUseCase $createUseCase)
+    public function create()
     {   
-        return $createUseCase->showCreatePage();
+        $id = 0;
+
+        $interface = new ShowArticle($id,'create');
+
+        return $interface->showArticleClass();
     }
 
     public function store(ArticleRequest $request,ArticleCrudUseCase $articleCrudUseCase)
@@ -76,14 +69,16 @@ class ArticleController extends Controller
         return redirect()->route('index');
     }
    
-    public function show(ArticleCrudUseCase $articleCrudUseCase,int $id)
+    public function show(int $id)
     {   
-       return $articleCrudUseCase->showArticle($id,Auth::id());
+        $interface = new ShowArticle($id,'show');
+        return $interface->showArticleClass();
     }
 
-    public function edit(int $article_id, EditUseCase $editUseCase)
+    public function edit(int $article_id)
     {   
-        return $editUseCase->showEditPage($article_id);
+        $interface = new ShowArticle($article_id,'edit');
+        return $interface->showArticleClass();
     }
 
     public function update(ArticleRequest $request,ArticleCrudUseCase $articleCrudUseCase)
