@@ -4,20 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\CommentRequest;
-use App\ArticleTag;
-use App\Article_tag;
-use App\Article;
-use App\Comment;
-use App\Reply;
-use App\User;
-use App\Tag;
 use App\UseCase\Article\ArticleCrudUseCase;
 use App\UseCase\Article\SearchWordUseCase;
-use App\UseCase\Article\CreateUseCase;
-use App\UseCase\Article\EditUseCase;
 use App\UseCase\Article\StatusUseCase;
 use App\UseCase\Article\CommentUseCase;
 use App\UseCase\Article\ReplyUseCase;
@@ -35,7 +25,6 @@ class ArticleController extends Controller
         $article_list = [];
               
         $interface = new Search($tag_keyword,$free_keyword);
-
         $article_list = $interface->searchClass();
 
         // コレクションを配列に変換
@@ -57,7 +46,6 @@ class ArticleController extends Controller
         $id = 0;
 
         $interface = new ShowArticle($id,'create');
-
         return $interface->showArticleClass();
     }
 

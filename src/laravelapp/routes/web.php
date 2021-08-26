@@ -4,10 +4,6 @@ Auth::routes([
     'register' => false
 ]);
 
-Route::get('/env', function () {
-    return view('env');
-});
-
 Route::get('/register',function() {
     return view('auth.register');
 })->name('register');
