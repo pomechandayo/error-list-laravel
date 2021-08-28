@@ -43352,10 +43352,7 @@ var render = function() {
             { staticClass: "show-like-box" },
             [
               _c("article-like", {
-                attrs: {
-                  user_id: _vm.auth.id,
-                  article_id: this.$route.query.articleId
-                }
+                attrs: { user_id: _vm.auth.id, article_id: _vm.article.id }
               }),
               _vm._v(" "),
               _vm.postUser.id === _vm.auth.id
