@@ -43352,7 +43352,10 @@ var render = function() {
             { staticClass: "show-like-box" },
             [
               _c("article-like", {
-                attrs: { user_id: _vm.auth.id, article_id: _vm.article.id }
+                attrs: {
+                  user_id: _vm.auth.id,
+                  article_id: this.$route.query.articleId
+                }
               }),
               _vm._v(" "),
               _vm.postUser.id === _vm.auth.id
@@ -43576,7 +43579,7 @@ var render = function() {
                         staticClass: "comment-delete",
                         attrs: {
                           action: "/article/comment/delete",
-                          method: "post"
+                          method: "get"
                         }
                       },
                       [

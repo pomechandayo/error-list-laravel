@@ -15,7 +15,7 @@ class KeywordExploder
      */
     public function handle($request, Closure $next)
     {
-        // dd($request);
+        
         $keyword = $request->input('keyword');
         $ret = [];
     
@@ -35,7 +35,6 @@ class KeywordExploder
             // キーワード文字列の前後のスペースを削除する
             $keyword = trim($keyword);
          
-
         }
 
         if(!empty($keyword) || $keyword !== '')
