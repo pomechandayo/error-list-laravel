@@ -5,10 +5,9 @@ jobs:
    - image: circleci/php:7.4-node-browsers
   steps:
    - checkout
-   - run: cd ./src/laravelapp
-   - run: sudo composer self-update --1 
-   - run: composer install 
-   - run: npm install 
+   - run: sudo composer self-update --1 --working-dir=./src/laravelapp
+   - run: composer install --working-dir=./src/laravelapp
+   - run: npm install --working-dir=./src/laravelapp
    - run:
       name: php test 
-      command: ./vendor/bin/phpunit
+      command: cd ./src/laravelapp && ./vendor/bin/phpunit
