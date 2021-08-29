@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Article;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\CommentRequest;
