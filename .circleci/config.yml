@@ -19,9 +19,8 @@ jobs:
       name: npm ci 
       command: | 
        if [ !-d node_modules ]; then
-        npm ci
+        npm ci --working-dir=./src/laravelapp
        fi
-       npm ci --working-dir=./src/laravelapp
    - save_cache:
       key: npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
       paths:
