@@ -10,4 +10,4 @@ jobs:
    - run: npm install --working-dir=./src/laravelapp
    - run:
       name: php test 
-      command: vendor/bin/phpunit --working-dir=./src/laravelapp
+      command: ./vendor/bin/phpunit --working-dir=./src/laravelapp
