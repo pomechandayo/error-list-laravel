@@ -14,7 +14,7 @@ jobs:
       paths:
        - ./src/laravelapp/vendor
    - restore_cache:
-      key:npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
+      key: npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
    - run: 
       name: npm ci 
       command: | 
@@ -23,7 +23,7 @@ jobs:
        fi
        npm ci --working-dir=./src/laravelapp
    - save_cache:
-      key:npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
+      key: npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
       paths:
        - ./src/laravelapp/node_modules
    - run:
