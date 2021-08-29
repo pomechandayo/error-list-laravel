@@ -7,7 +7,7 @@ jobs:
    - checkout
    - run: sudo composer self-update --1 --working-dir=./src/laravelapp
    - run: composer install --working-dir=./src/laravelapp
-   - run: npm ci --working-dir=./src/laravelapp
+   - run: npm install --working-dir=./src/laravelapp
    - run: npm run dev --working-dir=./src/laravelapp
    - run:
       name: php test 
