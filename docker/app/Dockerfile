@@ -39,11 +39,18 @@ libxpm-dev
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install -j$(nproc) gd
 
-Run apt-get update && \
+RUN apt-get update && \
     apt-get install -y libmagickwand-dev && \
     pecl install imagick && \
     docker-php-ext-enable imagick
 
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install npm@latest -g
+RUN apt-get install -y nodejs npm
+
+
+RUN echo "alias cl='cd laravelapp'" >> /root/.bashrc　
+RUN echo "alias pa='php artisan'" >> /root/.bashrc
+RUN echo "alias pam='php artisan migrate'" >> /root/.bashrc
+RUN echo "alias pamrs='php artisan migrate:refresh --seed'" >> /root/.bashrc
+RUN echo "alias pamrst='php artisan migrate:refresh --seed --env=testing'" >> /root/.bashrc
+RUN echo "alias put='./vendor/bin/phpunit tests'" >> /root/.bashrc
+RUN echo "alias putf='./vendor/bin/phpunit --filter'" >> /root/.bashrc

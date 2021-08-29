@@ -9,28 +9,32 @@ use App\Like;
 
 class LikeController extends Controller
 {
-    public function likeFirstCheck(int $article_id, $user_id = null) 
+    public function likeFirstCheck( $article_id,string $user_id = null) :array
     {
+        $count = $this->likeCount($article_id);
+
         $likes = new Like();
         $like = Like::where('article_id',$article_id)
         ->where('user_id',$user_id)->first();
 
         if($like !== null ) {
-            $count = $likes->where('article_id',$article_id)
-            ->count();
-
             return [true,$count];
-        }else{
-            $count = $likes->where('article_id',$article_id)
-            ->count();
-            
-            return [false,$count];
         }
+        
+        return [false,$count];  
     }
 
-    public function likeCheck(int $article_id, int $user_id) 
+    public function likeCount(string $article_id) :int
     {
-        $likes = new Like();
+        $count = Like::where('article_id',$article_id)
+        ->count();
+
+        return $count;
+    }
+
+    public function likeCheck(int $article_id, int $user_id) :array
+    {
+
         $like = Like::where('article_id',$article_id)
         ->where('user_id',$user_id)->first();
         
@@ -39,36 +43,17 @@ class LikeController extends Controller
                 'article_id' => $article_id,
                 'user_id' => $user_id,
             ]);
-            $count = $likes->where('article_id',$article_id)
-            ->count();
-
+            $count = $this->likeCount($article_id);
             return [true,$count];
         }else{
 
             Like::where('article_id',$article_id)
             ->where('user_id',$user_id)->delete();
 
-            $count = $likes->where('article_id',$article_id)
-            ->count();
-
+            $count = $this->likeCount($article_id);
             return [false,$count];
         }
-    }
-    public function like(Request $request)
-    {
-        $user_id = Auth::id(); 
-        $article_id = $request->article_id;
-        
-        $already_liked = Like::where('user_id', $user_id)->where('article_id', $article_id)->first();   
-        if (!$already_liked) {   
-            Like::create([
-                'article_id' => $article_id,
-                'user_id' => $user_id 
-            ]);
-        } else { 
-            Like::where('article_id', $article_id)->where('user_id', $user_id)->delete();
-        }
-     
+
     }
 
 }

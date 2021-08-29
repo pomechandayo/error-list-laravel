@@ -15,8 +15,6 @@ use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**articles */
     public function testUserArticle()
     {

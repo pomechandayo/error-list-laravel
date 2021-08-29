@@ -19,3 +19,15 @@ $factory->define(User::class, function (Faker $faker) {
     ];
     
 });
+
+$factory->state(User::class,'login',function ($faker) {
+    return [
+        'name' => 'エラー嫌太郎',
+        'email' => 'error@iya.com',
+        'password' => 'password',
+        'email_verified_at' => null,
+        'remember_token' => null,
+        'profile_image' => null,
+    ];
+    
+});

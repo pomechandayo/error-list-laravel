@@ -7,45 +7,31 @@ services:
    container_name: laravel_app
    volumes:
      - ./src:/var/www/html
+  
  db:
    image: mysql:5.7
-   container_name: laravel_db
-   environment:
-     MYSQL_ROOT_PASSWORD: root
-     MYSQL_DATABASE: laravel_db
-     MYSQL_USER: laravel_user
-     MYSQL_PASSWORD: laravel_pass
-     TZ: 'Asia/Tokyo'
+   container_name: db
    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
    volumes:
      - ./docker/db/data:/var/lib/mysql
      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-   ports:
-     - 3306:3306
- db-test:
-   image: mysql:5.7
-   container_name: db-test
    environment:
-     MYSQL_ROOT_PASSWORD: root
-     MYSQL_DATABASE: laravel_db
-     MYSQL_USER: laravel_user
-     MYSQL_PASSWORD: laravel_pass
-     TZ: 'Asia_Tokyo'
-   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-   volumes:
-     - ./docker/db-test/data:/var/lib/mysql
-     - ./docker/db-test/my.cnf:/etc/mysql/conf.d/my.cnf
-   ports:
-     - 3000:3306
+     - DB_CONNECTION=mysql
+     - DB_HOST=db
+     - DB_PORT=3306
+     - DB_DATABASE=${DB_NAME:-laravel_db}
+     - DB_USERNAME=${DB_USER:-laravel_user}
+     - DB_PASSWORD=${DB_PASS:-laravel_pass}
+     
  phpmyadmin:
    image: phpmyadmin/phpmyadmin
    environment:
      - PMA_ARBITRARY=1
-     - PMA_HOST=laravel_db
+     - PMA_HOST=db
      - PMA_USER=laravel_user
      - PMA_PASSWORD=laravel_pass
    links:
-     - db-test
+     - db
    ports:
       - 8081:80
    volumes:

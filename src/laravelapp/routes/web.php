@@ -4,10 +4,10 @@ Auth::routes([
     'register' => false
 ]);
 
-
 Route::get('/register',function() {
     return view('auth.register');
 })->name('register');
+
 Route::get('/login',function() {
     return view('auth.register');
 })->name('login');
@@ -35,6 +35,7 @@ Route::get('/index',function(){
         
         Route::get('/status','ArticleController@status')
         ->name('status');
+     
         Route::post('/destroy','ArticleController@destroy')
         ->name('destroy');
 
