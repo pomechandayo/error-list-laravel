@@ -5,16 +5,15 @@ jobs:
    - image: circleci/php:7.4-node-browsers
   steps:
    - checkout
-   - run: woriking_directory: ./src/laravelapp
-    - run: sudo composer self-update --1 --working-dir=./src/laravelapp
-    - restore_cache:
-       key: composer-v1 -{{checksum "composer.lock"}}
-    - run: composer install --working-dir=./src/laravelapp
-    - save_cache:
-       key: composer-v1-{{checksum "composer.lock"}}
+   - run: sudo composer self-update --1 --working-dir=./src/laravelapp
+   - restore_cache:
+      key: composer-v1 -{{checksum "composer.lock"}}
+   - run: composer install --working-dir=./src/laravelapp
+   - save_cache:
+      key: composer-v1-{{checksum "composer.lock"}}
       paths:
-       -vendor
-    - run: npm install --working-dir=./src/laravelapp
-    - run:
-       name: php test 
-       command: cd ./src/laravelapp && touch database/laravel_db.sqlite && ./vendor/bin/phpunit
+       - src/laravelapp/vendor
+   - run: npm install --working-dir=./src/laravelapp
+   - run:
+      name: php test 
+      command: cd ./src/laravelapp && touch database/laravel_db.sqlite && ./vendor/bin/phpunit
