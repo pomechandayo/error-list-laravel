@@ -7,10 +7,10 @@ jobs:
    - checkout
    - run: sudo composer self-update --1 --working-dir=./src/laravelapp
    - restore_cache:
-      key: composer-v1 -{{checksum "composer.lock"}}
+      key: composer-v1 -{{checksum "/src/laravelapp/composer.lock"}}
    - run: composer install --working-dir=./src/laravelapp
    - save_cache:
-      key: composer-v1-{{checksum "composer.lock"}}
+      key: composer-v1-{{checksum "/src/laravelapp/composer.lock"}}
       paths:
        - src/laravelapp/vendor
    - run: npm install --working-dir=./src/laravelapp
