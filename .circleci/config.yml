@@ -8,6 +8,7 @@ jobs:
    - run: sudo composer self-update --1 --working-dir=./src/laravelapp
    - run: composer install --working-dir=./src/laravelapp
    - run: npm install --working-dir=./src/laravelapp
+   - run: touch database/laravel_db.sqlite --working-dir=./src/laravelapp
    - run:
       name: php test 
       command: cd ./src/laravelapp && ./vendor/bin/phpunit
