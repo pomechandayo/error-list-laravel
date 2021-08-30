@@ -48,7 +48,11 @@ class ArticleControllerTest extends TestCase
     //記事作成用データ
     public function dataCreateArticle()
     {
-     
+        return [
+            'title' => substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 8),
+            'tags' => '#php',
+            'body' => substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 8)
+        ];
     }
 
     //ログイン状態のユーザーデータを作る
