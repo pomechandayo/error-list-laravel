@@ -39,8 +39,7 @@ jobs:
       command: |
        ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
         git pull origin master && \
-        docker exec -it laravel_app bash && \
-        cd laravelapp && \
+        docker exec -it laravel_app bash cd laravelapp && \
         composer install -n --no-dev --prefer-dist && \
         npm ci && \
         npm run prod && \
