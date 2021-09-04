@@ -38,7 +38,7 @@ jobs:
       name: deploy
       command: |
        ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} && \
-        git pull origin master && \
+        "git pull origin master && \
         cd error-list-laravel && \
         docker exec -it laravel_app bash && \
         cd laravelapp && \
