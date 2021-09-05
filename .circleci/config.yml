@@ -43,14 +43,12 @@ jobs:
         docker-compose up -d --build && \
         ls && \
         docker ps && \
-        docker exec laravel_app /bin/sh && \
-        ls && \
-        cl && \
+        docker exec laravel_app '/bin/sh  && \        
         composer install -n --no-dev --prefer-dist && \
         npm ci && \
         npm run prod && \
         php artisan migrate:fresh --seed --force && \
-        php artisan config:cache"
+        php artisan config:cache' "
 
 
 workflows:
