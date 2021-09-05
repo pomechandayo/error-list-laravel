@@ -34,11 +34,13 @@ jobs:
    - image: circleci/php:7.4-node-browsers
   steps:
    - add_ssh_keys
+   - setup_remote_docker
    - run:
       name: deploy
       command: |
-       ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} && \
-    
+       ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
+        git pull origin master && \
+        docker-compose up -d --build"
 
 workflows:
  version: 2
