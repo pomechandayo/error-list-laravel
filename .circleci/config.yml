@@ -41,6 +41,8 @@ jobs:
         ls && \
         git pull origin master && \
         docker-compose up -d --build && \
+        ls && \
+        docker ps && \
         docker exec -it laravel_app bash && \
         ls && \
         cl && \
