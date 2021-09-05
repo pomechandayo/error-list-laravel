@@ -54,3 +54,10 @@ RUN echo "alias pamrs='php artisan migrate:refresh --seed'" >> /root/.bashrc
 RUN echo "alias pamrst='php artisan migrate:refresh --seed --env=testing'" >> /root/.bashrc
 RUN echo "alias put='./vendor/bin/phpunit tests'" >> /root/.bashrc
 RUN echo "alias putf='./vendor/bin/phpunit --filter'" >> /root/.bashrc
+
+RUN cd /var/www/html/laravelapp
+RUN composer install -n --no-dev --prefer-dist
+RUN npm ci
+RUN npm run prod
+RUN php artisan migrate:fresh --seed --force
+RUN php artisan config:cache
