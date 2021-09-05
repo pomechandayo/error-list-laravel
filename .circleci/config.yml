@@ -43,7 +43,7 @@ jobs:
         docker-compose up -d --build && \
         ls && \
         docker ps && \
-        docker exec laravel_app 'bash && ls && cl && composer install -n --no-dev --prefer-dist'   && \
+        docker exec laravel_app /bin/sh && \
         ls && \
         cl && \
         composer install -n --no-dev --prefer-dist && \
