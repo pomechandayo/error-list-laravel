@@ -41,6 +41,8 @@ jobs:
        ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
         git pull origin master && \
         docker-compose up -d --build && \
+        echo $PID && \
+        docker ps && \
         PID=$(docker inspect --format {{.State.Pid}} laravel_app) && \
         echo $PID && \
         sudo nsenter --target $PID --mount --uts --ipc --net --pid && \
