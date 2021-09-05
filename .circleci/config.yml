@@ -38,10 +38,22 @@ jobs:
    - run:
       name: deploy
       command: |
-       ssh -o StrictHostKeyChecking=no -t ec2-user@35.76.172.50 "cd error-list-laravel && \
+       ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
         pwd && \
         git pull origin master && \
-        docker-compose up -d --build"
+        docker-compose up -d --build && \
+        docker ps && \
+        echo 'testtest' && \
+        ls && \
+        sudo nsenter --target 5402 --mount --uts --ipc --net --pid && \
+        ls && \
+        cd /var/www/html/laravelapp && \
+        composer install -n --no-dev --prefer-dist && \
+        npm ci && \
+        npm run prod && \
+        php artisan migrate:fresh --seed --force && \
+        php artisan config:cache"
+
 
 workflows:
  version: 2
