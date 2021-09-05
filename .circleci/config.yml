@@ -42,7 +42,7 @@ jobs:
         docker-compose up -d --build && \
         PID=$(docker inspect --format {{.State.Pid}} laravel_app) && \
         echo $PID && \
-        nsenter --target $PID && \
+        sudo nsenter --target $PID --mount --uts --ipc --net --pid && \
         cd /var/www/html/laravelapp && \
         composer install -n --no-dev --prefer-dist && \
         npm ci && \
