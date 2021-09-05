@@ -39,6 +39,7 @@ jobs:
       command: |
        ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
         git pull origin master && \
+        docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter && \
         docker-compose up -d --build && \
         PID=$(docker inspect --format {{.State.Pid}} laravel_app) && \
         nsenter --target $PID -m -u -i -n -p && \
