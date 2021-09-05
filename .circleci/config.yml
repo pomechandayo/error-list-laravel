@@ -45,12 +45,12 @@ jobs:
         echo $PID && \
         docker ps && \
         echo 'testtest' && \
-        sudo nsenter --target 5402 --mount --uts --ipc --net --pid && \
-        cd /var/www/html/laravelapp && \
-        composer install -n --no-dev --prefer-dist && \
-        npm ci && \
-        npm run prod && \
-        php artisan migrate:fresh --seed --force && \
+        sudo nsenter --target 5402 --mount --uts --ipc --net --pid && 
+        cd /var/www/html/laravelapp && 
+        composer install -n --no-dev --prefer-dist && 
+        npm ci && 
+        npm run prod && 
+        php artisan migrate:fresh --seed --force && 
         php artisan config:cache"
 
 
