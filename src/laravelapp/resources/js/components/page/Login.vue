@@ -23,8 +23,8 @@ style="margin: 0; width: 100%;"
     
 </form>
 
-<a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
-    
+<!-- <a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
+     -->
     <h3 class="login-h3">ログイン</h3>
 
 <div class="" v-if="errors.length !== 0">
