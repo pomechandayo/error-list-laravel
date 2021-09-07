@@ -41694,19 +41694,6 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "google-login",
-            attrs: {
-              href: "/login/google",
-              type: "button",
-              onfocus: "this.blur(); "
-            }
-          },
-          [_vm._v(" Googleからログイン")]
-        ),
-        _vm._v(" "),
         _c("h3", { staticClass: "login-h3" }, [_vm._v("ログイン")]),
         _vm._v(" "),
         _vm.errors.length !== 0
@@ -42302,19 +42289,6 @@ var render = function() {
               [_vm._v("簡単ログイン")]
             )
           ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "google-login",
-            attrs: {
-              href: "/login/google",
-              type: "button",
-              onfocus: "this.blur(); "
-            }
-          },
-          [_vm._v(" Googleからログイン")]
         ),
         _vm._v(" "),
         _c("h3", { staticClass: "login-h3" }, [
