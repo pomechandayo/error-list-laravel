@@ -255,7 +255,19 @@ a:hover {
     padding: 10px 0 10px 0;
     background-color: #6c757d;
     height: 20px;
-    margin-top: 40px;
+    margin-top: 0;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+  }
+  .login-easy-btn{
+    font-size: 1.2rem;
+    color: 	#fff;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    background-color: #6c757d;
+    height: 20px;
+    margin-top: 30px;
     letter-spacing: 2px;
     font-size: 1.5rem;
   }
@@ -308,11 +320,20 @@ a:hover {
      background-color:  #fff;
      height: auto;
     }
-  .form-box{
+  .form-box-s{
     display: flex;
     flex-direction: column;
     height: auto;
     background-color:  #fff;
+    margin: 0px auto;
+  }
+
+  .form-box-m{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    background-color:  #fff;
+    margin: 0px auto;
   }
   
   
