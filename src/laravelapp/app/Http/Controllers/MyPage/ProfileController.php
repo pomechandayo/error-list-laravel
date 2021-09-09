@@ -7,7 +7,6 @@ use App\Http\Requests\Mypage\Profile\EditRequest;
 use App\Article;
 use App\Comment;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;

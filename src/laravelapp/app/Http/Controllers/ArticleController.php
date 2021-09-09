@@ -11,7 +11,6 @@ use App\UseCase\Article\SearchWordUseCase;
 use App\UseCase\Article\StatusUseCase;
 use App\UseCase\Article\CommentUseCase;
 use App\UseCase\Article\ReplyUseCase;
-use Illuminate\Support\Facades\Storage;
 use App\GetClass\Search;
 use App\GetClass\ShowArticle;
 
