@@ -1,4 +1,4 @@
-<template >
+<template>
   <header>
 <div class="header-box">
   <div class="header-left">
@@ -45,7 +45,8 @@
        </a>
     
         <img 
-        @click="toggle('1000')"
+        v-click-outside="hide"
+        @click="toggleNav"
           :src="userImage" 
           class="icon-img" style="margin: 0 10px;"
           v-if="auth.length !== 0"
@@ -80,7 +81,7 @@
 </div>
 
 <nav id="nav1" v-if="auth.length !== 0"
-v-show="show_contents.indexOf('1000') >= 0"> 
+v-show="opened"> 
   <ul class="nav-ul">
       <li class="nav-list" >
         <a class="nav-link"
@@ -129,6 +130,8 @@ v-show="show_contents.indexOf('1001') >= 0"
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
+
   export default {
     data() {
       return {
@@ -140,6 +143,7 @@ v-show="show_contents.indexOf('1001') >= 0"
       userid: "",
       userImage: "",
       header_search_keyword: "",
+      opened: false
       };
       
     },
@@ -148,13 +152,37 @@ v-show="show_contents.indexOf('1001') >= 0"
         type: Object|Array
       } 
     },
+    mounted() {
+    // windowにイベントリスナーをセットする
+     window.addEventListener('click', this._onBlurHandler = (event) => {
+      if (this.show_contents.indexOf(data) >= 0) {
+          this.show_contents = this.show_contents.filter(n => n !== data)
+        } // 表示フラグをOFFにする
+      });
+    },
+    beforeDestroy() {
+    // コンポーネントが破棄されるタイミングにイベントリスナーも消す
+    window.removeEventListener('click', this._onBlurHandler);
+    },
     methods: {
       toggle: function (data) {
         if (this.show_contents.indexOf(data) >= 0) {
           this.show_contents = this.show_contents.filter(n => n !== data)
+          console.log(this.show_contents.filter(n => n !== data))
         }else {
           this.show_contents.push(data)
+          console.log(this.show_contents,data)
         }
+      },
+      toggleNav() {
+        if (this.opened === true) {
+          this.opened = false
+        }else {
+          this.opened = true
+        }
+      },
+      hide () {
+        this.opened = false
       },
      goUrlPage(url) {
        this.$router.push(url);
@@ -174,6 +202,12 @@ v-show="show_contents.indexOf('1001') >= 0"
     created() {
       this.getProfileImage();
     },
+    mounted () {
+      this.popupItem = this.$el
+    },
+    directives: {
+      ClickOutside
+    }
  
 }
 </script>
