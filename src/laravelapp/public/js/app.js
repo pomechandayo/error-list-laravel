@@ -41784,20 +41784,19 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      {
-        staticClass: "form-box",
-        staticStyle: { width: "72%", margin: "0 auto" }
-      },
+      { staticClass: "form-box-m", staticStyle: { width: "72%" } },
       [
         _c(
           "form",
           {
-            staticClass: "form-box",
-            staticStyle: { margin: "0", width: "100%" },
+            staticClass: "form-box-s",
+            staticStyle: { width: "100%" },
             attrs: { method: "post", action: "login" }
           },
           [
-            _c("h3", { staticClass: "login-h3" }, [_vm._v("簡単ログイン")]),
+            _c("h3", { staticClass: "login-easy-btn" }, [
+              _vm._v("簡単ログイン")
+            ]),
             _vm._v(" "),
             _c("input", {
               attrs: { type: "hidden", name: "_token" },
@@ -42381,20 +42380,19 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      {
-        staticClass: "form-box",
-        staticStyle: { width: "72%", margin: "0 auto" }
-      },
+      { staticClass: "form-box-m", staticStyle: { width: "72%" } },
       [
         _c(
           "form",
           {
-            staticClass: "form-box",
-            staticStyle: { margin: "0", width: "100%" },
+            staticClass: "form-box-s",
+            staticStyle: { width: "100%" },
             attrs: { method: "post", action: "login" }
           },
           [
-            _c("h3", { staticClass: "login-h3" }, [_vm._v("簡単ログイン")]),
+            _c("h3", { staticClass: "login-easy-btn" }, [
+              _vm._v("簡単ログイン")
+            ]),
             _vm._v(" "),
             _c("input", {
               attrs: { type: "hidden", name: "_token" },
