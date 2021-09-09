@@ -4,15 +4,15 @@
   <h2 class="login-h2">新規会員登録</h2>
 </div>
 
-<div class="form-box" style="width: 72%; margin: 0 auto; ">
+<div class="form-box-m" style="width: 72%;">
 
 <form 
 method="post" 
 action="login" 
-class="form-box" 
-style="margin: 0; width: 100%;"
+class="form-box-s" 
+style="width: 100%;"
 >
-        <h3 class="login-h3">簡単ログイン</h3>
+        <h3 class="login-easy-btn">簡単ログイン</h3>
 
         <input type="hidden" name="_token" :value="csrf" />
         <input type="hidden" name="email" value="error@iya.com">
@@ -23,7 +23,7 @@ style="margin: 0; width: 100%;"
     
 </form>
 
-<a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a>
+<!-- <a href="/login/google" class="google-login" type="button" onfocus="this.blur(); "> Googleからログイン</a> -->
     
     <h3 class="login-h3"> メールアドレスで登録</h3>
 

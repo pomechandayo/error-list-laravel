@@ -1,0 +1,39 @@
+version: '3'
+services:
+ app:
+   ports:
+     - "10081:80"
+   build: ./docker/app
+   container_name: laravel_app
+   volumes:
+     - ./src:/var/www/html
+  
+ db:
+   image: mysql:5.7
+   container_name: db
+   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+   volumes:
+     - ./docker/db/data:/var/lib/mysql
+     - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+   environment:
+     - DB_CONNECTION=mysql
+     - DB_HOST=db
+     - DB_PORT=3306
+     - DB_DATABASE=${DB_NAME:-laravel_db}
+     - DB_USERNAME=${DB_USER:-laravel_user}
+     - DB_PASSWORD=${DB_PASS:-laravel_pass}
+     
+ phpmyadmin:
+   image: phpmyadmin/phpmyadmin
+   environment:
+     - PMA_ARBITRARY=1
+     - PMA_HOST=db
+     - PMA_USER=laravel_user
+     - PMA_PASSWORD=laravel_pass
+   links:
+     - db
+   ports:
+      - 8081:80
+   volumes:
+      - /sessions
+

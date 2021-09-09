@@ -73,7 +73,7 @@ public function showProfile(int $user_id, string $keyword = null)
         
          if ($request->has('profile_image')) {
              $fileName = $this->saveAvatar($request->file('profile_image'));
-             $user->profile_image = 'https://was-and-infra-errorlist-laravel.s3-ap-northeast-1.amazonaws.com/'.$fileName;
+             $user->profile_image = 'https://error-list-laravel.s3.ap-northeast-1.amazonaws.com/'.$fileName;
          }
         
         $user->save();
