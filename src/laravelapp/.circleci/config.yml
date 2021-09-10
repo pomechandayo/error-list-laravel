@@ -5,10 +5,52 @@ jobs:
    - image: circleci/php:7.4-node-browsers
   steps:
    - checkout
-   - run: sudo composer self-update --1
-   - run: composer install -n --prefer-dist
-   - run: npm ci
-   - run: npm run dev
+   - run: sudo composer self-update --1 --working-dir=./src/laravelapp
+   - restore_cache:
+      key: composer-v1 -{{checksum "./src/laravelapp/composer.lock"}}
+   - run: composer install --working-dir=./src/laravelapp
+   - save_cache:
+      key: composer-v1-{{checksum "./src/laravelapp/composer.lock"}}
+      paths:
+       - ./src/laravelapp/vendor
+   - restore_cache:
+      key: npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
+   - run: 
+      name: npm ci 
+      command: | 
+       if [ !-d node_modules ]; then
+        npm ci --working-dir=./src/laravelapp
+       fi
+   - save_cache:
+      key: npm-v1-{{checksum "./src/laravelapp/package-lock.json"}}
+      paths:
+       - ./src/laravelapp/node_modules
    - run:
-      name: php test
-      command: vendor/bin/phpunit
+      name: php test 
+      command: cd ./src/laravelapp && touch database/laravel_db.sqlite && ./vendor/bin/phpunit
+
+ deploy:
+  docker:
+   - image: circleci/php:7.4-node-browsers
+  steps:
+   - add_ssh_keys
+   - setup_remote_docker
+   - run:
+      name: deploy
+      command: |
+       ssh -o StrictHostKeyChecking=no -t ${USER_NAME}@${HOST_NAME} "cd error-list-laravel && \
+        git pull origin master && \
+        docker-compose up -d --build"
+
+workflows:
+ version: 2
+ build_deploy:
+  jobs:
+   - build
+   - deploy:
+      requires:
+       - build
+      filters:
+       branches:
+        only:
+         - master
