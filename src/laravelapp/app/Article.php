@@ -3,9 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use database\factories\ArticleFactory;
-use Illuminate\Support\Facades\Auth;
-use App\ArticleTag;
 
 class Article extends Model
 {   
