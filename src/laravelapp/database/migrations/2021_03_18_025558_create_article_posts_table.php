@@ -15,10 +15,10 @@ class CreateArticlePostsTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title',100);
+            $table->text('body',2000);
             $table->boolean('status');
             $table->unsignedbigInteger('user_id');
-            $table->string('title')->nullable();
-            $table->text('body')->nullalbe();
             $table->timestamps();
 
             $table->foreign('user_id')
