@@ -70,4 +70,7 @@ PHPUnit
     - CircleCiを使い、テストとデプロイを自動化  
     - 主要な機能のテストコードを書いた  
 - チーム開発を意識  
-    - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った 
+    - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った   
+  
+# ER図
+   <img width="1440" alt="errorlist_ER" src="https://user-images.githubusercontent.com/77386781/132971236-83d80a63-70ab-4069-a070-ab911ec9dbb0.png">
