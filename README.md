@@ -72,5 +72,5 @@ PHPUnit
 - チーム開発を意識  
     - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った   
   
-# ER図
-   <img width="1440" alt="errorlist_ER" src="https://user-images.githubusercontent.com/77386781/132971236-83d80a63-70ab-4069-a070-ab911ec9dbb0.png">
+## ER図
+<img width="1440" alt="errorlist_ER" src="https://user-images.githubusercontent.com/77386781/132986507-cb09cdbe-0afb-4860-9fe3-b22635f34f20.png">
