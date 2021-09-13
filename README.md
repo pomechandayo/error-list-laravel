@@ -15,7 +15,7 @@ DB: MySQL5.7/SQLite
 インフラ: AWS(VPC,EC2,S3,RDS)/Docker  
 Webサーバー: Apache  
 ツール: CircleCi  
-バージョン管理: Git/Github/Soucetree  
+バージョン管理: Git/Github  
   
 ## 機能一覧
 - 認証機能  
@@ -73,4 +73,4 @@ PHPUnit
     - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った   
   
 ## ER図
-<img width="1440" alt="errorlist_ER" src="https://user-images.githubusercontent.com/77386781/132986507-cb09cdbe-0afb-4860-9fe3-b22635f34f20.png">
+<img width="1039" alt="ER" src="https://user-images.githubusercontent.com/77386781/133092348-46ca5c0f-9a8b-4f54-94fc-6698d3825d25.png">
