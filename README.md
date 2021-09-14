@@ -73,4 +73,7 @@ PHPUnit
     - GitHubのPull requestsやIssuesを使って実践を意識しながらポートフォリオを作った   
   
 ## ER図
-<img width="1039" alt="ER" src="https://user-images.githubusercontent.com/77386781/133092348-46ca5c0f-9a8b-4f54-94fc-6698d3825d25.png">
+<img width="1039" alt="ER" src="https://user-images.githubusercontent.com/77386781/133092348-46ca5c0f-9a8b-4f54-94fc-6698d3825d25.png">  
+
+## アーキテクチャー図
+<img width="1039" alt="アーキテクチャー図" src="https://user-images.githubusercontent.com/77386781/133259780-f48f991a-76ae-4165-b201-e430c5f9b58b.png">
