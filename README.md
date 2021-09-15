@@ -76,4 +76,4 @@ PHPUnit
 <img width="800" height="500" alt="ER" src="https://user-images.githubusercontent.com/77386781/133092348-46ca5c0f-9a8b-4f54-94fc-6698d3825d25.png">  
 
 ## アーキテクチャー図
-<img width="800" height="500" alt="アーキテクチャー図" src="https://user-images.githubusercontent.com/77386781/133259780-f48f991a-76ae-4165-b201-e430c5f9b58b.png">
+<img width="800" height="800" alt="アーキテクチャー図" src="https://user-images.githubusercontent.com/77386781/133428557-a949b959-8aeb-423d-8e8d-bb1cb90de72b.png">
