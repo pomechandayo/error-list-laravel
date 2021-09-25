@@ -9,7 +9,7 @@ http://app.error-list.com:8080/index
 http://app.error-list.com:8080/login
 
 ## 使用技術
-言語: PHP7.4/Javascript 
+言語: PHP7.4/Javascript　　
 フレームワーク: Laravel6/Vue.js/Bootstrap  
 DB: MySQL5.7/SQLite  
 インフラ: AWS(VPC,EC2,S3,RDS)/Docker  
