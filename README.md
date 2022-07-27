@@ -8,8 +8,8 @@ http://app.error-list.com:8080/index
 全ての機能を使う場合は、お手数ですが下記URLからログインページへと進み「簡単ログイン」ボタンからログインしてください。  
 http://app.error-list.com:8080/login
 
-## 使用技術
-言語: PHP7.4/Javascript 
+## 使用技術　　
+言語: PHP7.4/Javascript  
 フレームワーク: Laravel6/Vue.js/Bootstrap  
 DB: MySQL5.7/SQLite  
 インフラ: AWS(VPC,EC2,S3,RDS)/Docker  
@@ -76,4 +76,4 @@ PHPUnit
 <img width="800" height="500" alt="ER" src="https://user-images.githubusercontent.com/77386781/133092348-46ca5c0f-9a8b-4f54-94fc-6698d3825d25.png">  
 
 ## アーキテクチャー図
-<img width="800" height="800" alt="アーキテクチャー図" src="https://user-images.githubusercontent.com/77386781/133428557-a949b959-8aeb-423d-8e8d-bb1cb90de72b.png">
+<img width="800" height="500" alt="アーキテクチャー図" src="https://user-images.githubusercontent.com/77386781/133428557-a949b959-8aeb-423d-8e8d-bb1cb90de72b.png">

@@ -14,7 +14,6 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
         'profile_image' => asset('/img/serch1.png'),
     ];
     
@@ -26,7 +25,6 @@ $factory->state(User::class,'login',function ($faker) {
         'email' => 'error@iya.com',
         'password' => 'password',
         'email_verified_at' => null,
-        'remember_token' => null,
         'profile_image' => null,
     ];
     
